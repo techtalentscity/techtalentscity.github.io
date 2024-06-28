@@ -3,9 +3,9 @@ import image from '../../assets/images/aboutImage.png'
 
 const About = () => {
   return (
-    <Container className={'pt-9 px-4 lg:px-20 xl:px-32'}>
+    <Container className={'pt-9 px-4 lg:!px-20 xl:!px-32'}>
         <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold pb-6">About</h1>
+            <h1 className="text-5xl md:text-6xl font-bold pb-6">About Us</h1>
             <p>Welcome to TechTalents City, the pulsating core of innovation and growth in the tech sector. Our story is one of passion, dedication, and a relentless pursuit of excellence in nurturing and accelerating development within the dynamic world of technology.</p>
         </div>
         <img src={image} alt="about image" className="w-full object-cover pt-12 pb-12 md:pb-16 lg:pb-28" />
