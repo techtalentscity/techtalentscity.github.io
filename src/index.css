@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+}
+
+:root {
+  --navbar-height: 64px; /* Adjust this value based on your navbar's height */
+}
+
+.hero {
+  height: calc(100vh - var(--navbar-height));
+}
+
+.top-bar,
+.bottom-bar {
+  transition: all 0.4s ease-out;
+}
+
+.top-bar {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(45deg) translate(4px, 0px);
+}
+
+.center-bar {
+  transform: rotate(-45deg);
+}
+
+.bottom-bar {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(45deg) translate(-4px, 0px);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
