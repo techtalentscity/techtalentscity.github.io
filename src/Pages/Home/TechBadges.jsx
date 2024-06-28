@@ -69,7 +69,7 @@ const badges = [
       title: 'TechGuard',
       description: (
         <>
-          Awarded to Network and Cybersecurity professionals, including Cloud and DevOps Engineers, after the successful completion of each collaborative project.
+          Awarded to <strong>Network and Cybersecurity professionals</strong> after the successful completion of each collaborative project.
         </>
       ),
       bg: '#F2F2F2'
