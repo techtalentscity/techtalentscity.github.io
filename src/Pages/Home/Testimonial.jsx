@@ -34,7 +34,7 @@ const Testimonials = () => {
         <Container className={'py-28'}>
             <div className="text-center mb-12">
                 <h2 className="text-2xl md:text-3xl font-bold">What Our Users Say</h2>
-                <p className="text-gray-500 mt-2">Explore what users are saying about their journey with TechTalents City!</p>
+                <p className="text-gray-500 mt-2 max-w-[378px] text-center mx-auto">Explore what users are saying about their journey with TechTalents City!</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {testimonials.map((testimonial) => (
