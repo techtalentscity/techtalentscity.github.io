@@ -1,8 +1,7 @@
 import Container from "../../components/Container"
 import PostAProject from "./PostAProject";
 import RecentProjects from "./RecentProjects";
-import amazon from '../../assets/images/amazon.png';
-import microsoft from '../../assets/images/microsoft.png';
+import techtalent from '../../assets/images/techtalent.png';
 
 const HomeProjects = () => {
 
@@ -10,7 +9,7 @@ const HomeProjects = () => {
         {
           title: 'Augmented Reality (AR) Application Development',
           skills: ['AR Developers', '3D Animators', 'UI Designer', 'Full Stack Developer'],
-          logo: amazon,
+          logo: techtalent,
           verified: true,
           premium: true,
           price: '$500',
@@ -18,7 +17,7 @@ const HomeProjects = () => {
         {
           title: 'SmartCity Integration System',
           skills: ['Full-stack Developers', 'IoT Specialists', 'Data Scientists', 'Cloud Architects'],
-          logo: microsoft,
+          logo: techtalent,
           verified: false,
           premium: false,
           price: 'Free',
@@ -26,7 +25,7 @@ const HomeProjects = () => {
         {
           title: 'Augmented Reality (AR) Application Development',
           skills: ['AR Developers', '3D Animators', 'UI Designer', 'Full Stack Developer'],
-          logo: amazon,
+          logo: techtalent,
           verified: true,
           premium: true,
           price: '$500',
@@ -34,7 +33,7 @@ const HomeProjects = () => {
         {
           title: 'SmartCity Integration System',
           skills: ['Full-stack Developers', 'IoT Specialists', 'Data Scientists', 'Cloud Architects'],
-          logo: microsoft,
+          logo: techtalent,
           verified: false,
           premium: false,
           price: 'Free',

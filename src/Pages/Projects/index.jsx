@@ -1,7 +1,6 @@
 import Container from "../../components/Container"
 import PostAProject from "../Home/PostAProject"
-import amazon from '../../assets/images/amazon.png';
-import microsoft from '../../assets/images/microsoft.png';
+import techtalent from '../../assets/images/techtalent.png';
 import AllProjects from "./AllProjects";
 import { Input } from "antd";
 import { IoIosSearch } from "react-icons/io";
@@ -13,7 +12,7 @@ const Projects = () => {
         {
           title: 'Augmented Reality (AR) Application Development',
           skills: ['AR Developers', '3D Animators', 'UI Designer', 'Full Stack Developer'],
-          logo: amazon,
+          logo: techtalent,
           verified: true,
           premium: true,
           price: '$500',
@@ -21,7 +20,7 @@ const Projects = () => {
         {
           title: 'SmartCity Integration System',
           skills: ['Full-stack Developers', 'IoT Specialists', 'Data Scientists', 'Cloud Architects'],
-          logo: microsoft,
+          logo: techtalent,
           verified: false,
           premium: false,
           price: 'Free',
@@ -29,7 +28,7 @@ const Projects = () => {
         {
           title: 'Augmented Reality (AR) Application Development',
           skills: ['AR Developers', '3D Animators', 'UI Designer', 'Full Stack Developer'],
-          logo: amazon,
+          logo: techtalent,
           verified: true,
           premium: true,
           price: '$500',
@@ -37,7 +36,7 @@ const Projects = () => {
         {
           title: 'SmartCity Integration System',
           skills: ['Full-stack Developers', 'IoT Specialists', 'Data Scientists', 'Cloud Architects'],
-          logo: microsoft,
+          logo: techtalent,
           verified: false,
           premium: false,
           price: 'Free',
