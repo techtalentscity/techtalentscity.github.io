@@ -1,8 +1,9 @@
-import { Badge } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectCard = ({ project }) => {
+    const navigate = useNavigate()
   return (
-    <div className="border border-[#EFF1F3] p-4 rounded-lg bg-white">
+    <div className="border border-[#EFF1F3] p-4 rounded-lg bg-white cursor-pointer" onClick={() => navigate(`/projects/1`)}>
         <div className="flex flex-col md:flex-row  justify-between gap-5">    
             <div className="flex items-center mb-2 gap-1 md:gap-0">
                 <img src={project.logo} alt="Company Logo" className="h-20 w-20 object-contain object-center mr-2" />

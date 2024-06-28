@@ -42,12 +42,12 @@ const Navbar = () => {
                 <Link to={'/'}>
                     <img src={logo} alt="logo" className="w-[250px]" />
                 </Link>
-                <div className="hidden md:flex items-center gap-20">
+                <div className="hidden lg:flex items-center gap-20">
                     <NavLink to={'/'} className={({ isActive }) => isActive ? "font-bold text-[#3B3CC6]" : "" }>Home</NavLink>
                     <NavLink to={'/projects'} className={({ isActive }) => isActive ? "font-bold text-[#3B3CC6]" : "" }>Projects</NavLink>
                     <NavLink to={'/about'} className={({ isActive }) => isActive ? "font-bold text-[#3B3CC6]" : "" }>About</NavLink>
                 </div>
-                <div className="hidden md:flex items-center gap-2">
+                <div className="hidden lg:flex items-center gap-2">
                     <Link to={'/signin'}><Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">Login</Button></Link>
                     <Link to={'/signup'}><Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none">Register</Button></Link>
                 </div>
