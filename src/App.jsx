@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import HomeWrapper from "./components/HomeWrapper"
-import { About, Home, Login, ProjectDetail, Projects, Register } from "./Pages"
+import { About, Dashboard, Home, Login, MainDashboard, ProjectDetail, Projects, Register } from "./Pages"
 import TopScroll from "./components/TopScroll"
 
 
@@ -17,8 +17,11 @@ function App() {
               <Route path='/projects' element={<Projects />} />
               <Route path='/projects/:id' element={<ProjectDetail />} />
             </Route>
-              <Route path='/signin' element={<Login />} />
-              <Route path='/signup' element={<Register />} />
+            <Route path='/signin' element={<Login />} />
+            <Route path='/signup' element={<Register />} />
+            <Route element={<Dashboard />}>
+              <Route path='/dashboard' element={<MainDashboard />} />
+            </Route>
           </Routes>
         </TopScroll>
       </BrowserRouter>
