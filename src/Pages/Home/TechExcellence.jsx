@@ -2,7 +2,7 @@ import image from '../../assets/images/excellence.png'
 import Container from '../../components/Container';
 const TechExcellenceSection = () => {
   return (
-    <Container className="grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-6 p-8 bg-white">
+    <Container className="grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-2 p-8 bg-white 2xl:px-36">
       <div className="w-full flex justify-center lg:justify-start mb-2 lg:mb-0">
         <img src={image} alt="Group of people" className="object-cover object-center rounded-3xl" />
       </div>
