@@ -22,7 +22,7 @@ const testimonials = [
   },
   {
     id: 3,
-    rating: 4,
+    rating: 5,
     text: "As an AI/ML researcher, I'm intrigued on how this platform will connect the right talent to skill-customized AI projects.",
     name: "Suma Movva",
     // role: "Designer",
