@@ -5,25 +5,25 @@ const testimonials = [
   {
     id: 1,
     rating: 4,
-    text: "Lorem ipsum dolor sit amet consectetur. Sed tellus volutpat auctor sed turpis pellentesque.",
-    name: "Regina Miles",
-    role: "Designer",
+    text: "As a tech entrepreneur, I'm excited about this platform and its potential for innovative tech solutions across various domains.",
+    name: "Temitope Ajibola",
+    // role: "Designer",
     image: userImage
   },
   {
     id: 2,
     rating: 4,
-    text: "Lorem ipsum dolor sit amet consectetur. Aliquam netus sapien commodo at nibh.",
-    name: "Regina Miles",
-    role: "Designer",
+    text: "As a professional accountant and analyst, I'm excited about this platform and its potential for transitioning into technology.",
+    name: "Peter Adeniran",
+    // role: "Designer",
     image: userImage
   },
   {
     id: 3,
     rating: 4,
-    text: "Lorem ipsum dolor sit amet consectetur. In justo justo erat tellus massa pellentesque.",
-    name: "Regina Miles",
-    role: "Designer",
+    text: "As an AI/ML researcher, I'm intrigued on how this platform will connect the right talent to skill-customized AI projects.",
+    name: "Suma Movva",
+    // role: "Designer",
     image: userImage
   }
 ];
