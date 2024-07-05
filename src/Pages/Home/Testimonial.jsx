@@ -10,7 +10,7 @@ const testimonials = [
     text: "As a tech entrepreneur, I'm excited about this platform and its potential for innovative tech solutions across various domains.",
     name: "Temitope Ajibola",
     // role: "Designer",
-    image: user1
+    image: user2
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const testimonials = [
     text: "As a professional accountant and analyst, I'm excited about this platform and its potential for transitioning into technology.",
     name: "Peter Adeniran",
     // role: "Designer",
-    image: user2
+    image: user1
   },
   {
     id: 3,
