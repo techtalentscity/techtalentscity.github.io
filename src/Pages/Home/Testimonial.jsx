@@ -1,4 +1,6 @@
-import userImage from '../../assets/images/userImage.png';
+import user1 from '../../assets/images/user1.png';
+import user2 from '../../assets/images/user2.png';
+import user3 from '../../assets/images/user3.png';
 import Container from '../../components/Container';
 
 const testimonials = [
@@ -8,7 +10,7 @@ const testimonials = [
     text: "As a tech entrepreneur, I'm excited about this platform and its potential for innovative tech solutions across various domains.",
     name: "Temitope Ajibola",
     // role: "Designer",
-    image: userImage
+    image: user1
   },
   {
     id: 2,
@@ -16,7 +18,7 @@ const testimonials = [
     text: "As a professional accountant and analyst, I'm excited about this platform and its potential for transitioning into technology.",
     name: "Peter Adeniran",
     // role: "Designer",
-    image: userImage
+    image: user2
   },
   {
     id: 3,
@@ -24,7 +26,7 @@ const testimonials = [
     text: "As an AI/ML researcher, I'm intrigued on how this platform will connect the right talent to skill-customized AI projects.",
     name: "Suma Movva",
     // role: "Designer",
-    image: userImage
+    image: user3
   }
 ];
 
