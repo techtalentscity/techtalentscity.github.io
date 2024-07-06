@@ -13,11 +13,11 @@ const About = () => {
             <div className="flex flex-col gap-6">
                 <div className="bg-[#F5F5FA] p-9 rounded-3xl">
                     <p className="font-bold pb-8 text-2xl">Our Journey</p>
-                    <p>Embarking on this journey, we envisioned TechTalents City as more than just a platform; it&apos;s a thriving ecosystem. From its inception, our goal has been to create a space where tech professionals, emerging leaders, and industry key players converge to shape the future of technology.</p>
+                    <p>Embarking on this journey, we envisioned TechTalents City as more than just a platform; it&apos;s a thriving ecosystem. Since its inception, our goal has been to create a space where tech professionals, emerging leaders, and key industry players converge to shape the future of technology.</p>
                 </div>
                 <div className="bg-[#F5F5FA] p-9 rounded-3xl">
                     <p className="font-bold pb-8 text-2xl">Our Vision</p>
-                    <p>At the heart of TechTalents City beats a vision to be the leading platform that nurtures the growth and success of tech professionals. We&apos;re dedicated to fostering a community where learning, skill recognition, and career advancement opportunities seamlessly converge.</p>
+                    <p>At Tech Talents City, we envision becoming the leading platform that nurtures the growth and success of tech professionals. We foster a community where learning, skill recognition, and career advancement opportunities seamlessly converge.</p>
                 </div>
             </div>
             <div className="text-lg text-white flex justify-center items-center bg-gradient-to-br from-[#461fdf] to-[#5f30ac] rounded-3xl py-16 px-9">

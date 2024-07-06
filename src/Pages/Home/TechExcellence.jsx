@@ -8,14 +8,14 @@ const TechExcellenceSection = () => {
       </div>
       <div className=" w-full">
         <h2 className="text-2xl xl:text-3xl font-bold mb-4">
-          Accelerate Your Tech Excellence: Soar with TechTalents City.
+          Achieve tech excellence at TechTalents City.
         </h2>
         <ul className="space-y-6 mt-6 md:mt-12 xl:mt-20">
           <li>
             <div className="flex items-start">
               <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
               <div>
-                <h3 className="font-bold text-lg">Accelerated Career Progression</h3>
+                <h3 className="font-bold text-lg">Rapid Career Advancement</h3>
                 <p className='text-sm xl:text-base text-[#737373] mt-2'>Access to real-world projects allows us to fast-track the career growth of tech professionals, enabling them to transition from novices to experts efficiently.</p>
               </div>
             </div>
@@ -42,7 +42,7 @@ const TechExcellenceSection = () => {
             <div className="flex items-start">
               <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
               <div>
-                <h3 className="font-bold text-lg">Personalized Career Pathways</h3>
+                <h3 className="font-bold text-lg">Personalized Career Paths</h3>
                 <p className='text-sm xl:text-base text-[#737373] mt-2'>Experience our AI project recommendation system designed to align perfectly with your career goals, enhancing your professional journey and ensuring optimal success.</p>
               </div>
             </div>

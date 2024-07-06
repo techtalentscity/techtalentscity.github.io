@@ -15,13 +15,13 @@ const Footer = () => {
                 </Link>
                 <ul className="text-[#101010]">
                     <li className="mb-2"><Link to={'/'}>Home</Link></li>
-                    <li className="mb-2"><Link to={'/contact'}>Contact</Link></li>
+                    <li className="mb-2"><Link to={'/projects'}>Projects</Link></li>
                     <li className="mb-2"><Link to={'/about'}>About</Link></li>
                 </ul>
                 <ul className="text-[#101010]">
-                    <li className="mb-2"><Link to={'/'}>Support</Link></li>
-                    <li className="mb-2"><Link to={'/contact'}>Privacy Policy</Link></li>
-                    <li className="mb-2"><Link to={'/about'}>Terms of Service</Link></li>
+                    <li className="mb-2">Support</li>
+                    <li className="mb-2">Privacy Policy</li>
+                    <li className="mb-2">Terms of Service</li>
                 </ul>
             </div>
             <div className="flex flex-col md:flex-row justify-between md:items-center border-t py-6 mt-3 gap-5">

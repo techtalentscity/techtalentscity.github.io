@@ -7,7 +7,7 @@ const testimonials = [
   {
     id: 1,
     rating: 4,
-    text: "As a tech entrepreneur, I'm excited about this platform and its potential for innovative tech solutions across various domains.",
+    text: "As a tech entrepreneur, I'm excited about TTC and its potential for innovative tech solutions across various domains.",
     name: "Temitope Ajibola",
     // role: "Designer",
     image: user2
@@ -15,7 +15,7 @@ const testimonials = [
   {
     id: 2,
     rating: 4,
-    text: "As a professional accountant and analyst, I'm excited about this platform and its potential for transitioning into technology.",
+    text: "As a professional accountant and analyst, I'm excited about TTC and its potential for transitioning into technology.",
     name: "Peter Adeniran",
     // role: "Designer",
     image: user1
@@ -23,7 +23,7 @@ const testimonials = [
   {
     id: 3,
     rating: 5,
-    text: "As an AI/ML researcher, I'm intrigued on how this platform will connect the right talent to skill-customized AI projects.",
+    text: "As an AI/ML researcher, I'm intrigued on how TTC will connect the right talent to skill-customized AI projects.",
     name: "Suma Movva",
     // role: "Designer",
     image: user3

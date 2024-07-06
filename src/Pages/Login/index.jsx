@@ -39,7 +39,7 @@ const Login = () => {
         <img src={IMAGE} alt="login" className='w-full h-full object-cover rounded-l-[60px]' />
         <div className="absolute top-40 left-20 2xl:left-40 inset-0 flex flex-col justify-center items-center bg-white bg-opacity-20 w-[400px] xl:w-[500px] h-[350px] text-white p-8 ">
           <h2 className="text-3xl xl:text-5xl font-bold mb-4">Community and Network Building</h2>
-          <p className="text-lg text-[#F6F6F8]">Creating opportunity to develop and earn TechTalents badges faster by creating and collaborating featured projects</p>
+          <p className="text-lg text-[#F6F6F8]">Accelerate your progress and earn TechTalent badges faster through posting projects and active participation.</p>
         </div>
       </div>
     </div>
