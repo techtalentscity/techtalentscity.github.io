@@ -12,18 +12,20 @@ import { useLocation } from "react-router-dom";
 
 const routeNames = {
   '/dashboard': 'Dashboard',
-  '/projects': 'Projects',
+  '/all-projects': 'Projects',
   '/ttc-ai': 'TTC AI',
   '/hire': 'Hire',
   '/project-vault': 'Project Vault',
   '/support': 'Support',
   '/settings': 'Settings',
+  '/settings/reset-password': 'Settings > Reset Password',
+  '/settings/edit-profile': 'Settings > Edit Profile',
 };
 
 const Topnav = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
-  const currentRouteName = routeNames[location.pathname] || 'Hello';
+  const currentRouteName = routeNames[location.pathname] || null;
 
   // const { user } = useSelector((state) => state.user);
   // const dispatch = useDispatch();
@@ -51,7 +53,7 @@ const Topnav = ({ toggleSidebar }) => {
             className='cursor-pointer text-dark-primary dark:text-light-primary'
             onClick={() => toggleSidebar()}
           />
-        <p className="text-[#000606] text-base md:text-2xl lg:text-4xl font-bold">{currentRouteName}</p>
+        <p className="text-[#000606] text-base md:text-xl font-bold">{currentRouteName}</p>
         </div>
         <div className={`flex gap-4 justify-center items-center`}>
           <div className="w-8 md:w-12 h-8 md:h-12 bg-[#F3F3FF] rounded-full p-3 flex items-center justify-center">

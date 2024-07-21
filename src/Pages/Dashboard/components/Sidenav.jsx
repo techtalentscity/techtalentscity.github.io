@@ -39,7 +39,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
@@ -65,11 +65,11 @@ const Sidenav = ({ open, toggleSidebar }) => {
           </h2>
         </NavLink>
         <NavLink
-          to={"/projects"}
+          to={"/all-projects"}
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
@@ -99,7 +99,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
@@ -129,7 +129,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
@@ -159,7 +159,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
@@ -189,7 +189,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
@@ -219,7 +219,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
-              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
+              ? `bg-primary/90 text-[#f2f2f2] font-bold flex items-center text-sm gap-3 p-2 py-3 rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
               : `flex items-center text-sm gap-3 font-medium p-2 hover:bg-white/10 text-[#f2f2f2] rounded-r-3xl ${open ? "pl-12" : "pl-4"} group`
           }
         >
