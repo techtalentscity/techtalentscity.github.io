@@ -2,7 +2,7 @@ import Hero from "./Hero"
 import HireTalent from "./HireTalent"
 import HomeProjects from "./HomeProjects"
 import TechBadges from "./TechBadges"
-import TechExcellenceSection from "./TechExcellence"
+// import TechExcellenceSection from "./TechExcellence"
 import Testimonials from "./Testimonial"
 
 const Home = () => {
@@ -11,7 +11,7 @@ const Home = () => {
         <Hero />
         <HomeProjects />
         <HireTalent />
-        <TechExcellenceSection />
+        {/* <TechExcellenceSection /> */}
         <TechBadges />
         <Testimonials />
     </div>
