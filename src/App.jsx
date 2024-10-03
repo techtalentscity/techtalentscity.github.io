@@ -22,7 +22,7 @@ function App() {
             <Route element={<Dashboard />}>
               <Route path='/dashboard' element={<MainDashboard />} />
               <Route path='/all-projects' element={<AllProjects />} />
-              <Route path='/ttc-ai' element={<TtcAi />} />
+              {/* <Route path='/ttc-ai' element={<TtcAi />} /> */}
               <Route path='/settings' element={<Settings />} />
               <Route path='/settings/reset-password' element={<ResetPassword />} />
               <Route path='/settings/edit-profile' element={<EditProfile />} />

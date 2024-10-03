@@ -94,7 +94,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
             Projects
           </h2>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to={"/ttc-ai"}
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
@@ -123,9 +123,9 @@ const Sidenav = ({ open, toggleSidebar }) => {
           >
             TTC AI
           </h2>
-        </NavLink>
+        </NavLink> */}
         <NavLink
-          to={"/hire"}
+          to={"/recruit"}
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
@@ -144,14 +144,14 @@ const Sidenav = ({ open, toggleSidebar }) => {
               transitionDelay: `300ms`,
             }}
           >
-            Hire
+            Recruit
           </h2>
           <h2
             className={`${
               open && "hidden"
             } absolute left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit z-10 text-black`}
           >
-            Hire
+            Recruit
           </h2>
         </NavLink>
         <NavLink

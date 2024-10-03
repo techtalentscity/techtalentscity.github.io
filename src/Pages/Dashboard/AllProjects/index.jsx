@@ -49,7 +49,7 @@ const AllProjects = () => {
             <Button
               onClick={() => setCurrentView('All')}
               type={currentView === `All` ? 'primary' : 'default'}
-              className={`!shadow-none rounded-3xl font-medium p-2 !h-auto text-lg ${currentView !== `All` && '!border-none bg-[#F3F3FF] text-[#101010] hover:!bg-[#F3F3FF]'}`}
+              className={`!shadow-none rounded-3xl font-medium py-2 px-4 !h-auto text-lg ${currentView !== `All` && '!border-none bg-[#F3F3FF] text-[#101010] hover:!bg-[#F3F3FF]'}`}
             >
               All
             </Button>
@@ -67,7 +67,7 @@ const AllProjects = () => {
             >
               Completed
             </Button>
-            <Button
+            {/* <Button
               onClick={() => setCurrentView('Recommended projects')}
               type={currentView === `Recommended projects` ? 'primary' : 'default'}
               className={`!shadow-none rounded-3xl font-medium py-2 px-6 !h-auto text-lg ${currentView !== `Recommended projects` && '!border-none bg-[#F3F3FF] text-[#101010] hover:!bg-[#F3F3FF]'}`}
@@ -80,7 +80,7 @@ const AllProjects = () => {
               className={`!shadow-none rounded-3xl font-medium py-2 px-6 !h-auto text-lg ${currentView !== `Recommended collaborators` && '!border-none bg-[#F3F3FF] text-[#101010] hover:!bg-[#F3F3FF]'}`}
             >
               Recommended collaborators
-            </Button>
+            </Button> */}
         </div>
         <div className="flex flex-col lg:flex-row lg:items-start md:p-4 space-y-4 lg:space-y-0 lg:space-x-8 mt-8 md:mt-4">
             <div className="lg:flex-grow">
