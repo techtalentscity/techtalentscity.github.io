@@ -11,5 +11,7 @@ import ResetPassword from "./Dashboard/Settings/ResetPassword";
 import EditProfile from "./Dashboard/Settings/EditProfile";
 import TtcAi from "./Dashboard/TtcAi";
 import AllProjects from "./Dashboard/AllProjects";
+import Recruit from "./Dashboard/Recruit";
+import RecruitProfile from "./Dashboard/Recruit/RecruitProfile";
 
-export {Home, About, Projects, Login, Register, ProjectDetail, Dashboard, MainDashboard, Settings, ResetPassword, EditProfile, TtcAi, AllProjects}
+export {Home, About, Projects, Login, Register, ProjectDetail, Dashboard, MainDashboard, Settings, ResetPassword, EditProfile, TtcAi, AllProjects, Recruit, RecruitProfile}

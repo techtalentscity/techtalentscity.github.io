@@ -14,7 +14,7 @@ const routeNames = {
   '/dashboard': 'Dashboard',
   '/all-projects': 'Projects',
   '/ttc-ai': 'TTC AI',
-  '/hire': 'Hire',
+  '/recruit': 'Recruit',
   '/project-vault': 'Project Vault',
   '/support': 'Support',
   '/settings': 'Settings',

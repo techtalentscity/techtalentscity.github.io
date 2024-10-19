@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import HomeWrapper from "./components/HomeWrapper"
-import { About, AllProjects, Dashboard, EditProfile, Home, Login, MainDashboard, ProjectDetail, Projects, Register, ResetPassword, Settings, TtcAi } from "./Pages"
+import { About, AllProjects, Dashboard, EditProfile, Home, Login, MainDashboard, ProjectDetail, Projects, Recruit, RecruitProfile, Register, ResetPassword, Settings } from "./Pages"
 import TopScroll from "./components/TopScroll"
 
 
@@ -22,6 +22,8 @@ function App() {
             <Route element={<Dashboard />}>
               <Route path='/dashboard' element={<MainDashboard />} />
               <Route path='/all-projects' element={<AllProjects />} />
+              <Route path='/recruit' element={<Recruit />} />
+              <Route path='/recruit/:slug' element={<RecruitProfile />} />
               {/* <Route path='/ttc-ai' element={<TtcAi />} /> */}
               <Route path='/settings' element={<Settings />} />
               <Route path='/settings/reset-password' element={<ResetPassword />} />
