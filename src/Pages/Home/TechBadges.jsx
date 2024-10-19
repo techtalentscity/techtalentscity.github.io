@@ -79,7 +79,7 @@ const badges = [
 
 const TechBadges = () => {
   return (
-    <Container className="bg-white my-12 md:my-24 py-16 !px-4 lg:!px-20 xl:!px-32">
+    <Container className="bg-white my-12 md:my-16 py-16 !px-4 lg:!px-20 xl:!px-32">
       <h2 className="text-3xl font-semibold text-center mb-4">Tech Badges</h2>
       <p className="text-center mb-12 text-[#737373] max-w-xl mx-auto">
         Advance your career with our innovative TechTalents Badge System, spotlighting key milestones and tackling tech industry challenges.
