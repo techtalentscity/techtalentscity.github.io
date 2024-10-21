@@ -125,7 +125,7 @@ const Sidenav = ({ open, toggleSidebar }) => {
           </h2>
         </NavLink> */}
         <NavLink
-          to={"/recruit"}
+          to={"/talent-board"}
           onClick={handleNavLinkClick}
           className={({ isActive }) =>
             isActive
@@ -144,14 +144,14 @@ const Sidenav = ({ open, toggleSidebar }) => {
               transitionDelay: `300ms`,
             }}
           >
-            Recruit
+            Talent Board
           </h2>
           <h2
             className={`${
               open && "hidden"
             } absolute left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit z-10 text-black`}
           >
-            Recruit
+            Talent Board
           </h2>
         </NavLink>
         <NavLink
