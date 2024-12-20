@@ -1,4 +1,4 @@
-import image from '../../assets/images/dp1.png';
+import image from '../../assets/images/dp.png';
 import Container from '../../components/Container';
 
 const Events = () => {
