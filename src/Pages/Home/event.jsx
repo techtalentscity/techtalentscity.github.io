@@ -12,7 +12,7 @@ const Events = () => {
           Recognizing Excellence and Innovation at the Tech Summit
         </h2>
         <p className="text-base xl:text-lg text-[#737373] mb-4">
-          The Tech Summit is a celebration of achievements, recognizing individuals and teams who have made outstanding contributions in technology and innovation. Participants are awarded based on their roles and the impact of their projects in various categories.
+          The Tech Summit, hosted and powered by <span className="font-semibold text-blue-600">Favored Online</span>, is a celebration of achievements, recognizing individuals and teams who have made outstanding contributions in technology and innovation. Members will be able to apply directly via their dashboard to participate.
         </p>
         <p className="text-base xl:text-lg text-[#737373] mb-4">
           Additionally, we celebrate the <span className="font-semibold text-blue-600">3 best innovative projects of the year</span>, emphasizing creativity, collaboration, and impact. Only free projects are eligible for this prestigious recognition.
