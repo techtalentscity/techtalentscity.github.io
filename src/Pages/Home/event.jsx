@@ -1,74 +1,90 @@
-import { Button } from "antd";
-import Container from "../../components/Container";
-import AwardsImage from "../../assets/images/excellence.png"; // Replace with your actual image path
+import image from '../../assets/images/excellence.png';
+import Container from '../../components/Container';
 
 const Events = () => {
   return (
-    <Container className="mb-16">
-      <div className="relative w-full bg-gradient-to-r from-blue-50 via-blue-100 to-purple-50 rounded-2xl shadow-md flex flex-col md:flex-row items-center p-10 md:p-16">
-        {/* Image Section */}
-        <div className="hidden md:block w-1/2">
-          <img
-            src={AwardsImage}
-            alt="Tech Summit Awards"
-            className="rounded-xl shadow-lg"
-          />
-        </div>
-
-        {/* Content Section */}
-        <div className="max-w-lg md:max-w-xl w-full text-center md:text-left flex flex-col justify-center gap-8">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-[#101010] leading-tight">
-            Celebrate Excellence and Innovation at the Tech Summit
-          </h1>
-          <p className="text-[#555555] text-lg md:text-xl leading-relaxed">
-            Join us as we recognize outstanding achievements in technology,
-            innovation, and collaboration. Awards will be given in the
-            following categories:
-          </p>
-          <ul className="text-[#555555] text-lg md:text-xl leading-relaxed space-y-3">
-            <li>
-              <span className="font-semibold text-purple-600">💡 TechPO:</span>{" "}
-              Product Owners
-            </li>
-            <li>
-              <span className="font-semibold text-purple-600">🛠️ TechQA:</span>{" "}
-              Quality Testers
-            </li>
-            <li>
-              <span className="font-semibold text-purple-600">💻 TechDev:</span>{" "}
-              Coding Developers
-            </li>
-            <li>
-              <span className="font-semibold text-purple-600">🌟 TechLeads:</span>{" "}
-              Non-Technical Professionals
-            </li>
-            <li>
-              <span className="font-semibold text-purple-600">🚀 TechArchs:</span>{" "}
-              Low/No-Code Developers
-            </li>
-            <li>
-              <span className="font-semibold text-purple-600">🔒 TechGuard:</span>{" "}
-              Network and Cybersecurity Experts
-            </li>
-          </ul>
-          <p className="text-[#555555] text-lg md:text-xl leading-relaxed">
-            We will also honor the{" "}
-            <span className="font-semibold text-purple-600">
-              individual who transitioned from novice to expert
-            </span>{" "}
-            within a year.
-          </p>
-          <p className="text-[#555555] text-lg md:text-xl leading-relaxed">
-            Plus, the <span className="font-semibold text-blue-600">3 best innovative projects of the year</span> will be selected and awarded. Only free projects are eligible for consideration.
-          </p>
-          <Button
-            type="primary"
-            size="large"
-            className="mt-4 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-blue-500 hover:to-purple-600 text-white font-bold rounded-full shadow-md px-10 py-4"
-          >
-            Join the Celebration
-          </Button>
-        </div>
+    <Container className="flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-12 p-8 bg-white 2xl:px-36">
+      <div className="lg:w-[50%] lg:h-[746px] flex justify-center mb-2 lg:mb-0 shrink-0 ">
+        <img src={image} alt="Awards and Recognition" className="object-cover object-center rounded-3xl" />
+      </div>
+      <div className="w-full flex flex-col gap-5 justify-between h-full lg:h-[746px]">
+        <h2 className="text-2xl xl:text-3xl font-bold">
+          Celebrate Excellence and Innovation at the Tech Summit
+        </h2>
+        <ul className="space-y-6">
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">TechPO: Product Owners</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Product Owners after the successful completion of each collaborative project.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">TechQA: Quality Testers</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Quality Testers after the successful completion of each collaborative project.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">TechDev: Coding Developers</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Coding Developers after the successful completion of each collaborative project.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">TechLeads: Non-Technical Professionals</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Non-Technical Professionals after the successful completion of each collaborative project.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">TechArchs: Low/No-Code Developers</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Low/No-Coding Developers after the successful completion of each collaborative project.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">TechGuard: Network and Cybersecurity Experts</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Network and Cybersecurity Professionals after the successful completion of each collaborative project.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">Novice to Expert</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Recognizing the individual who transitioned from novice to expert within a year.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-start">
+              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div>
+                <h3 className="font-bold text-lg">Best Innovative Projects</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Celebrating the 3 best innovative projects of the year. Only free projects are eligible for this recognition.</p>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </Container>
   );
