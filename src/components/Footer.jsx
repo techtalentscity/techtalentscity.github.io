@@ -32,9 +32,9 @@ const Footer = () => {
                     <FaLinkedin size={17} />
                     <FaPinterest size={17} />
                 </div>
-                <p className="text-xs text-gray-800 dark:text-gray-200 font-medium">
-                  © {currentYear} <a href="https://www.techtalentscity.com/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">TechTalents City</a>. 
-                  Powered by <a href="https://www.favoredonline.com/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Favored Online Inc.</a>
+                <p className="text-xs text-black font-sans font-medium">
+                  © {currentYear} <a href="https://www.techtalentscity.com/" className="text-black hover:underline" target="_blank" rel="noopener noreferrer">TechTalents City</a>. 
+               Powered by <a href="https://www.favoredonline.com/" className="text-black hover:underline" target="_blank" rel="noopener noreferrer">Favored Online Inc.</a>
                 </p>
             </div>
         </Container>
