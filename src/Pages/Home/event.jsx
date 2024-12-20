@@ -20,7 +20,7 @@ const Events = () => {
             size="large"
             className="mt-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500 text-white font-bold rounded-lg shadow-md px-8 py-4"
           >
-            Learn More
+            Post your Project Now
           </Button>
         </div>
       </div>
