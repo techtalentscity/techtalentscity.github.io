@@ -19,8 +19,8 @@ const Events = () => {
           Recognizing Excellence and Innovation at the Tech Summit
         </h2>
         <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
-          The Tech Summit, powered by{' '}
-          <span className="font-semibold text-blue-600">Favored Online</span>, celebrates individuals and teams for exceptional contributions in the following sectors, with members applying via their dashboards.
+        The Tech Summit, powered by{' '}
+       <span className="font-semibold text-blue-600">Favored Online</span>, honors exceptional contributions, with members applying through their dashboards.
         </p>
         <ul className="space-y-6">
           <li>
