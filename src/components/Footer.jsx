@@ -32,7 +32,7 @@ const Footer = () => {
                     <FaLinkedin size={17} />
                     <FaPinterest size={17} />
                 </div>
-                <p className="text-sm">© TechTalents City {currentYear} Powered by Favored Online Inc.</p>
+                <p className="text-sm">© {currentYear} TechTalents City. Powered by Favored Online Inc.</p>
             </div>
         </Container>
     </div>
