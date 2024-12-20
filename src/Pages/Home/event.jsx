@@ -22,10 +22,6 @@ const Events = () => {
           The Tech Summit, hosted and powered by{' '}
           <span className="font-semibold text-blue-600">Favored Online</span>, celebrates achievements by recognizing individuals and teams who have made outstanding contributions to technology and innovation. Members can apply directly via their dashboards to participate.
         </p>
-        <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
-          Additionally, we celebrate the{' '}
-          <span className="font-semibold text-blue-600">3 best innovative projects of the year</span>, emphasizing creativity, collaboration, and impact. Only free projects are eligible for this prestigious recognition.
-        </p>
         <ul className="space-y-6">
           <li>
             <div className="flex items-start">
