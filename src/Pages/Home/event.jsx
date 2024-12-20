@@ -9,7 +9,7 @@ const Events = () => {
         <img
           src={image}
           alt="Awards and Recognition"
-          className="w-full h-full max-h-[600px] rounded-3xl object-cover"
+          className="w-full h-full rounded-3xl object-cover"
         />
       </div>
 
