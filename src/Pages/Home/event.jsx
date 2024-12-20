@@ -9,60 +9,21 @@ const Events = () => {
       </div>
       <div className="w-full flex flex-col gap-5 justify-between h-full lg:h-[746px]">
         <h2 className="text-2xl xl:text-3xl font-bold">
-          Celebrate Excellence and Innovation at the Tech Summit
+          Recognizing Excellence and Innovation at the Tech Summit
         </h2>
+        <p className="text-base xl:text-lg text-[#737373] mb-4">
+          The Tech Summit is a celebration of achievements, recognizing individuals and teams who have made outstanding contributions in technology and innovation. Participants are awarded based on their roles and the impact of their projects in various categories.
+        </p>
+        <p className="text-base xl:text-lg text-[#737373] mb-4">
+          Additionally, we celebrate the <span className="font-semibold text-blue-600">3 best innovative projects of the year</span>, emphasizing creativity, collaboration, and impact. Only free projects are eligible for this prestigious recognition.
+        </p>
         <ul className="space-y-6">
           <li>
             <div className="flex items-start">
               <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
               <div>
-                <h3 className="font-bold text-lg">TechPO: Product Owners</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Product Owners after the successful completion of each collaborative project.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">TechQA: Quality Testers</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Quality Testers after the successful completion of each collaborative project.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">TechDev: Coding Developers</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Coding Developers after the successful completion of each collaborative project.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">TechLeads: Non-Technical Professionals</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Non-Technical Professionals after the successful completion of each collaborative project.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">TechArchs: Low/No-Code Developers</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Low/No-Coding Developers after the successful completion of each collaborative project.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">TechGuard: Network and Cybersecurity Experts</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awarded to Network and Cybersecurity Professionals after the successful completion of each collaborative project.</p>
+                <h3 className="font-bold text-lg">Best in Each Section</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2">Awards will be presented to the best individuals in each category, including TechPO, TechQA, TechDev, TechLeads, TechArchs, and TechGuard.</p>
               </div>
             </div>
           </li>
