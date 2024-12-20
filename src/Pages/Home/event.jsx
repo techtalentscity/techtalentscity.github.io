@@ -3,26 +3,28 @@ import Container from '../../components/Container';
 
 const Events = () => {
   return (
-    <Container className="flex flex-col lg:flex-row items-center lg:items-start gap-8 p-8 bg-white 2xl:px-36">
+    <Container className="flex flex-col lg:flex-row items-stretch gap-8 p-8 bg-white 2xl:px-36">
       {/* Left Section: Image */}
       <div className="flex-shrink-0 w-full lg:w-1/2">
         <img
           src={image}
           alt="Awards and Recognition"
-          className="w-full h-auto rounded-3xl object-cover object-center"
+          className="w-full h-full max-h-[500px] rounded-3xl object-cover"
         />
       </div>
 
       {/* Right Section: Content */}
-      <div className="w-full lg:w-1/2 flex flex-col gap-6">
+      <div className="w-full lg:w-1/2 flex flex-col justify-between gap-6">
         <h2 className="text-2xl xl:text-3xl font-bold leading-snug">
           Recognizing Excellence and Innovation at the Tech Summit
         </h2>
         <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
-          The Tech Summit, hosted and powered by <span className="font-semibold text-blue-600">Favored Online</span>, celebrates achievements by recognizing individuals and teams who have made outstanding contributions to technology and innovation. Members can apply directly via their dashboards to participate.
+          The Tech Summit, hosted and powered by{' '}
+          <span className="font-semibold text-blue-600">Favored Online</span>, celebrates achievements by recognizing individuals and teams who have made outstanding contributions to technology and innovation. Members can apply directly via their dashboards to participate.
         </p>
         <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
-          Additionally, we celebrate the <span className="font-semibold text-blue-600">3 best innovative projects of the year</span>, emphasizing creativity, collaboration, and impact. Only free projects are eligible for this prestigious recognition.
+          Additionally, we celebrate the{' '}
+          <span className="font-semibold text-blue-600">3 best innovative projects of the year</span>, emphasizing creativity, collaboration, and impact. Only free projects are eligible for this prestigious recognition.
         </p>
         <ul className="space-y-6">
           <li>
