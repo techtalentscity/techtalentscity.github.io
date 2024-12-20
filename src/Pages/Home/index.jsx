@@ -9,9 +9,9 @@ const Home = () => {
   return (
     <div>
         <Hero />
-        <Events /> {/* Correctly used Events component */}
         <HomeProjects />
         <TechBadges />
+        <Events /> {/* Correctly used Events component */}
         <Testimonials />
     </div>
   );
