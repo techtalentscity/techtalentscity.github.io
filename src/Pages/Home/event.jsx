@@ -9,7 +9,8 @@ const Events = () => {
         <img
           src={image}
           alt="Awards and Recognition"
-          className="w-full h-auto max-h-[500px] rounded-3xl object-cover"
+          className="w-full h-auto max-h-[500px] rounded-3xl object-contain"
+          style={{ margin: 'auto', display: 'block' }}
         />
       </div>
 
