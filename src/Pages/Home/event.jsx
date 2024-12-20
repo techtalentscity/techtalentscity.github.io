@@ -1,58 +1,64 @@
-import image from '../../assets/images/excellence.png'
+import image from '../../assets/images/L-1.jpg';
 import Container from '../../components/Container';
-const TechExcellenceSection = () => {
+
+const Events = () => {
   return (
-    <Container className="grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-12 p-8 bg-white 2xl:px-36">
-      <div className="w-full flex justify-center lg:justify-start mb-2 lg:mb-0">
-        <img src={image} alt="Group of people" className="object-cover object-center rounded-3xl" />
+    <Container className="flex flex-col lg:flex-row items-start gap-8 p-8 bg-white 2xl:px-36">
+      {/* Left Section: Image */}
+      <div className="flex-shrink-0 w-full lg:w-1/2">
+        <img
+          src={image}
+          alt="Awards and Recognition"
+          className="w-full h-auto max-h-[500px] rounded-3xl object-cover"
+        />
       </div>
-      <div className=" w-full">
-        <h2 className="text-2xl xl:text-3xl font-bold mb-4">
-          Achieve tech excellence at TechTalents City.
+
+      {/* Right Section: Content */}
+      <div className="w-full lg:w-1/2 flex flex-col gap-6">
+        <h2 className="text-2xl xl:text-3xl font-bold leading-snug">
+          Recognizing Excellence and Innovation at the Tech Summit
         </h2>
-        <ul className="space-y-6 mt-6 md:mt-12 xl:mt-20">
+        <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
+          The Tech Summit, powered by{' '}
+          <span className="font-semibold text-blue-600">Favored Online</span>,
+          celebrates individuals and teams for exceptional contributions in the
+          following sectors, with members applying via their dashboards.
+        </p>
+        <ul className="space-y-6">
           <li>
             <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div className="w-3 h-16 rounded-3xl bg-blue-600 mr-4"></div>
               <div>
-                <h3 className="font-bold text-lg">Rapid Career Advancement</h3>
-                <p className='text-sm xl:text-base text-[#737373] mt-2'>Access to real-world projects allows us to fast-track the career growth of tech professionals, enabling them to transition from novices to experts efficiently.</p>
+                <h3 className="font-bold text-lg">Best in Each Section</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2 leading-relaxed">
+                  Awards will be presented to the best individuals in each
+                  category, including TechPO, TechQA, TechDev, TechLeads,
+                  TechArchs, and TechGuard.
+                </p>
               </div>
             </div>
           </li>
           <li>
             <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div className="w-3 h-16 rounded-3xl bg-blue-600 mr-4"></div>
               <div>
-                <h3 className="font-bold text-lg">Real-World Experience and Financial Rewards</h3>
-                <p className='text-sm xl:text-base text-[#737373] mt-2'>Participation in paid projects not only bolsters technical and soft skills but also provides financial incentives, blending professional development with tangible benefits.</p>
+                <h3 className="font-bold text-lg">Novice to Expert</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2 leading-relaxed">
+                  Recognizing the individual who transitioned from novice to
+                  expert within a year.
+                </p>
               </div>
             </div>
           </li>
           <li>
             <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
+              <div className="w-3 h-16 rounded-3xl bg-blue-600 mr-4"></div>
               <div>
-                <h3 className="font-bold text-lg">Recognition Through the TechTalents Badge System</h3>
-                <p className='text-sm xl:text-base text-[#737373] mt-2'>Our badges act as a benchmark of professional achievement, enhancing visibility and credibility in the tech industry.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">Personalized Career Paths</h3>
-                <p className='text-sm xl:text-base text-[#737373] mt-2'>Experience our AI project recommendation system designed to align perfectly with your career goals, enhancing your professional journey and ensuring optimal success.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">Dynamic Skill Enhancement</h3>
-                <p className='text-sm xl:text-base text-[#737373] mt-2'>Engage with our TTC AI for continuous learning resources and personalized recommendations, keeping you ahead in your field and adaptable to technological advancements.</p>
+                <h3 className="font-bold text-lg">Best Innovative Projects</h3>
+                <p className="text-sm xl:text-base text-[#737373] mt-2 leading-relaxed">
+                  Celebrating the 3 best innovative projects of the year. Only
+                  free projects are eligible for this recognition.
+                </p>
               </div>
             </div>
           </li>
@@ -62,4 +68,4 @@ const TechExcellenceSection = () => {
   );
 };
 
-export default TechExcellenceSection;
+export default Events;
