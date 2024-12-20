@@ -5,11 +5,11 @@ const Events = () => {
   return (
     <Container className="flex flex-col lg:flex-row items-stretch gap-8 p-8 bg-white 2xl:px-36">
       {/* Left Section: Image */}
-      <div className="flex-shrink-0 w-full lg:w-1/2">
+      <div className="flex-shrink-0 w-full lg:w-1/2 flex items-stretch">
         <img
           src={image}
           alt="Awards and Recognition"
-          className="w-full h-full max-h-[500px] rounded-3xl object-cover"
+          className="w-full h-full max-h-[600px] rounded-3xl object-cover"
         />
       </div>
 
