@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import Container from "../../components/Container";
-import AwardsImage from "../../assets/images/awards.png"; // Replace with your actual image path
+import AwardsImage from "../../assets/images/excellence.png"; // Replace with your actual image path
 
 const Events = () => {
   return (
