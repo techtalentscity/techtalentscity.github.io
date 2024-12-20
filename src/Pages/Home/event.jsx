@@ -1,4 +1,4 @@
-import image from '../../assets/images/excellence.png';
+import image from '../../assets/images/dp.jpg';
 import Container from '../../components/Container';
 
 const Events = () => {
@@ -18,10 +18,10 @@ const Events = () => {
         <h2 className="text-2xl xl:text-3xl font-bold leading-snug">
           Recognizing Excellence and Innovation at the Tech Summit
         </h2>
-        <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
-        The Tech Summit, powered by{' '}
-       <span className="font-semibold text-blue-600">Favored Online</span>, honors exceptional contributions, with members applying through their dashboards.
-        </p>
+       <p className="text-base xl:text-lg text-[#737373] leading-relaxed">
+       The Tech Summit, powered by{' '}
+      <span className="font-semibold text-blue-600">Favored Online</span>, celebrates individuals and teams for exceptional contributions in the following sectors, with members applying via their dashboards.
+      </p>
         <ul className="space-y-6">
           <li>
             <div className="flex items-start">
