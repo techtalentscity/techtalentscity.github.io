@@ -2,8 +2,8 @@ import Hero from "./Hero";
 import HireTalent from "./HireTalent";
 import HomeProjects from "./HomeProjects";
 import TechBadges from "./TechBadges";
-import Events from "./event"; // Correct import for the Events component
 import Testimonials from "./Testimonial";
+import Events from "./event"; // Correct import for the Events component
 
 const Home = () => {
   return (
@@ -11,8 +11,8 @@ const Home = () => {
         <Hero />
         <HomeProjects />
         <TechBadges />
-        <Events /> {/* Correctly used Events component */}
         <Testimonials />
+        <Events /> {/* Correctly used Events component */}
     </div>
   );
 };
