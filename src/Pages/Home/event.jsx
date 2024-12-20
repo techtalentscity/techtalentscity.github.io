@@ -3,11 +3,11 @@ import Container from '../../components/Container';
 
 const Events = () => {
   return (
-    <Container className="flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-12 p-8 bg-white 2xl:px-36">
-      <div className="lg:w-[50%] lg:h-[746px] flex justify-center mb-2 lg:mb-0 shrink-0 ">
+    <Container className="flex flex-col lg:flex-row gap-6 md:gap-6 lg:gap-6 p-8 bg-white 2xl:px-36">
+      <div className="lg:w-[50%] flex justify-center mb-2 lg:mb-0 shrink-0">
         <img src={image} alt="Awards and Recognition" className="object-cover object-center rounded-3xl" />
       </div>
-      <div className="w-full flex flex-col gap-5 justify-between h-full lg:h-[746px]">
+      <div className="w-full flex flex-col gap-5 justify-between h-auto">
         <h2 className="text-2xl xl:text-3xl font-bold">
           Recognizing Excellence and Innovation at the Tech Summit
         </h2>
