@@ -8,13 +8,13 @@ const Events = () => {
         <img src={image} alt="Awards and Recognition" className="object-cover object-center rounded-3xl" />
       </div>
       <div className="w-full flex flex-col gap-5 justify-between h-auto">
-        <h2 className="text-2xl xl:text-3xl font-bold">
+        <h2 className="text-2xl xl:text-3xl font-bold leading-snug">
           Recognizing Excellence and Innovation at the Tech Summit
         </h2>
-        <p className="text-base xl:text-lg text-[#737373] mb-4">
-          The Tech Summit, hosted and powered by <span className="font-semibold text-blue-600">Favored Online</span>, is a celebration of achievements, recognizing individuals and teams who have made outstanding contributions in technology and innovation. Members will be able to apply directly via their dashboard to participate.
+        <p className="text-base xl:text-lg text-[#737373] mb-4 leading-relaxed max-w-prose">
+          The Tech Summit, hosted and powered by <span className="font-semibold text-blue-600">Favored Online</span>, celebrates achievements by recognizing individuals and teams who have made outstanding contributions to technology and innovation. Members can apply directly via their dashboards to participate.
         </p>
-        <p className="text-base xl:text-lg text-[#737373] mb-4">
+        <p className="text-base xl:text-lg text-[#737373] mb-4 leading-relaxed max-w-prose">
           Additionally, we celebrate the <span className="font-semibold text-blue-600">3 best innovative projects of the year</span>, emphasizing creativity, collaboration, and impact. Only free projects are eligible for this prestigious recognition.
         </p>
         <ul className="space-y-6">
@@ -23,7 +23,9 @@ const Events = () => {
               <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
               <div>
                 <h3 className="font-bold text-lg">Best in Each Section</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Awards will be presented to the best individuals in each category, including TechPO, TechQA, TechDev, TechLeads, TechArchs, and TechGuard.</p>
+                <p className="text-sm xl:text-base text-[#737373] mt-2 leading-relaxed max-w-prose">
+                  Awards will be presented to the best individuals in each category, including TechPO, TechQA, TechDev, TechLeads, TechArchs, and TechGuard.
+                </p>
               </div>
             </div>
           </li>
@@ -32,7 +34,9 @@ const Events = () => {
               <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
               <div>
                 <h3 className="font-bold text-lg">Novice to Expert</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Recognizing the individual who transitioned from novice to expert within a year.</p>
+                <p className="text-sm xl:text-base text-[#737373] mt-2 leading-relaxed max-w-prose">
+                  Recognizing the individual who transitioned from novice to expert within a year.
+                </p>
               </div>
             </div>
           </li>
@@ -41,7 +45,9 @@ const Events = () => {
               <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
               <div>
                 <h3 className="font-bold text-lg">Best Innovative Projects</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">Celebrating the 3 best innovative projects of the year. Only free projects are eligible for this recognition.</p>
+                <p className="text-sm xl:text-base text-[#737373] mt-2 leading-relaxed max-w-prose">
+                  Celebrating the 3 best innovative projects of the year. Only free projects are eligible for this recognition.
+                </p>
               </div>
             </div>
           </li>
