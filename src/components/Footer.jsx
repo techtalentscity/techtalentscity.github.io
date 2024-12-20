@@ -32,7 +32,10 @@ const Footer = () => {
                     <FaLinkedin size={17} />
                     <FaPinterest size={17} />
                 </div>
-                <p className="text-sm">© {currentYear} TechTalents City. Powered by Favored Online Inc.</p>
+                <p className="text-sm">
+                  © {currentYear} <a href="https://www.techtalentscity.com/" target="_blank" rel="noopener noreferrer">TechTalents City</a>. 
+                  Powered by <a href="https://www.favoredonline.com/" target="_blank" rel="noopener noreferrer">Favored Online Inc.</a>
+                </p>
             </div>
         </Container>
     </div>
