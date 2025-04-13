@@ -9,33 +9,33 @@ const HomeProjects = () => {
         {
           title: 'Building an AI-powered Agent for Customer Engagement',
           skills: [
-            'NLP Engineers', 
-            'Machine Learning Developers', 
-            'Frontend Developers', 
-            'Backend Developers', 
-            'UI/UX Designers', 
+            'NLP Engineers',
+            'Machine Learning Developers',
+            'Frontend Developers',
+            'Backend Developers',
+            'UI/UX Designers',
             'Cybersecurity Specialists'
           ],
           logo: techtalent,
           verified: true,
           premium: false,
           price: 'Free',
-          link: '/projects', // ✅ Correct link for AI agent
+          link: '/projects/ai-agent', // ✅ Correct link
         },
         {
           title: 'Developing a Mobile App for Mental Health Support',
           skills: [
-            'Mobile App Developers', 
-            'UI/UX Designers', 
-            'Backend Developers', 
-            'Data Security Specialists', 
+            'Mobile App Developers',
+            'UI/UX Designers',
+            'Backend Developers',
+            'Data Security Specialists',
             'Mental Health Researchers'
           ],
           logo: techtalent,
           verified: true,
           premium: false,
           price: 'Free',
-          link: '/projects/mental-app', // ✅ Correct link for Mental Health app
+          link: '/projects/mental-app', // ✅ Correct link
         },
     ];
 
