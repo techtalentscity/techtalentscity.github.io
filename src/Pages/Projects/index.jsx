@@ -12,26 +12,26 @@ const Projects = () => {
         {
           title: 'Building an AI-powered Agent for Customer Engagement',
           skills: [
-            'NLP Engineers', 
-            'Machine Learning Developers', 
-            'Frontend Developers', 
-            'Backend Developers', 
-            'UI/UX Designers', 
+            'NLP Engineers',
+            'Machine Learning Developers',
+            'Frontend Developers',
+            'Backend Developers',
+            'UI/UX Designers',
             'Cybersecurity Specialists'
           ],
           logo: techtalent,
           verified: true,
           premium: false,
           price: 'Free',
-          link: '/projects', // ✅ Correct link
+          link: '/projects/ai-agent', // ✅ Correct link
         },
         {
           title: 'Developing a Mobile App for Mental Health Support',
           skills: [
-            'Mobile App Developers', 
-            'UI/UX Designers', 
-            'Backend Developers', 
-            'Data Security Specialists', 
+            'Mobile App Developers',
+            'UI/UX Designers',
+            'Backend Developers',
+            'Data Security Specialists',
             'Mental Health Researchers'
           ],
           logo: techtalent,
@@ -45,13 +45,13 @@ const Projects = () => {
     return (
       <Container className={'pt-9'}>
         <h1 className="text-5xl md:text-6xl font-bold pb-6 text-center">Projects</h1>
-        
-        <div className="flex items-center space-x-2 lg:space-x-6 mb-4">  
+
+        <div className="flex items-center space-x-2 lg:space-x-6 mb-4">
           <div className="flex gap-2 items-center bg-[#F2F2F2] rounded-xl py-4 px-5 shadow-md">
             <HiOutlineAdjustments />
             <p className="text-sm hidden md:block">Filters</p>
           </div>
-          
+
           <div className='w-full rounded-xl shadow-md bg-white/80 flex justify-between items-center py-2 px-5'>
             <Input
               placeholder="Try searching for projects..."
@@ -62,7 +62,7 @@ const Projects = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="flex flex-col lg:flex-row lg:items-start md:p-4 space-y-4 lg:space-y-0 lg:space-x-8 my-10 lg:my-[60px]">
             <div className="lg:flex-grow">
                 <AllProjects projects={projects} />
