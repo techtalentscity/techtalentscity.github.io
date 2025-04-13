@@ -16,6 +16,7 @@ const Projects = () => {
           verified: true,
           premium: false,
           price: 'Free',
+          link: '/projects/ai-customer-engagement', // 🔥 Add the correct page link for AI Agent
         },
         {
           title: 'Developing a Mobile App for Mental Health Support',
@@ -24,6 +25,7 @@ const Projects = () => {
           verified: true,
           premium: false,
           price: 'Free',
+          link: '/projects/mental-app', // 🔥 Link to mental app project detail
         },
     ];
 
