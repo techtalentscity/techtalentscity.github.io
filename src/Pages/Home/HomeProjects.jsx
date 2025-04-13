@@ -1,4 +1,4 @@
-import Container from "../../components/Container"
+import Container from "../../components/Container";
 import PostAProject from "./PostAProject";
 import RecentProjects from "./RecentProjects";
 import techtalent from '../../assets/images/techtalent.png';
@@ -13,6 +13,7 @@ const HomeProjects = () => {
           verified: true,
           premium: false,
           price: 'Free',
+          link: '/projects/ai-customer-engagement', // 🔥 added correct link
         },
         {
           title: 'Developing a Mobile App for Mental Health Support',
@@ -21,6 +22,7 @@ const HomeProjects = () => {
           verified: true,
           premium: false,
           price: 'Free',
+          link: '/projects/mental-app', // 🔥 added correct link
         },
     ];
 
