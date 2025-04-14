@@ -5,6 +5,10 @@ import logo from '../../assets/images/techtalent.png';
 import { LuArrowLeftToLine } from 'react-icons/lu';
 
 const MentalAppDetail = () => {
+  const handleApplyClick = () => {
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform', '_blank');
+  };
+
   return (
     <Container className="w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20">
       <div className="w-full flex flex-col items-start bg-white">
@@ -85,18 +89,30 @@ const MentalAppDetail = () => {
           </ul>
         </div>
 
-        {/* Apply Button (Fixed) */}
+        {/* Apply Button (Fixed at bottom right) */}
         <div className="fixed bottom-8 right-8">
-          <Button type="primary" size="large" className="rounded-full px-8 py-4 font-bold">
+          <Button 
+            type="primary" 
+            size="large" 
+            className="rounded-full px-8 py-4 font-bold"
+            onClick={handleApplyClick}
+          >
             Apply for this Project
           </Button>
         </div>
       </div>
 
-      {/* Sidebar Logo */}
+      {/* Sidebar Logo and Button */}
       <div className="shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6">
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
-        <Button type="primary" size="large" block>Apply for this Project</Button>
+        <Button 
+          type="primary" 
+          size="large" 
+          block 
+          onClick={handleApplyClick}
+        >
+          Apply for this Project
+        </Button>
       </div>
     </Container>
   );
