@@ -24,7 +24,7 @@ const MentalAppDetail = () => {
   const total = calculateTotal();
 
   const handleApplyClick = () => {
-    window.open('https://forms.gle/SNRmVGyKa8aT3d176', '_blank');
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing', '_blank');
   };
 
   return (
