@@ -49,9 +49,9 @@ const Navbar = () => {
                 </div>
                 <div className="hidden lg:flex items-center gap-2">
                     {/* <Link to={'/signin'}><Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">Login</Button></Link> */}
-                    <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0"><a href="https://forms.gle/PU9vd5priKgEooTH9" target="_blank">Login</a></Button>
+                    <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank">Login</a></Button>
                     {/* <Link to={'/signup'}><Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none">Register</Button></Link> */}
-                    <Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none"><a href="https://forms.gle/PU9vd5priKgEooTH9" target="_blank">Sign Up</a></Button>
+                    <Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none"><a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank">Sign Up</a></Button>
                 </div>
                 <div className="burger-menu lg:hidden" onClick={handleBurger}>
                     <div className="flex flex-col items-center justify-center w-[24px] h-[24px] cursor-pointer relative">
