@@ -3,8 +3,38 @@ import { Button } from 'antd';
 import logo from '../../assets/images/techtalent.png';
 import { LuArrowLeftToLine } from 'react-icons/lu';
 import Container from '../../components/Container';
+import { useState } from 'react';
 
 const DataScienceProjectDetail = () => {
+  // Team requirements for the project
+  const [teamRoles, setTeamRoles] = useState([
+    {
+      role: "TechDev",
+      count: 2,
+      description: "Python developers experienced in data processing pipelines and ML frameworks"
+    },
+    {
+      role: "TechArchs",
+      count: 1,
+      description: "Data architect to design data storage and processing architecture"
+    },
+    {
+      role: "TechQA",
+      count: 1,
+      description: "Quality assurance specialist for model validation and testing"
+    },
+    {
+      role: "TechLeads",
+      count: 1,
+      description: "Project lead with experience in data science project management"
+    },
+    {
+      role: "TechGuard",
+      count: 1,
+      description: "Security specialist for data protection and privacy compliance"
+    }
+  ]);
+
   return (
     <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
       <div className="w-full flex flex-col items-start bg-white">
@@ -14,6 +44,19 @@ const DataScienceProjectDetail = () => {
         <p className="text-sm text-gray-500 mb-2">Published on April 19, 2025</p>
         <h1 className="text-3xl font-bold mb-4">Climate Change Prediction with Machine Learning</h1>
         <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">Free</span></p>
+
+        {/* Team Composition */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Team Composition:</h2>
+          <ul className="list-disc list-inside">
+            {teamRoles.map((teamRole, index) => (
+              <li key={index}>
+                <strong>* {teamRole.role}:</strong> {teamRole.count} {teamRole.count > 1 ? "people" : "person"} - {teamRole.description}
+              </li>
+            ))}
+            <li><strong>Total Team Size:</strong> {teamRoles.reduce((sum, role) => sum + role.count, 0)} people</li>
+          </ul>
+        </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
