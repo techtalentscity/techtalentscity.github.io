@@ -3,8 +3,26 @@ import { Button } from 'antd';
 import Container from '../../components/Container';
 import logo from '../../assets/images/techtalent.png';
 import { LuArrowLeftToLine } from 'react-icons/lu';
+import { useState } from 'react';
 
 const MentalAppDetail = () => {
+  // Project budget
+  const [totalBudget, setTotalBudget] = useState(100);
+  
+  // Role amounts for mental health app project
+  const [roleAmounts, setRoleAmounts] = useState({
+    techArchs: 40, // $40
+    techDev: 30,   // $30
+    techLeads: 30  // $30
+  });
+
+  // Calculate total to verify
+  const calculateTotal = () => {
+    return Object.values(roleAmounts).reduce((sum, amount) => sum + amount, 0);
+  };
+
+  const total = calculateTotal();
+
   const handleApplyClick = () => {
     window.open('https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform', '_blank');
   };
@@ -22,7 +40,18 @@ const MentalAppDetail = () => {
           Developing a Mobile App for Mental Health Support
         </h1>
 
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">$100</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">${totalBudget}</span></p>
+
+        {/* Budget Distribution */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Budget Distribution:</h2>
+          <ul className="list-disc list-inside">
+            <li><strong>TechArchs:</strong> ${roleAmounts.techArchs}</li>
+            <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
+            <li><strong>TechLeads:</strong> ${roleAmounts.techLeads} ▪️</li>
+            <li><strong>Total:</strong> ${total}</li>
+          </ul>
+        </div>
 
         {/* Project Description */}
         <div className="mb-8">
