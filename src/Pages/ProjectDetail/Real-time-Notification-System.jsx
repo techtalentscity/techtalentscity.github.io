@@ -9,23 +9,19 @@ const ProjectDetail = () => {
   // Project budget
   const [totalBudget, setTotalBudget] = useState(110);
   
-  // Distribution percentages
-  const [distribution, setDistribution] = useState({
-    techDev: 50,    // 50% of the budget
-    techLeads: 30,  // 30% of the budget
-    techArchs: 20   // 20% of the budget
+  // Fixed role amounts for realtime project
+  const [roleAmounts, setRoleAmounts] = useState({
+    techDev: 50,
+    techGuard: 30,
+    techLeads: 30
   });
 
-  // Calculate amounts based on percentages
-  const calculateAmounts = () => {
-    return {
-      techDev: (totalBudget * distribution.techDev / 100).toFixed(2),
-      techLeads: (totalBudget * distribution.techLeads / 100).toFixed(2),
-      techArchs: (totalBudget * distribution.techArchs / 100).toFixed(2)
-    };
+  // Calculate total to verify
+  const calculateTotal = () => {
+    return Object.values(roleAmounts).reduce((sum, amount) => sum + amount, 0);
   };
 
-  const amounts = calculateAmounts();
+  const total = calculateTotal();
 
   return (
     <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
@@ -40,9 +36,10 @@ const ProjectDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Budget Distribution:</h2>
           <ul className="list-disc list-inside">
-            <li><strong>TechDev:</strong> ${amounts.techDev} ({distribution.techDev}%)</li>
-            <li><strong>TechLeads:</strong> ${amounts.techLeads} ({distribution.techLeads}%)</li>
-            <li><strong>TechArchs:</strong> ${amounts.techArchs} ({distribution.techArchs}%)</li>
+            <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
+            <li><strong>TechGuard:</strong> ${roleAmounts.techGuard}</li>
+            <li><strong>TechLeads:</strong> ${roleAmounts.techLeads}</li>
+            <li><strong>Total:</strong> ${total} (budget: ${totalBudget})</li>
           </ul>
         </div>
 
