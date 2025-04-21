@@ -115,7 +115,7 @@ const ProjectDetail = () => {
         </div>
 
         <div className="fixed bottom-8 right-8">
-          <a href="https://forms.gle/wKS61rtU12unkPT49" target="_blank" rel="noopener noreferrer">
+          <a href="https://forms.gle/SNRmVGyKa8aT3d176" target="_blank" rel="noopener noreferrer">
             <Button type="primary" size="large" className="rounded-full px-8 py-4 font-bold">
               Apply for this Project
             </Button>
@@ -124,7 +124,7 @@ const ProjectDetail = () => {
       </div>
       <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
-        <a href="https://forms.gle/wKS61rtU12unkPT49" target="_blank" rel="noopener noreferrer">
+        <a href="https://forms.gle/SNRmVGyKa8aT3d176" target="_blank" rel="noopener noreferrer">
           <Button type="primary" size="large" block>Apply for this Project</Button>
         </a>
       </div>
