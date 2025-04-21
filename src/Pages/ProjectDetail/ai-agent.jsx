@@ -27,7 +27,7 @@ const ProjectDetail = () => {
           <ul className="list-disc list-inside">
             <li><strong>Start Date:</strong> July 12, 2025</li>
             <li><strong>End Date:</strong> September 27, 2025</li>
-            <li><strong>Total Duration:</strong> 8 weeks</li>
+            <li><strong>Total Duration:</strong> 11 weeks</li>
           </ul>
         </div>
 
