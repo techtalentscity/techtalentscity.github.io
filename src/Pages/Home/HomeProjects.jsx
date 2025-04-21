@@ -50,6 +50,36 @@ const HomeProjects = () => {
       premium: true,
       price: '$125',
       link: '/projects/real-time-notification-system',
+    },
+    {
+      title: 'Blockchain-based DeFi Lending Platform',
+      skills: [
+        'Solidity Developers',
+        'Smart Contract Auditors',
+        'Frontend Developers',
+        'Backend/API Developers',
+        'DeFi Strategists'
+      ],
+      logo: techtalent,
+      verified: true,
+      premium: false,
+      price: 'Free',
+      link: '/projects/blockchain-defi',
+    },
+    {
+      title: 'AI-Driven Climate Change Prediction Platform',
+      skills: [
+        'AI/ML Researchers',
+        'Data Scientists',
+        'Frontend Developers',
+        'Climate Experts',
+        'Visualization Engineers'
+      ],
+      logo: techtalent,
+      verified: true,
+      premium: false,
+      price: 'Free',
+      link: '/projects/climate-prediction',
     }
   ];
 
