@@ -65,8 +65,8 @@ const Projects = () => {
       ],
       logo: techtalent,
       verified: true,
-      premium: false,
-      price: '180',
+      premium: true, // ✅ Updated
+      price: '$180', // ✅ Updated
       link: '/projects/blockchain-defi',
     },
     {
