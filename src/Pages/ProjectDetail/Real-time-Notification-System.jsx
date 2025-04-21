@@ -115,7 +115,7 @@ const ProjectDetail = () => {
         </div>
 
         <div className="fixed bottom-8 right-8">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform" target="_blank" rel="noopener noreferrer">
+          <a href="https://forms.gle/wKS61rtU12unkPT49" target="_blank" rel="noopener noreferrer">
             <Button type="primary" size="large" className="rounded-full px-8 py-4 font-bold">
               Apply for this Project
             </Button>
