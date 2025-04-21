@@ -75,13 +75,13 @@ const Navbar = () => {
                             {/* <Link to={'/signin'}>
                                 Login
                             </Link> */}
-                            <a href="https://forms.gle/sYrx3WVt34MgMspY6" target="_blank">Login</a>
+                            <a href="https://forms.gle/EuHkVu41pDLSGqi49" target="_blank">Login</a>
                         </div>
                         <div className='flex justify-center items-center'>
                             {/* <Link to={'/signup'}>
                                 Sign Up
                             </Link> */}
-                            <a href="https://forms.gle/sYrx3WVt34MgMspY6" target="_blank">Sign Up</a>
+                            <a href="https://forms.gle/EuHkVu41pDLSGqi49" target="_blank">Sign Up</a>
                         </div>
                     </div>
                 </div>
