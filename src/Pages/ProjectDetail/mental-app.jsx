@@ -22,7 +22,7 @@ const MentalAppDetail = () => {
           Developing a Mobile App for Mental Health Support
         </h1>
 
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">Free</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">$100</span></p>
 
         {/* Project Description */}
         <div className="mb-8">
