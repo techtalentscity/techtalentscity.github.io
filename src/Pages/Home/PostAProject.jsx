@@ -2,7 +2,7 @@ import { Button } from 'antd';
 
 const PostAProject = () => {
   const handleClick = () => {
-    window.open('https://forms.gle/gvV1yXuGy8ZrYJWK9', '_blank');
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing', '_blank');
   };
 
   return (
