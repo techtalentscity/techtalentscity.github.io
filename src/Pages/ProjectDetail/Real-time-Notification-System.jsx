@@ -25,8 +25,8 @@ const ProjectDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Duration:</h2>
           <ul className="list-disc list-inside">
-            <li><strong>Start Date:</strong> May 15, 2025</li>
-            <li><strong>End Date:</strong> July 15, 2025</li>
+            <li><strong>Start Date:</strong> June 14, 2025</li>
+            <li><strong>End Date:</strong> August 30, 2025</li>
             <li><strong>Total Duration:</strong> 8 weeks</li>
           </ul>
         </div>
