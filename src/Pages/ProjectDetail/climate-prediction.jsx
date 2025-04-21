@@ -27,7 +27,7 @@ const DataScienceProjectDetail = () => {
           <ul className="list-disc list-inside">
             <li><strong>Start Date:</strong> May 10, 2025</li>
             <li><strong>End Date:</strong> July 26, 2025</li>
-            <li><strong>Total Duration:</strong> 8 weeks</li>
+            <li><strong>Total Duration:</strong> 11 weeks</li>
           </ul>
         </div>
 
