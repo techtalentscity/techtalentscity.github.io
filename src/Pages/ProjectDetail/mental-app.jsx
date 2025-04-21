@@ -53,6 +53,12 @@ const MentalAppDetail = () => {
           </ul>
         </div>
 
+        <div className="mb-8">
+      <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+       <p className="text-[#131518]">
+       <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
+    </div>
+
         {/* Project Description */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
