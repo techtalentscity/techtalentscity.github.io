@@ -27,7 +27,7 @@ const BlockchainProjectDetail = () => {
           <ul className="list-disc list-inside">
             <li><strong>Start Date:</strong> September 13, 2025</li>
             <li><strong>End Date:</strong> November 29, 2025</li>
-            <li><strong>Total Duration:</strong> 8 weeks</li>
+            <li><strong>Total Duration:</strong> 11 weeks</li>
           </ul>
         </div>
 
