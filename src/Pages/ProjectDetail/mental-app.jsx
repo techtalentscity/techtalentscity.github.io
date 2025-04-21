@@ -38,8 +38,8 @@ const MentalAppDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Duration:</h2>
           <ul className="list-disc list-inside">
-            <li><strong>Start Date:</strong> August 1, 2025</li>
-            <li><strong>End Date:</strong> October 1, 2025</li>
+            <li><strong>Start Date:</strong> August 9, 2025</li>
+            <li><strong>End Date:</strong> October 25, 2025</li>
             <li><strong>Total Duration:</strong> 8 weeks</li>
           </ul>
         </div>
