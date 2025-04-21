@@ -62,8 +62,8 @@ const HomeProjects = () => {
       ],
       logo: techtalent,
       verified: true,
-      premium: false,
-      price: '180',
+      premium: true, // ✅ changed from false to true
+      price: '$180',  // ✅ changed from '180' to '$180'
       link: '/projects/blockchain-defi',
     },
     {
