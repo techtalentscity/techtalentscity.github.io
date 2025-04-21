@@ -45,6 +45,12 @@ const BlockchainProjectDetail = () => {
         </div>
 
         <div className="mb-8">
+         <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+        <p className="text-[#131518]">
+        <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
+       </div>
+
+        <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
           <p>
             This project will focus on developing a decentralized finance application on the Ethereum blockchain. The application will allow users to stake tokens, provide liquidity to decentralized exchanges, and earn interest on their crypto assets. The project will include implementing smart contracts, designing a responsive UI, and ensuring security at all levels of the application stack.
