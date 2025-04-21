@@ -21,9 +21,9 @@ const Projects = () => {
           ],
           logo: techtalent,
           verified: true,
-          premium: false,
-          price: 'Free',
-          link: '/projects/ai-agent', // ✅ Correct link
+          premium: true,
+          price: '$150',
+          link: '/projects/ai-agent',
         },
         {
           title: 'Developing a Mobile App for Mental Health Support',
@@ -36,10 +36,24 @@ const Projects = () => {
           ],
           logo: techtalent,
           verified: true,
-          premium: false,
-          price: 'Free',
-          link: '/projects/mental-app', // ✅ Correct link
+          premium: true,
+          price: '$100',
+          link: '/projects/mental-app',
         },
+        {
+          title: 'Real-Time Notification System for Tech Platforms',
+          skills: [
+            'Realtime Engineers',
+            'Socket.io Developers',
+            'System Integrators',
+            'Cloud Infrastructure Specialists'
+          ],
+          logo: techtalent,
+          verified: true,
+          premium: true,
+          price: '$125',
+          link: '/projects/real-time-notification-system',
+        }
     ];
 
     return (
