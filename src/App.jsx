@@ -22,7 +22,7 @@ import {
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
-import NotificationSystemDetail from "./Pages/ProjectDetail/Real-time-Notification-System";
+import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notification-System";
 
 // 404 Not Found Page
 import NotFound from "./Pages/NotFound";
@@ -41,7 +41,7 @@ function App() {
               <Route path='/projects' element={<Projects />} />
               <Route path='/projects/ai-agent' element={<AiAgentDetail />} />
               <Route path='/projects/mental-app' element={<MentalAppDetail />} />
-              <Route path='/projects/notification-system' element={<NotificationSystemDetail />} />
+              <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
             </Route>
 
             {/* Authentication Pages */}
