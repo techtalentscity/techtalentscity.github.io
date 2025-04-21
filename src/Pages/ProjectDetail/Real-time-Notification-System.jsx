@@ -13,7 +13,7 @@ const ProjectDetail = () => {
         </Link>
         <p className="text-sm text-gray-500 mb-2">Published on April 20, 2025</p>
         <h1 className="text-3xl font-bold mb-4">Developing a Scalable Real-time Notification System</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-green-500">$110</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">$110</span></p>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
