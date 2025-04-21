@@ -3,8 +3,30 @@ import { Button } from 'antd';
 import logo from '../../assets/images/techtalent.png';
 import { LuArrowLeftToLine } from 'react-icons/lu';
 import Container from '../../components/Container';
+import { useState } from 'react';
 
 const ProjectDetail = () => {
+  // Project budget
+  const [totalBudget, setTotalBudget] = useState(150);
+  
+  // Distribution percentages
+  const [distribution, setDistribution] = useState({
+    techDev: 50,    // 50% of the budget
+    techLeads: 30,  // 30% of the budget
+    techArchs: 20   // 20% of the budget
+  });
+
+  // Calculate amounts based on percentages
+  const calculateAmounts = () => {
+    return {
+      techDev: (totalBudget * distribution.techDev / 100).toFixed(2),
+      techLeads: (totalBudget * distribution.techLeads / 100).toFixed(2),
+      techArchs: (totalBudget * distribution.techArchs / 100).toFixed(2)
+    };
+  };
+
+  const amounts = calculateAmounts();
+
   return (
     <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
       <div className="w-full flex flex-col items-start bg-white">
@@ -13,7 +35,16 @@ const ProjectDetail = () => {
         </Link>
         <p className="text-sm text-gray-500 mb-2">Published on May 16, 2024</p>
         <h1 className="text-3xl font-bold mb-4">Building an AI-powered Agent for Customer Engagement</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">$150</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">${totalBudget}</span></p>
+
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Budget Distribution:</h2>
+          <ul className="list-disc list-inside">
+            <li><strong>TechDev:</strong> ${amounts.techDev} ({distribution.techDev}%)</li>
+            <li><strong>TechLeads:</strong> ${amounts.techLeads} ({distribution.techLeads}%)</li>
+            <li><strong>TechArchs:</strong> ${amounts.techArchs} ({distribution.techArchs}%)</li>
+          </ul>
+        </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
