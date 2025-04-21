@@ -13,7 +13,7 @@ const BlockchainProjectDetail = () => {
         </Link>
         <p className="text-sm text-gray-500 mb-2">Published on April 18, 2025</p>
         <h1 className="text-3xl font-bold mb-4">Building a Decentralized Finance (DeFi) Application</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">Free</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">$180</span></p>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
