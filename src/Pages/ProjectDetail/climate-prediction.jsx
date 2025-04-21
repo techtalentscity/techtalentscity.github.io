@@ -75,6 +75,12 @@ const DataScienceProjectDetail = () => {
         </div>
 
         <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+       <p className="text-[#131518]">
+       <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
+       </div>  
+
+        <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Required Skill Sets:</h2>
           <ul className="list-disc list-inside">
             <li>Python Programming (NumPy, Pandas, Scikit-learn)</li>
