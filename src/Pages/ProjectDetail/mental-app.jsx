@@ -48,7 +48,7 @@ const MentalAppDetail = () => {
           <ul className="list-disc list-inside">
             <li><strong>TechArchs:</strong> ${roleAmounts.techArchs}</li>
             <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
-            <li><strong>TechLeads:</strong> ${roleAmounts.techLeads} ▪️</li>
+            <li><strong>TechLeads:</strong> ${roleAmounts.techLeads}</li>
             <li><strong>Total:</strong> ${total}</li>
           </ul>
         </div>
