@@ -3,8 +3,26 @@ import { Button } from 'antd';
 import logo from '../../assets/images/techtalent.png';
 import { LuArrowLeftToLine } from 'react-icons/lu';
 import Container from '../../components/Container';
+import { useState } from 'react';
 
 const BlockchainProjectDetail = () => {
+  // Project budget
+  const [totalBudget, setTotalBudget] = useState(180);
+  
+  // Role amounts for blockchain project
+  const [roleAmounts, setRoleAmounts] = useState({
+    techDev: 80,     // $80
+    techArchs: 60,   // $60
+    techGuard: 40    // $40
+  });
+
+  // Calculate total to verify
+  const calculateTotal = () => {
+    return Object.values(roleAmounts).reduce((sum, amount) => sum + amount, 0);
+  };
+
+  const total = calculateTotal();
+
   return (
     <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
       <div className="w-full flex flex-col items-start bg-white">
@@ -13,7 +31,18 @@ const BlockchainProjectDetail = () => {
         </Link>
         <p className="text-sm text-gray-500 mb-2">Published on April 18, 2025</p>
         <h1 className="text-3xl font-bold mb-4">Building a Decentralized Finance (DeFi) Application</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">$180</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">${totalBudget}</span></p>
+
+        {/* Budget Distribution */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Budget Distribution:</h2>
+          <ul className="list-disc list-inside">
+            <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
+            <li><strong>TechArchs:</strong> ${roleAmounts.techArchs}</li>
+            <li><strong>TechGuard:</strong> ${roleAmounts.techGuard}</li>
+            <li><strong>Total:</strong> ${total}</li>
+          </ul>
+        </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
