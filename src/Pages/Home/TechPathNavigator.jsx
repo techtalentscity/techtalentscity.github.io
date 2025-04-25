@@ -1,4 +1,4 @@
-import image from '../../assets/images/Xdg.jpeg'
+import image from '../../assets/images/techpath.png'
 import Container from '../../components/Container';
 
 const TechPathNavigator = () => {
