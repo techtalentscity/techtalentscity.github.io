@@ -1,7 +1,8 @@
 import Hero from "./Hero";
 import HireTalent from "./HireTalent";
 import HomeProjects from "./HomeProjects";
-import TechPathNavigator from "./TechPathNavigator"; // ✅ Moved above TechBadges
+import CareerTest from "./CareerTest"; // ✅ New import added
+import TechPathNavigator from "./TechPathNavigator";
 import TechBadges from "./TechBadges";
 import Testimonials from "./Testimonial";
 
@@ -10,7 +11,8 @@ const Home = () => {
     <div>
       <Hero />
       <HomeProjects />
-      <TechPathNavigator /> {/* ✅ TechPathNavigator comes BEFORE TechBadges */}
+      <CareerTest /> {/* ✅ Insert CareerTest here after HomeProjects */}
+      <TechPathNavigator />
       <TechBadges />
       <Testimonials />
     </div>
