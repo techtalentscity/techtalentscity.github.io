@@ -1,7 +1,12 @@
 import React from 'react';
-import careerImg from '../../assets/images/vr2.png'; // ✅ Corrected path to the image
+import { Button } from 'antd'; // ✅ Import Ant Design Button
+import careerImg from '../../assets/vr2.png'; // ✅ Corrected path
 
 const CareerTest = () => {
+  const handleClick = () => {
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing', '_blank');
+  };
+
   return (
     <section className="py-24 bg-white" id="career-test">
       <div className="container mx-auto px-6">
@@ -24,9 +29,13 @@ const CareerTest = () => {
               </div>
               <h4 className="mt-4 text-2xl font-bold text-center">Find Your Best-Fit Tech Role</h4>
               <p className="text-lg mt-3 bg-black/40 px-4 py-2 rounded-lg">Career Test: 5 minutes</p>
-              <button className="mt-8 bg-white text-indigo-700 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors">
-                Take Career Test
-              </button>
+              <Button 
+                type="primary"
+                className="mt-8 py-5 px-12 font-bold text-lg"
+                onClick={handleClick}
+              >
+                Take Career Test Now
+              </Button>
             </div>
           </div>
         </div>
