@@ -3,7 +3,7 @@ import HireTalent from "./HireTalent";
 import HomeProjects from "./HomeProjects";
 import TechBadges from "./TechBadges";
 import Testimonials from "./Testimonial";
-import TechPathNavigator from "./TechPathNavigator"; // Importing the new component
+import TechPathNavigator from "./Home/TechPathNavigator"; // ✅ Corrected import path
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
       <Hero />
       <HomeProjects />
       <TechBadges />
-      <TechPathNavigator /> {/* Adding it to the page structure */}
+      <TechPathNavigator /> {/* ✅ Correctly included */}
       <Testimonials />
     </div>
   );
