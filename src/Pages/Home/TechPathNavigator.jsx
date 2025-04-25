@@ -23,7 +23,7 @@ const TechPathNavigator = () => {
   return (
     <Container className="bg-white py-16 px-6 md:px-10 2xl:px-36">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-green-700">
+        <h2 className="text-3xl sm:text-4xl font-bold text-indigo-900">
           Navigate Your Tech Journey with AI-Powered Insights
         </h2>
         <p className="text-gray-600 mt-4">
@@ -44,7 +44,7 @@ const TechPathNavigator = () => {
           {features.map((feature, index) => (
             <div key={index} className="bg-gray-50 border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition">
               <div className="text-3xl mb-3">{feature.emoji}</div>
-              <h3 className="font-bold text-lg text-green-700">{feature.title}</h3>
+              <h3 className="font-bold text-lg text-indigo-900">{feature.title}</h3>
               <p className="text-sm text-gray-600 mt-2">{feature.description}</p>
             </div>
           ))}
