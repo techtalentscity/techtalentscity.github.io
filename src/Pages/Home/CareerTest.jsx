@@ -13,7 +13,7 @@ const CareerTest = () => {
         <div className="bg-white rounded-xl p-10 shadow-xl">
           <h3 className="text-3xl font-bold text-gray-800 mb-6">Know Your Career Path in Tech</h3>
           <p className="text-xl text-gray-600 mb-8">
-            To discover the right project for you, take our career test now.
+            To help you navigate your career path toward tech and discover the right project for you, take our career test now.
           </p>
           <div className="relative h-[32rem] overflow-hidden rounded-xl group">
             <img 
