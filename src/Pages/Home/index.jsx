@@ -1,17 +1,17 @@
 import Hero from "./Hero";
 import HireTalent from "./HireTalent";
 import HomeProjects from "./HomeProjects";
+import TechPathNavigator from "./TechPathNavigator"; // ✅ Moved above TechBadges
 import TechBadges from "./TechBadges";
 import Testimonials from "./Testimonial";
-import TechPathNavigator from "./TechPathNavigator"; // ✅ Corrected import path
 
 const Home = () => {
   return (
     <div>
       <Hero />
       <HomeProjects />
+      <TechPathNavigator /> {/* ✅ TechPathNavigator comes BEFORE TechBadges */}
       <TechBadges />
-      <TechPathNavigator /> {/* ✅ Correctly included */}
       <Testimonials />
     </div>
   );
