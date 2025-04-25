@@ -1,58 +1,54 @@
-import image from '../../assets/images/techpath.png'
+import image from '../../assets/images/excellence.png';
 import Container from '../../components/Container';
+
+const features = [
+  {
+    title: "AI-Powered Skill Discovery",
+    description: "Our AI analyzes your project contributions and learning patterns to uncover strengths and identify transferable skills relevant to high-demand tech roles.",
+    emoji: "🧠",
+  },
+  {
+    title: "Personalized Roadmap",
+    description: "Get a personalized project roadmap aligned with your career goals and track your growth by solving real-world problems.",
+    emoji: "🗺️",
+  },
+  {
+    title: "Explore Career Paths",
+    description: "Explore different tech career paths by solving problems that mirror in-demand roles and gain clarity on your next step as you grow from novice to expert.",
+    emoji: "🚀",
+  },
+];
 
 const TechPathNavigator = () => {
   return (
-    <Container className="flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-12 p-8 bg-white 2xl:px-36">
-      
-      <div className="lg:w-[50%] lg:h-[746px] flex justify-center mb-2 lg:mb-0 shrink-0">
-        <img src={image} alt="Tech journey visualization" className="object-cover object-center rounded-3xl" />
-      </div>
-
-      <div className="w-full flex flex-col gap-5 justify-between h-full lg:h-[746px]">
-        <h2 className="text-2xl xl:text-3xl font-bold">
+    <Container className="bg-white py-16 px-6 md:px-10 2xl:px-36">
+      <div className="text-center max-w-3xl mx-auto mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-green-700">
           Navigate Your Tech Journey with AI-Powered Insights
         </h2>
+        <p className="text-gray-600 mt-4">
+          Discover your strengths, plan your learning, and visualize your growth with intelligent guidance every step of the way.
+        </p>
+      </div>
 
-        <ul className="space-y-6">
+      <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="lg:w-1/2">
+          <img
+            src={image}
+            alt="Tech journey"
+            className="w-full h-auto rounded-3xl shadow-md object-cover"
+          />
+        </div>
 
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">AI-Powered Skill Discovery</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">
-                  Our AI analyzes your project contributions and learning patterns to uncover strengths and identify transferable skills relevant to high-demand tech roles.
-                </p>
-              </div>
+        <div className="lg:w-1/2 w-full grid gap-6">
+          {features.map((feature, index) => (
+            <div key={index} className="bg-gray-50 border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+              <div className="text-3xl mb-3">{feature.emoji}</div>
+              <h3 className="font-bold text-lg text-green-700">{feature.title}</h3>
+              <p className="text-sm text-gray-600 mt-2">{feature.description}</p>
             </div>
-          </li>
-
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">Personalized Roadmap</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">
-                  Get a personalized project roadmap aligned with your career goals and track your growth by solving real-world problems.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <div className="flex items-start">
-              <div className="shrink-0 w-3 h-16 rounded-3xl bg-blue-600 mr-3"></div>
-              <div>
-                <h3 className="font-bold text-lg">Explore Career Paths</h3>
-                <p className="text-sm xl:text-base text-[#737373] mt-2">
-                  Explore different tech career paths by solving problems that mirror in-demand roles and gain clarity on your next step as you grow from novice to expert.
-                </p>
-              </div>
-            </div>
-          </li>
-
-        </ul>
+          ))}
+        </div>
       </div>
     </Container>
   );
