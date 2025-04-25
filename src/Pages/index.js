@@ -13,5 +13,23 @@ import TtcAi from "./Dashboard/TtcAi";
 import AllProjects from "./Dashboard/AllProjects";
 import Recruit from "./Dashboard/Recruit";
 import RecruitProfile from "./Dashboard/Recruit/RecruitProfile";
+import TechPathNavigator from "./TechPathNavigator"; // ✅ New Import
 
-export {Home, About, Projects, Login, Register, ProjectDetail, Dashboard, MainDashboard, Settings, ResetPassword, EditProfile, TtcAi, AllProjects, Recruit, RecruitProfile}
+export {
+  Home,
+  About,
+  Projects,
+  Login,
+  Register,
+  ProjectDetail,
+  Dashboard,
+  MainDashboard,
+  Settings,
+  ResetPassword,
+  EditProfile,
+  TtcAi,
+  AllProjects,
+  Recruit,
+  RecruitProfile,
+  TechPathNavigator // ✅ New Export
+};
