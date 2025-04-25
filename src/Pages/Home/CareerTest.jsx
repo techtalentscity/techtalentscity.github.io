@@ -1,5 +1,5 @@
 import React from 'react';
-import careerImg from '../../assets/vr2.png'; // ✅ Corrected path to the image
+import careerImg from '../../assets/images/vr2.png'; // ✅ Corrected path to the image
 
 const CareerTest = () => {
   return (
