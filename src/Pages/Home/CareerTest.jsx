@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd'; // ✅ Import Ant Design Button
-import careerImg from '../../assets/vr2.png'; // ✅ Corrected path
+import careerImg from '../../assets/images/vr2.png'; // ✅ Corrected path
 
 const CareerTest = () => {
   const handleClick = () => {
