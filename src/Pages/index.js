@@ -13,7 +13,6 @@ import TtcAi from "./Dashboard/TtcAi";
 import AllProjects from "./Dashboard/AllProjects";
 import Recruit from "./Dashboard/Recruit";
 import RecruitProfile from "./Dashboard/Recruit/RecruitProfile";
-import TechPathNavigator from "./Home/TechPathNavigator"; // ✅ Correct path
 
 export {
   Home,
@@ -30,6 +29,5 @@ export {
   TtcAi,
   AllProjects,
   Recruit,
-  RecruitProfile,
-  TechPathNavigator // ✅ Now correctly exported
+  RecruitProfile
 };
