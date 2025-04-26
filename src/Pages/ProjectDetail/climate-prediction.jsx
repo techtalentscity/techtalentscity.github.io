@@ -6,7 +6,7 @@ import Container from '../../components/Container';
 import { useState } from 'react';
 
 const DataScienceProjectDetail = () => {
-  // Team requirements for the project
+  // Team roles including TechMentor (TechMo)
   const [teamRoles, setTeamRoles] = useState([
     {
       role: "TechDev",
@@ -32,18 +32,23 @@ const DataScienceProjectDetail = () => {
       role: "TechGuard",
       count: 1,
       description: "Security specialist for data protection and privacy compliance"
+    },
+    {
+      role: "TechMo",
+      count: 1,
+      description: "Tech mentor guiding the team with learning resources, best practices, and applying skills to real-world challenges"
     }
   ]);
 
   return (
-    <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
+    <Container className="w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20">
       <div className="w-full flex flex-col items-start bg-white">
         <Link to="/projects" className="text-[#101010] font-bold mb-4 flex items-center gap-2">
           <LuArrowLeftToLine /> <span>Back to projects</span>
         </Link>
         <p className="text-sm text-gray-500 mb-2">Published on April 19, 2025</p>
         <h1 className="text-3xl font-bold mb-4">Climate Change Prediction with Machine Learning</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">Free</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-green-600 font-semibold">Volunteer Project (Free)</span></p>
 
         {/* Team Composition */}
         <div className="mb-8">
@@ -58,10 +63,17 @@ const DataScienceProjectDetail = () => {
           </ul>
         </div>
 
+        {/* New Disclaimer Section */}
+        <div className="mb-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg">
+          <p className="text-sm text-yellow-800">
+            <strong>Disclaimer:</strong> This is a volunteer-driven research project. Participants will contribute their skills towards addressing climate change challenges while gaining real-world project experience. No financial compensation is provided.
+          </p>
+        </div>
+
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
           <p>
-            This data science project will focus on analyzing climate data and developing prediction models to forecast climate patterns. The team will work with historical weather data, satellite imagery, and other environmental datasets to build machine learning models that can predict temperature changes, precipitation patterns, and extreme weather events. The project aims to contribute to our understanding of climate change through data-driven approaches.
+            This data science project will focus on analyzing climate data and developing prediction models to forecast climate patterns. The team will work with historical weather data, satellite imagery, and other environmental datasets to build machine learning models that can predict temperature changes, precipitation patterns, and extreme weather events. The project aims to contribute to scientific understanding of climate change through data-driven approaches.
           </p>
         </div>
 
@@ -75,10 +87,11 @@ const DataScienceProjectDetail = () => {
         </div>
 
         <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
-       <p className="text-[#131518]">
-       <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
-       </div>  
+          <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+          <p className="text-[#131518]">
+            <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.
+          </p>
+        </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Required Skill Sets:</h2>
@@ -108,14 +121,14 @@ const DataScienceProjectDetail = () => {
           <h2 className="text-xl font-semibold mb-2">Benefits of Participation:</h2>
           <ul className="list-disc list-inside">
             <li>Gain experience in applying data science to real-world environmental challenges.</li>
-            <li>Build a portfolio project demonstrating data analysis and machine learning skills.</li>
+            <li>Build a strong portfolio demonstrating data analysis and machine learning skills.</li>
             <li>Contribute to research that addresses one of the most pressing global issues.</li>
-            <li>Develop expertise in working with complex, multi-dimensional datasets.</li>
+            <li>Develop expertise working with complex, multi-dimensional datasets.</li>
           </ul>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Nice-to-have:</h2>
+          <h2 className="text-xl font-semibold mb-2">Nice-to-have Skills:</h2>
           <ul className="list-disc list-inside">
             <li>Experience with geospatial data analysis</li>
             <li>Knowledge of cloud computing platforms (AWS, GCP, Azure)</li>
@@ -132,10 +145,13 @@ const DataScienceProjectDetail = () => {
           </a>
         </div>
       </div>
-      <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
+
+      <div className="shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6">
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-          <Button type="primary" size="large" block>Apply for this Project</Button>
+          <Button type="primary" size="large" block>
+            Apply for this Project
+          </Button>
         </a>
       </div>
     </Container>
