@@ -7,13 +7,14 @@ import { useState } from 'react';
 
 const ProjectDetail = () => {
   // Project budget
-  const [totalBudget, setTotalBudget] = useState(110);
+  const [totalBudget, setTotalBudget] = useState(200); // ✅ Total budget is $200
   
-  // Fixed role amounts for realtime project
+  // Fixed role amounts for real-world project
   const [roleAmounts, setRoleAmounts] = useState({
-    techDev: 50,
-    techGuard: 30,
-    techLeads: 30
+    techDev: 90,   // ✅ Developers get $90
+    techGuard: 30, // ✅ TechGuard security/QA role
+    techLeads: 50, // ✅ TechLeads leadership role
+    techMo: 30     // ✅ TechMentors (TechMo) role
   });
 
   // Calculate total to verify
@@ -39,15 +40,17 @@ const ProjectDetail = () => {
             <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
             <li><strong>TechGuard:</strong> ${roleAmounts.techGuard}</li>
             <li><strong>TechLeads:</strong> ${roleAmounts.techLeads}</li>
+            <li><strong>TechMo:</strong> ${roleAmounts.techMo}</li>
             <li><strong>Total:</strong> ${total} (budget: ${totalBudget})</li>
           </ul>
         </div>
 
-    <div className="mb-8">
-      <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
-       <p className="text-[#131518]">
-       <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
-    </div>
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+          <p className="text-[#131518]">
+            <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.
+          </p>
+        </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
@@ -122,10 +125,13 @@ const ProjectDetail = () => {
           </a>
         </div>
       </div>
+
       <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-          <Button type="primary" size="large" block>Apply for this Project</Button>
+          <Button type="primary" size="large" block>
+            Apply for this Project
+          </Button>
         </a>
       </div>
     </Container>
