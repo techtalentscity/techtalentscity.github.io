@@ -17,6 +17,11 @@ const features = [
     description: "Explore different tech career paths by solving problems that mirror in-demand roles and gain clarity on your next step as you grow from novice to expert.",
     emoji: "🚀",
   },
+  {
+    title: "TechMentor Guidance",
+    description: "Connect with experienced tech mentors who provide learning resources and guide you in applying your skills to real-world problems.",
+    emoji: "🎓", // 🎓 graduation cap emoji to symbolize mentorship and learning
+  },
 ];
 
 const TechPathNavigator = () => {
