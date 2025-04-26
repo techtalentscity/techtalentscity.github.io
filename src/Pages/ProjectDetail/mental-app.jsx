@@ -6,14 +6,15 @@ import { LuArrowLeftToLine } from 'react-icons/lu';
 import { useState } from 'react';
 
 const MentalAppDetail = () => {
-  // Project budget
-  const [totalBudget, setTotalBudget] = useState(100);
-  
-  // Role amounts for mental health app project
+  // Updated project budget
+  const [totalBudget, setTotalBudget] = useState(200);
+
+  // Updated role amounts including TechMo (Tech Mentor)
   const [roleAmounts, setRoleAmounts] = useState({
-    techArchs: 40, // $40
-    techDev: 30,   // $30
-    techLeads: 30  // $30
+    techArchs: 60,  // $60
+    techDev: 60,    // $60
+    techLeads: 40,  // $40
+    techMo: 40      // $40 (Tech Mentor)
   });
 
   // Calculate total to verify
@@ -49,15 +50,17 @@ const MentalAppDetail = () => {
             <li><strong>TechArchs:</strong> ${roleAmounts.techArchs}</li>
             <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
             <li><strong>TechLeads:</strong> ${roleAmounts.techLeads}</li>
+            <li><strong>TechMo:</strong> ${roleAmounts.techMo}</li>
             <li><strong>Total:</strong> ${total}</li>
           </ul>
         </div>
 
         <div className="mb-8">
-      <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
-       <p className="text-[#131518]">
-       <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
-    </div>
+          <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+          <p className="text-[#131518]">
+            <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.
+          </p>
+        </div>
 
         {/* Project Description */}
         <div className="mb-8">
@@ -95,11 +98,11 @@ const MentalAppDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Key Tasks and Responsibilities:</h2>
           <ul className="list-disc list-inside">
-            <li>Designing user-friendly and empathetic UI for mental health tracking features</li>
-            <li>Building secure authentication and user profile management systems</li>
-            <li>Developing backend services to manage mood data and wellness activities</li>
-            <li>Implementing data encryption to ensure user privacy</li>
-            <li>Testing the application for emotional impact and accessibility standards</li>
+            <li>Design user-friendly and empathetic UI for mental health tracking features.</li>
+            <li>Build secure authentication and user profile management systems.</li>
+            <li>Develop backend services to manage mood data and wellness activities.</li>
+            <li>Implement data encryption to ensure user privacy.</li>
+            <li>Test the application for emotional impact and accessibility standards.</li>
           </ul>
         </div>
 
@@ -107,10 +110,10 @@ const MentalAppDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Benefits of Participation:</h2>
           <ul className="list-disc list-inside">
-            <li>Gain hands-on experience developing apps in a sensitive and emerging sector</li>
-            <li>Build a portfolio project that addresses real-world societal needs</li>
-            <li>Opportunity to work on an application with meaningful social impact</li>
-            <li>Learn about ethical technology development for mental health and well-being</li>
+            <li>Gain hands-on experience developing apps in a sensitive and emerging sector.</li>
+            <li>Build a portfolio project that addresses real-world societal needs.</li>
+            <li>Opportunity to work on an application with meaningful social impact.</li>
+            <li>Learn about ethical technology development for mental health and well-being.</li>
           </ul>
         </div>
 
@@ -118,13 +121,13 @@ const MentalAppDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Nice-to-Have:</h2>
           <ul className="list-disc list-inside">
-            <li>Experience with mental health-related research or apps</li>
-            <li>Knowledge of mindfulness, CBT, or mental health support frameworks</li>
-            <li>Timezone: EST or CET preferred, but all are welcome</li>
+            <li>Experience with mental health-related research or apps.</li>
+            <li>Knowledge of mindfulness, CBT, or mental health support frameworks.</li>
+            <li>Timezone: EST or CET preferred, but all are welcome.</li>
           </ul>
         </div>
 
-        {/* Apply Button (Fixed at bottom right) */}
+        {/* Apply Button */}
         <div className="fixed bottom-8 right-8">
           <Button 
             type="primary" 
