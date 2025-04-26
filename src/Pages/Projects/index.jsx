@@ -22,7 +22,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
-      price: '$150',
+      price: '$200',
       link: '/projects/ai-agent',
     },
     {
@@ -37,7 +37,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
-      price: '$100',
+      price: '$200',
       link: '/projects/mental-app',
     },
     {
@@ -51,7 +51,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
-      price: '$125',
+      price: '$200',
       link: '/projects/real-time-notification-system',
     },
     {
@@ -66,7 +66,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true, // ✅ Updated
-      price: '$180', // ✅ Updated
+      price: '$200', // ✅ Updated
       link: '/projects/blockchain-defi',
     },
     {
