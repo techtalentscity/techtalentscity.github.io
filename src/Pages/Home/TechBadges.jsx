@@ -11,10 +11,10 @@ const badges = [
     {
       id: 1,
       image: badgePO,
-      title: 'TechPO',
+      title: 'TechMO',
       description: (
         <>
-          Awarded to <strong>Tech Mentors</strong>after the successful completion of each collaborative project.
+          Awarded to <strong>Tech Mentors</strong> after the successful completion of each collaborative project.
         </>
       ),
       bg: '#F3F3FF'
