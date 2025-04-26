@@ -7,13 +7,14 @@ import { useState } from 'react';
 
 const BlockchainProjectDetail = () => {
   // Project budget
-  const [totalBudget, setTotalBudget] = useState(180);
-  
-  // Role amounts for blockchain project
+  const [totalBudget, setTotalBudget] = useState(200); // ✅ Updated to $200
+
+  // Updated role amounts
   const [roleAmounts, setRoleAmounts] = useState({
-    techDev: 80,     // $80
-    techArchs: 60,   // $60
-    techGuard: 40    // $40
+    techDev: 70,     // $70
+    techArchs: 50,   // $50
+    techGuard: 40,   // $40
+    techMo: 40       // $40 (✅ Updated TechMentors amount)
   });
 
   // Calculate total to verify
@@ -24,7 +25,7 @@ const BlockchainProjectDetail = () => {
   const total = calculateTotal();
 
   return (
-    <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
+    <Container className="w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20">
       <div className="w-full flex flex-col items-start bg-white">
         <Link to="/projects" className="text-[#101010] font-bold mb-4 flex items-center gap-2">
           <LuArrowLeftToLine /> <span>Back to projects</span>
@@ -40,15 +41,17 @@ const BlockchainProjectDetail = () => {
             <li><strong>TechDev:</strong> ${roleAmounts.techDev}</li>
             <li><strong>TechArchs:</strong> ${roleAmounts.techArchs}</li>
             <li><strong>TechGuard:</strong> ${roleAmounts.techGuard}</li>
+            <li><strong>TechMo:</strong> ${roleAmounts.techMo}</li> {/* ✅ TechMentor updated */}
             <li><strong>Total:</strong> ${total}</li>
           </ul>
         </div>
 
         <div className="mb-8">
-         <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
-        <p className="text-[#131518]">
-        <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.</p>
-       </div>
+          <h2 className="text-xl font-semibold mb-2">Badge Skill Level:</h2>
+          <p className="text-[#131518]">
+            <strong>Open to All – No Badge Level Required.</strong> This project is open to participants regardless of their badge skill level. All motivated contributors are welcome to apply.
+          </p>
+        </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
@@ -117,7 +120,8 @@ const BlockchainProjectDetail = () => {
           </a>
         </div>
       </div>
-      <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
+
+      <div className="shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6">
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
           <Button type="primary" size="large" block>Apply for this Project</Button>
