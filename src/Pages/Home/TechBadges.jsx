@@ -14,7 +14,7 @@ const badges = [
       title: 'TechPO',
       description: (
         <>
-          Awarded to <strong>Product Owners</strong> after the successful completion of each collaborative project.
+          Awarded to <strong>Tech Mentors</strong>after the successful completion of each collaborative project.
         </>
       ),
       bg: '#F3F3FF'
