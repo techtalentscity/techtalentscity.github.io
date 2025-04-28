@@ -4,7 +4,7 @@ import careerImg from '../../assets/images/vr2.png'; // ✅ Corrected path
 
 const CareerTest = () => {
   const handleClick = () => {
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing', '_blank');
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform', '_blank');
   };
 
   return (
