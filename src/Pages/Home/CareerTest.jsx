@@ -24,7 +24,6 @@ const CareerTest = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-center items-center text-white p-8">
               <div className="text-7xl mb-6 transition-transform hover:scale-110">
                 <div className="bg-white/30 rounded-full p-4 backdrop-blur-md border-2 border-white/20">
-                  🎯
                 </div>
               </div>
               <h4 className="mt-4 text-2xl font-bold text-center">Find Your Best-Fit Tech Role</h4>
