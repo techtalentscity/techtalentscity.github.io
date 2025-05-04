@@ -1,58 +1,77 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
-import { Button, Form, Input, message } from 'antd';
+import { Button, message } from 'antd';
 import { useState } from 'react';
 
 const Register = () => {
-  const navigate = useNavigate();
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState({});
 
-  // Google Form submission URL - replace with your actual form URL
-  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/formResponse";
+  // Your updated Google Form ID from the new URL
+  const googleFormID = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
+  
+  // Form submission URL
+  const googleFormURL = `https://docs.google.com/forms/d/e/${googleFormID}/formResponse`;
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
-  // Handle form submission
-  const handleSubmit = async (values) => {
-    try {
-      setLoading(true);
-      
-      // Create form data for submission
-      const formData = new FormData();
-      
-      // Add entry fields - REPLACE THESE with your actual Google Form field IDs
-      // You'll need to inspect your Google Form to get the exact field IDs
-      formData.append('entry.123456789', values.email); // Replace with your email field ID
-      formData.append('entry.987654321', values.password); // Replace with your password field ID
-      
-      // Submit the form data
-      await fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for cross-origin requests to Google Forms
-        body: formData
-      });
-      
-      // Show success message
-      message.success('Registration successful! Redirecting to Discord...');
-      
-      // Clear form
-      form.resetFields();
-      
-      // Redirect to Discord after a short delay
-      setTimeout(() => {
-        window.location.href = discordURL;
-      }, 2000);
-      
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      message.error('Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
+  const validateEmail = (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Reset errors
+    setErrors({});
+    
+    // Validate
+    let isValid = true;
+    const newErrors = {};
+    
+    if (!firstName.trim()) {
+      newErrors.firstName = 'First Name is required';
+      isValid = false;
     }
+    
+    if (!lastName.trim()) {
+      newErrors.lastName = 'Last Name is required';
+      isValid = false;
+    }
+    
+    if (!email) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      newErrors.email = 'Please enter a valid email';
+      isValid = false;
+    }
+    
+    if (!isValid) {
+      setErrors(newErrors);
+      return;
+    }
+    
+    // Set loading
+    setLoading(true);
+    
+    // Submit the form
+    document.getElementById('registration-form').submit();
+    
+    // Show success message
+    message.success('Registration successful! Redirecting to Discord...');
+    
+    // Redirect to Discord after a short delay
+    setTimeout(() => {
+      window.location.href = discordURL;
+    }, 2000);
   };
 
   return (
@@ -65,33 +84,67 @@ const Register = () => {
           <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
           <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
           
-          <Form 
-            layout='vertical' 
-            className='pt-8'
-            form={form}
-            onFinish={handleSubmit}
+          {/* Direct form submission to Google Forms */}
+          <form 
+            id="registration-form"
+            method="POST" 
+            action={googleFormURL}
+            onSubmit={handleSubmit}
+            className="pt-8"
           >
-            <Form.Item 
-              label="Email Address" 
-              name="email" 
-              rules={[
-                { required: true, message: 'Email is required' },
-                { type: "email", message: 'Please enter a valid email' }
-              ]}
-            >
-              <Input placeholder="johndoe@email.com" className='p-2' />
-            </Form.Item>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
+                First Name *
+              </label>
+              <input 
+                type="text" 
+                // Actual entry ID from the Google Form
+                name="entry.2120631500" 
+                id="firstName"
+                className={`shadow appearance-none border ${errors.firstName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                placeholder="John"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+              {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName}</p>}
+            </div>
             
-            <Form.Item 
-              label="Password" 
-              name="password" 
-              rules={[
-                { required: true, message: 'Password is required' },
-                { min: 8, message: 'Password must be at least 8 characters' }
-              ]}
-            >
-              <Input.Password placeholder='*********' className='p-2' />
-            </Form.Item>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
+                Last Name *
+              </label>
+              <input 
+                type="text" 
+                // Actual entry ID from the Google Form
+                name="entry.976572827" 
+                id="lastName"
+                className={`shadow appearance-none border ${errors.lastName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                placeholder="Doe"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+              {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName}</p>}
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                Email Address *
+              </label>
+              <input 
+                type="email" 
+                // Actual entry ID from the Google Form
+                name="entry.1043611405" 
+                id="email"
+                className={`shadow appearance-none border ${errors.email ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                placeholder="johndoe@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
+            </div>
             
             <p className='pb-6 text-sm'>
               By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
@@ -100,17 +153,22 @@ const Register = () => {
             
             <Button 
               type='primary' 
-              block 
-              className='p-2 !h-auto font-bold' 
               htmlType="submit"
+              block 
+              className='p-2 !h-auto font-bold'
               loading={loading}
             >
               Register with us
             </Button>
-          </Form>
+          </form>
           
           <div className="mt-6 text-center">
-            <p>Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a></p>
+            <p>
+              Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a>
+            </p>
+            <p className="text-xs mt-3 text-gray-500">
+              Having trouble? Try submitting the <a href={`https://docs.google.com/forms/d/e/${googleFormID}/viewform`} target="_blank" rel="noopener noreferrer" className="text-primary underline">form directly</a>.
+            </p>
           </div>
         </Container>
       </div>
