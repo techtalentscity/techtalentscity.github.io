@@ -3,8 +3,6 @@ import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, Form, Input, message } from 'antd';
-import { FcGoogle } from 'react-icons/fc';
-import { FaLinkedin } from 'react-icons/fa';
 import { useState } from 'react';
 
 const Register = () => {
@@ -13,7 +11,6 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   // Google Form submission URL - replace with your actual form URL
-  // This one is taken from your navbar component
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/formResponse";
   
   // Discord redirect URL
@@ -114,21 +111,6 @@ const Register = () => {
           
           <div className="mt-6 text-center">
             <p>Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a></p>
-            <p className="my-4">Or</p>
-            
-            <Button 
-              className='mb-4 h-auto p-2' 
-              block 
-              onClick={() => {
-                message.info('Redirecting to Discord community...');
-                setTimeout(() => {
-                  window.location.href = discordURL;
-                }, 1000);
-              }}
-              icon={<FcGoogle size={17} />}
-            >
-              Join our Discord community
-            </Button>
           </div>
         </Container>
       </div>
