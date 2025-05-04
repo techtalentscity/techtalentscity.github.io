@@ -3,7 +3,7 @@ import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, message } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +11,15 @@ const Register = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({});
+  const [hasRegistered, setHasRegistered] = useState(false);
+  
+  // Check if user has already registered when component mounts
+  useEffect(() => {
+    const registrationStatus = localStorage.getItem('ttc_registration_completed');
+    if (registrationStatus === 'true') {
+      setHasRegistered(true);
+    }
+  }, []);
 
   // Your updated Google Form ID from the new URL
   const googleFormID = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
@@ -28,6 +37,15 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Check if already registered via localStorage
+    if (localStorage.getItem('ttc_registration_completed') === 'true') {
+      message.info('You have already registered. Redirecting to Discord...');
+      setTimeout(() => {
+        window.location.href = discordURL;
+      }, 1500);
+      return;
+    }
     
     // Reset errors
     setErrors({});
@@ -75,6 +93,10 @@ const Register = () => {
       body: formData
     })
     .then(() => {
+      // Store registration status in localStorage
+      localStorage.setItem('ttc_registration_completed', 'true');
+      localStorage.setItem('ttc_registered_email', email);
+      
       // Show success message
       message.success('Registration successful! Redirecting to Discord...');
       
@@ -98,14 +120,34 @@ const Register = () => {
             <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
           </Link>
           <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
-          <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
           
-          {/* Form submission handled via AJAX */}
-          <form 
-            id="registration-form"
-            onSubmit={handleSubmit}
-            className="pt-8"
-          >
+          {hasRegistered ? (
+            <div className="text-center py-8">
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-5 rounded mb-6">
+                <p className="font-bold text-xl mb-2">You have already registered!</p>
+                <p>Your registration has been recorded.</p>
+                <p className="mt-2">
+                  Email: <span className="font-medium">{localStorage.getItem('ttc_registered_email')}</span>
+                </p>
+              </div>
+              <Button 
+                type="primary" 
+                onClick={() => window.location.href = discordURL}
+                className="p-2 !h-auto font-bold"
+              >
+                Join our Discord Community
+              </Button>
+            </div>
+          ) : (
+            <>
+              <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
+              
+              {/* Form submission handled via AJAX */}
+              <form 
+                id="registration-form"
+                onSubmit={handleSubmit}
+                className="pt-8"
+              >
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
                 First Name *
@@ -181,6 +223,8 @@ const Register = () => {
               Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a>
             </p>
           </div>
+            </>
+          )}
         </Container>
       </div>
       
