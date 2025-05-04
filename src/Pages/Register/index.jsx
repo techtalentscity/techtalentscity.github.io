@@ -13,6 +13,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [hasRegistered, setHasRegistered] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
+  const [checkingEmail, setCheckingEmail] = useState(false);
   
   // Your updated Google Form ID from the new URL
   const googleFormID = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
@@ -23,33 +24,88 @@ const Register = () => {
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
   
-  // Additional validation for email uniqueness across devices
-  const checkExistingEmail = async (email) => {
+  // ==========================================
+  // IMPROVED EMAIL VALIDATION FUNCTIONS
+  // ==========================================
+  
+  // Fetch registered emails from localStorage
+  const getRegisteredEmails = () => {
     try {
-      // This is just a client-side check that mimics a server check
-      // In a real application, you would call an API endpoint that checks against your database
-      
-      // For now, we'll use localStorage as a simple demonstration
-      const existingEmails = JSON.parse(localStorage.getItem('ttc_registered_emails') || '[]');
-      return existingEmails.includes(email);
+      return JSON.parse(localStorage.getItem('ttc_registered_emails') || '[]');
     } catch (error) {
-      console.error('Error checking email:', error);
-      return false;
+      console.error('Error getting registered emails:', error);
+      return [];
     }
   };
   
+  // Store a new registered email in localStorage
   const storeRegisteredEmail = (email) => {
     try {
-      const existingEmails = JSON.parse(localStorage.getItem('ttc_registered_emails') || '[]');
-      if (!existingEmails.includes(email)) {
-        existingEmails.push(email);
+      const existingEmails = getRegisteredEmails();
+      if (!existingEmails.includes(email.toLowerCase())) {
+        existingEmails.push(email.toLowerCase());
         localStorage.setItem('ttc_registered_emails', JSON.stringify(existingEmails));
       }
     } catch (error) {
       console.error('Error storing email:', error);
     }
   };
-
+  
+  // Check if email exists in the registration system
+  const checkExistingEmail = async (email) => {
+    if (!email) return false;
+    
+    setCheckingEmail(true);
+    
+    return new Promise((resolve) => {
+      // Simulate a network delay for better UX (so user sees "checking" message)
+      setTimeout(() => {
+        try {
+          // Check localStorage for registered emails (client-side check)
+          const existingEmails = getRegisteredEmails();
+          const exists = existingEmails.includes(email.toLowerCase());
+          
+          // Update state based on existence check
+          if (exists) {
+            setErrors(prev => ({ ...prev, email: 'This email has already been registered' }));
+            setEmailExists(true);
+          } else {
+            // Clear email error if it exists
+            if (errors.email === 'This email has already been registered') {
+              setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.email;
+                return newErrors;
+              });
+            }
+            setEmailExists(false);
+          }
+          
+          setCheckingEmail(false);
+          resolve(exists);
+        } catch (error) {
+          console.error('Error checking email:', error);
+          setCheckingEmail(false);
+          resolve(false);
+        }
+      }, 500); // 500ms delay to show checking state
+    });
+  };
+  
+  // ==========================================
+  // VALIDATION FUNCTIONS
+  // ==========================================
+  
+  // Validate email format
+  const validateEmail = (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+  
+  // ==========================================
+  // EVENT HANDLERS
+  // ==========================================
+  
   // Check if user has already registered when component mounts
   useEffect(() => {
     // Check if the user has already registered on this device
@@ -59,12 +115,45 @@ const Register = () => {
     }
   }, []);
   
-  // Validate email format
-  const validateEmail = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+  // Handle email input changes
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    
+    // Clear existing email error if field is empty
+    if (!newEmail) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.email;
+        return newErrors;
+      });
+      setEmailExists(false);
+      return;
+    }
+    
+    // Validate email format
+    if (!validateEmail(newEmail)) {
+      setErrors(prev => ({ ...prev, email: 'Please enter a valid email' }));
+    } else {
+      // Clear format error if it exists
+      if (errors.email === 'Please enter a valid email') {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors.email;
+          return newErrors;
+        });
+      }
+    }
+  };
+  
+  // Check email existence when user leaves the email field
+  const handleEmailBlur = async () => {
+    if (email && validateEmail(email)) {
+      await checkExistingEmail(email);
+    }
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -102,18 +191,16 @@ const Register = () => {
       isValid = false;
     }
     
-    // Check if email already exists in global registration list
+    // Final check if email already exists in localStorage
     const emailAlreadyExists = await checkExistingEmail(email);
     if (emailAlreadyExists) {
       newErrors.email = 'This email has already been registered';
       message.error('This email has already been registered. Please use a different email.');
-      setEmailExists(true);
       isValid = false;
     }
     
     if (!isValid) {
       setErrors(newErrors);
-      setLoading(false);
       return;
     }
     
@@ -126,13 +213,14 @@ const Register = () => {
     formData.append('entry.976572827', lastName);
     formData.append('entry.1043611405', email);
     
-    // Submit the form using fetch API instead of form submission
-    fetch(googleFormURL, {
-      method: 'POST',
-      mode: 'no-cors', // This is important for cross-origin requests to Google Forms
-      body: formData
-    })
-    .then(() => {
+    // Submit the form using fetch API
+    try {
+      const response = await fetch(googleFormURL, {
+        method: 'POST',
+        mode: 'no-cors', // Important for cross-origin requests to Google Forms
+        body: formData
+      });
+      
       // Store registration status in localStorage
       localStorage.setItem('ttc_registration_completed', 'true');
       localStorage.setItem('ttc_registered_email', email);
@@ -147,12 +235,11 @@ const Register = () => {
       setTimeout(() => {
         window.location.href = discordURL;
       }, 1500);
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error('Error submitting form:', error);
       message.error('Something went wrong. Please try again.');
       setLoading(false);
-    });
+    }
   };
 
   return (
@@ -185,87 +272,93 @@ const Register = () => {
             <>
               <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
               
-              {/* Form submission handled via AJAX */}
+              {/* Form submission handled via handleSubmit */}
               <form 
                 id="registration-form"
                 onSubmit={handleSubmit}
                 className="pt-8"
               >
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
-                First Name *
-              </label>
-              <input 
-                type="text" 
-                // Actual entry ID from the Google Form
-                name="entry.2120631500" 
-                id="firstName"
-                className={`shadow appearance-none border ${errors.firstName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                placeholder="John"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-              {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName}</p>}
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
-                Last Name *
-              </label>
-              <input 
-                type="text" 
-                // Actual entry ID from the Google Form
-                name="entry.976572827" 
-                id="lastName"
-                className={`shadow appearance-none border ${errors.lastName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                placeholder="Doe"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
-              {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName}</p>}
-            </div>
-            
-            <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                Email Address *
-              </label>
-              <input 
-                type="email" 
-                // Actual entry ID from the Google Form
-                name="entry.1043611405" 
-                id="email"
-                className={`shadow appearance-none border ${errors.email ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                placeholder="johndoe@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
-            </div>
-            
-            <p className='pb-6 text-sm'>
-              By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
-              acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
-            </p>
-            
-            <Button 
-              type='primary' 
-              htmlType="submit"
-              block 
-              className='p-2 !h-auto font-bold'
-              loading={loading}
-            >
-              Register with us
-            </Button>
-          </form>
-          
-          <div className="mt-6 text-center">
-            <p>
-              Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a>
-            </p>
-          </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
+                    First Name *
+                  </label>
+                  <input 
+                    type="text" 
+                    name="entry.2120631500" 
+                    id="firstName"
+                    className={`shadow appearance-none border ${errors.firstName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                    placeholder="John"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                  />
+                  {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName}</p>}
+                </div>
+                
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
+                    Last Name *
+                  </label>
+                  <input 
+                    type="text" 
+                    name="entry.976572827" 
+                    id="lastName"
+                    className={`shadow appearance-none border ${errors.lastName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                    placeholder="Doe"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                  />
+                  {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName}</p>}
+                </div>
+                
+                <div className="mb-6 relative">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                    Email Address *
+                  </label>
+                  <input 
+                    type="email" 
+                    name="entry.1043611405" 
+                    id="email"
+                    className={`shadow appearance-none border ${errors.email ? 'border-red-500' : emailExists === false && email ? 'border-green-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                    placeholder="johndoe@email.com"
+                    value={email}
+                    onChange={handleEmailChange}
+                    onBlur={handleEmailBlur}
+                    required
+                  />
+                  {checkingEmail && (
+                    <p className="text-blue-500 text-xs italic mt-1">Checking email...</p>
+                  )}
+                  {errors.email ? (
+                    <p className="text-red-500 text-xs italic mt-1">{errors.email}</p>
+                  ) : emailExists === false && email && validateEmail(email) ? (
+                    <p className="text-green-500 text-xs italic mt-1">Email is available!</p>
+                  ) : null}
+                </div>
+                
+                <p className='pb-6 text-sm'>
+                  By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
+                  acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
+                </p>
+                
+                <Button 
+                  type='primary' 
+                  htmlType="submit"
+                  block 
+                  className='p-2 !h-auto font-bold'
+                  loading={loading}
+                  disabled={checkingEmail || emailExists || Object.keys(errors).length > 0}
+                >
+                  Register with us
+                </Button>
+              </form>
+              
+              <div className="mt-6 text-center">
+                <p>
+                  Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a>
+                </p>
+              </div>
             </>
           )}
         </Container>
