@@ -48,10 +48,15 @@ const Navbar = () => {
                     <NavLink to={'/about'} className={({ isActive }) => isActive ? "font-bold text-[#3B3CC6]" : "" }>About</NavLink>
                 </div>
                 <div className="hidden lg:flex items-center gap-2">
-                    {/* <Link to={'/signin'}><Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">Login</Button></Link> */}
-                    <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0"><a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank">Login</a></Button>
-                    {/* <Link to={'/signup'}><Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none">Register</Button></Link> */}
-                    <Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none"><a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank">Sign Up</a></Button>
+                    {/* Login button still goes to Google Form directly */}
+                    <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">Login</a>
+                    </Button>
+                    
+                    {/* Sign Up button now links to your registration page */}
+                    <Link to={'/signup'}>
+                        <Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none">Sign Up</Button>
+                    </Link>
                 </div>
                 <div className="burger-menu lg:hidden" onClick={handleBurger}>
                     <div className="flex flex-col items-center justify-center w-[24px] h-[24px] cursor-pointer relative">
@@ -72,16 +77,14 @@ const Navbar = () => {
                     </ul>
                     <div className="text-primary font-semibold bg-[#fff] px-4 py-4 text-sm lg:text-sm grid grid-cols-2 gap-2">
                         <div className='flex justify-center items-center border-r-2'>
-                            {/* <Link to={'/signin'}>
-                                Login
-                            </Link> */}
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank">Login</a>
+                            {/* Login link remains the same */}
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">Login</a>
                         </div>
                         <div className='flex justify-center items-center'>
-                            {/* <Link to={'/signup'}>
+                            {/* Sign Up now links to your registration page */}
+                            <Link to={'/signup'} onClick={() => setFlip(!flip)}>
                                 Sign Up
-                            </Link> */}
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank">Sign Up</a>
+                            </Link>
                         </div>
                     </div>
                 </div>
