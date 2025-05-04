@@ -12,9 +12,9 @@ const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  // Replace with your actual Google Form submission URL
-  // This should be the action URL from your Google Form
-  const googleFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/formResponse";
+  // Google Form submission URL - replace with your actual form URL
+  // This one is taken from your navbar component
+  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/formResponse";
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
@@ -28,12 +28,9 @@ const Register = () => {
       const formData = new FormData();
       
       // Add entry fields - REPLACE THESE with your actual Google Form field IDs
-      // Find these by inspecting your Google Form's HTML source
+      // You'll need to inspect your Google Form to get the exact field IDs
       formData.append('entry.123456789', values.email); // Replace with your email field ID
       formData.append('entry.987654321', values.password); // Replace with your password field ID
-      
-      // Optional: Add timestamp
-      formData.append('entry.timestamp', new Date().toISOString());
       
       // Submit the form data
       await fetch(googleFormURL, {
@@ -61,16 +58,10 @@ const Register = () => {
     }
   };
 
-  // Handle Google/LinkedIn sign-in
-  const handleSocialSignIn = (provider) => {
-    message.info(`${provider} registration coming soon!`);
-    // You can implement OAuth flows here in the future
-  };
-
   return (
-    <div className="w-full flex items-center h-screen bg-white">
-      <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:h-screen pt-12 md:pt-0">
-        <Container className={'md:!px-16 lg:!px-0 md:h-screen pt-6 md:pt-12 pb-12'}>
+    <div className="w-full flex items-center min-h-screen bg-white">
+      <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:min-h-screen pt-12 md:pt-0">
+        <Container className={'md:!px-16 lg:!px-0 md:min-h-screen pt-6 md:pt-12 pb-12'}>
           <Link to={'/'}>
             <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
           </Link>
@@ -122,25 +113,21 @@ const Register = () => {
           </Form>
           
           <div className="mt-6 text-center">
-            <p>Already have an account? <Link to='/signin' className='text-primary font-bold'>Log In</Link></p>
+            <p>Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a></p>
             <p className="my-4">Or</p>
             
             <Button 
               className='mb-4 h-auto p-2' 
               block 
-              onClick={() => handleSocialSignIn('Google')}
+              onClick={() => {
+                message.info('Redirecting to Discord community...');
+                setTimeout(() => {
+                  window.location.href = discordURL;
+                }, 1000);
+              }}
               icon={<FcGoogle size={17} />}
             >
-              Register with Google
-            </Button>
-            
-            <Button 
-              className='mb-2 h-auto p-2' 
-              block 
-              onClick={() => handleSocialSignIn('LinkedIn')}
-              icon={<FaLinkedin size={17} color='#0288D1' />}
-            >
-              Register with LinkedIn
+              Join our Discord community
             </Button>
           </div>
         </Container>
