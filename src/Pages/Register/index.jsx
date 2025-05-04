@@ -62,16 +62,32 @@ const Register = () => {
     // Set loading
     setLoading(true);
     
-    // Submit the form
-    document.getElementById('registration-form').submit();
+    // Create form data to submit
+    const formData = new FormData();
+    formData.append('entry.2120631500', firstName);
+    formData.append('entry.976572827', lastName);
+    formData.append('entry.1043611405', email);
     
-    // Show success message
-    message.success('Registration successful! Redirecting to Discord...');
-    
-    // Redirect to Discord after a short delay
-    setTimeout(() => {
-      window.location.href = discordURL;
-    }, 2000);
+    // Submit the form using fetch API instead of form submission
+    fetch(googleFormURL, {
+      method: 'POST',
+      mode: 'no-cors', // This is important for cross-origin requests to Google Forms
+      body: formData
+    })
+    .then(() => {
+      // Show success message
+      message.success('Registration successful! Redirecting to Discord...');
+      
+      // Redirect to Discord
+      setTimeout(() => {
+        window.location.href = discordURL;
+      }, 1500);
+    })
+    .catch((error) => {
+      console.error('Error submitting form:', error);
+      message.error('Something went wrong. Please try again.');
+      setLoading(false);
+    });
   };
 
   return (
@@ -84,11 +100,9 @@ const Register = () => {
           <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
           <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
           
-          {/* Direct form submission to Google Forms */}
+          {/* Form submission handled via AJAX */}
           <form 
             id="registration-form"
-            method="POST" 
-            action={googleFormURL}
             onSubmit={handleSubmit}
             className="pt-8"
           >
