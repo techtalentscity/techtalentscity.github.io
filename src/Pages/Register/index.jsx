@@ -25,9 +25,9 @@ const Register = () => {
       const formData = new FormData();
       
       // Add entry fields with the correct Google Form field IDs
-      formData.append('emailAddress', values.email); // Email field
-      formData.append('entry.2137692021', values.firstName); // First Name field
-      formData.append('entry.1640115864', values.lastName); // Last Name field
+      formData.append('entry.2120631500', values.firstName); // First Name field
+      formData.append('entry.976572827', values.lastName); // Last Name field
+      formData.append('entry.721402290', values.email); // Email Address field
       
       // Submit the form data
       await fetch(googleFormURL, {
@@ -72,17 +72,6 @@ const Register = () => {
             onFinish={handleSubmit}
           >
             <Form.Item 
-              label="Email Address" 
-              name="email" 
-              rules={[
-                { required: true, message: 'Email is required' },
-                { type: "email", message: 'Please enter a valid email' }
-              ]}
-            >
-              <Input placeholder="johndoe@email.com" className='p-2' />
-            </Form.Item>
-            
-            <Form.Item 
               label="First Name" 
               name="firstName" 
               rules={[
@@ -103,14 +92,14 @@ const Register = () => {
             </Form.Item>
             
             <Form.Item 
-              label="Password" 
-              name="password" 
+              label="Email Address" 
+              name="email" 
               rules={[
-                { required: true, message: 'Password is required' },
-                { min: 8, message: 'Password must be at least 8 characters' }
+                { required: true, message: 'Email is required' },
+                { type: "email", message: 'Please enter a valid email' }
               ]}
             >
-              <Input.Password placeholder='*********' className='p-2' />
+              <Input placeholder="johndoe@email.com" className='p-2' />
             </Form.Item>
             
             <p className='pb-6 text-sm'>
