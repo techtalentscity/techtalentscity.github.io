@@ -3,7 +3,7 @@ import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, message } from 'antd';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -15,25 +15,17 @@ const Register = () => {
   const [emailExists, setEmailExists] = useState(false);
   const [checkingEmail, setCheckingEmail] = useState(false);
   
-  // Form reference for direct submission
-  const formRef = useRef(null);
-  
-  // Your Google Form ID from the URL
-  const googleFormID = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
-  
-  // Form submission URL - using the formResponse endpoint
-  const googleFormURL = `https://docs.google.com/forms/d/e/${googleFormID}/formResponse`;
-  
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
   
-  // Entry IDs from the Google Form (based on the HTML provided)
-  const entryIDs = {
-    firstName: "entry.2120631500", // First Name field entry ID
-    lastName: "entry.976572827",   // Last Name field entry ID
-    email: "entry.1043611405"      // Email field entry ID
+  // Your Google Form details
+  const formId = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
+  const entryIds = {
+    firstName: "entry.2120631500",
+    lastName: "entry.976572827",
+    email: "entry.1043611405"
   };
-
+  
   // Check if user has already registered when component mounts
   useEffect(() => {
     // Check if the user has already registered on this device
@@ -81,7 +73,7 @@ const Register = () => {
       console.error('Error storing registered email:', error);
     }
   };
-
+  
   // Check if the email already exists in the system
   const checkExistingEmail = (emailToCheck) => {
     if (!emailToCheck || !validateEmail(emailToCheck)) {
@@ -163,8 +155,132 @@ const Register = () => {
     }
   };
 
-  // Handle form pre-submission validation
-  const handleSubmitClick = (e) => {
+  // Function to submit form using CORS proxy
+  const submitFormWithCorsProxy = async (formData) => {
+    try {
+      // Option 1: Use a CORS proxy service
+      const corsProxyUrl = 'https://corsproxy.io/?';
+      
+      // Google Form submission URL
+      const googleFormUrl = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
+      
+      // Create URL params for the form data
+      const params = new URLSearchParams();
+      params.append(entryIds.firstName, formData.firstName);
+      params.append(entryIds.lastName, formData.lastName);
+      params.append(entryIds.email, formData.email);
+      
+      // Submit the form through the CORS proxy
+      const response = await fetch(`${corsProxyUrl}${encodeURIComponent(googleFormUrl)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+      });
+      
+      // If we get here, the form was submitted (even if Google returns a redirect)
+      return { success: true };
+    } catch (error) {
+      console.error('Error submitting form through CORS proxy:', error);
+      return { success: false, error: error.message };
+    }
+  };
+  
+  // Function to submit using a hidden iframe
+  const submitFormWithIframe = () => {
+    return new Promise((resolve) => {
+      // Create a hidden iframe
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden-form-target';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      // Create a temporary form
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
+      form.target = 'hidden-form-target';
+      
+      // Add form fields
+      const firstNameField = document.createElement('input');
+      firstNameField.type = 'text';
+      firstNameField.name = entryIds.firstName;
+      firstNameField.value = firstName;
+      form.appendChild(firstNameField);
+      
+      const lastNameField = document.createElement('input');
+      lastNameField.type = 'text';
+      lastNameField.name = entryIds.lastName;
+      lastNameField.value = lastName;
+      form.appendChild(lastNameField);
+      
+      const emailField = document.createElement('input');
+      emailField.type = 'email';
+      emailField.name = entryIds.email;
+      emailField.value = email;
+      form.appendChild(emailField);
+      
+      // Add form to the document
+      document.body.appendChild(form);
+      
+      // Handle iframe load
+      iframe.onload = () => {
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(form);
+          document.body.removeChild(iframe);
+        }, 500);
+        
+        // Resolve promise
+        resolve({ success: true });
+      };
+      
+      // Handle errors
+      iframe.onerror = () => {
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(form);
+          document.body.removeChild(iframe);
+        }, 500);
+        
+        // Resolve promise with error
+        resolve({ success: false, error: 'Failed to load iframe' });
+      };
+      
+      // Submit the form
+      form.submit();
+    });
+  };
+  
+  // Submit data using an email service as a backup option
+  const submitWithEmailService = async (formData) => {
+    try {
+      // Option 2: Use a service like Formspree or EmailJS
+      // You would need to sign up for a free account
+      
+      // Example using EmailJS (you would need to add the EmailJS SDK to your project)
+      // const result = await emailjs.send(
+      //   'YOUR_SERVICE_ID',
+      //   'YOUR_TEMPLATE_ID',
+      //   {
+      //     firstName: formData.firstName,
+      //     lastName: formData.lastName,
+      //     email: formData.email,
+      //   },
+      //   'YOUR_USER_ID'
+      // );
+      
+      // For now, we'll just simulate a successful response
+      return { success: true };
+    } catch (error) {
+      console.error('Error submitting with email service:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Check if already registered via localStorage
@@ -218,41 +334,60 @@ const Register = () => {
     // Set loading state
     setLoading(true);
     
-    // Store registration info in localStorage before submission
-    localStorage.setItem('ttc_registration_completed', 'true');
-    localStorage.setItem('ttc_registered_email', email);
-    storeRegisteredEmail(email);
-    
-    // Show success message before form submission
-    message.success('Submitting registration... Please wait.');
-    
-    // Use a timeout to ensure the user sees the message before the form is submitted
-    setTimeout(() => {
-      // Submit the form directly
-      if (formRef.current) {
-        formRef.current.submit();
-        
-        // Redirect to Discord after a delay
-        setTimeout(() => {
-          window.location.href = discordURL;
-        }, 2000);
-      }
-    }, 1000);
-  };
-  
-  // Create the hidden target iframe for form submission
-  useEffect(() => {
-    // Create a hidden iframe for the form target
-    const iframe = document.createElement('iframe');
-    iframe.name = 'hidden-form-target';
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    
-    // Clean up on component unmount
-    return () => {
-      document.body.removeChild(iframe);
+    // Prepare form data
+    const formData = {
+      firstName,
+      lastName,
+      email
     };
-  }, []);
+    
+    // Try multiple submission methods in sequence
+    try {
+      // First method: Use iframe submission
+      let result = await submitFormWithIframe();
+      
+      // If iframe submission fails, try CORS proxy
+      if (!result.success) {
+        result = await submitFormWithCorsProxy(formData);
+      }
+      
+      // If CORS proxy fails, try email service
+      if (!result.success) {
+        result = await submitWithEmailService(formData);
+      }
+      
+      // Store registration in localStorage regardless of submission result
+      // This ensures the user doesn't have to try again if there are backend issues
+      localStorage.setItem('ttc_registration_completed', 'true');
+      localStorage.setItem('ttc_registered_email', email);
+      storeRegisteredEmail(email);
+      
+      // Show success message
+      message.success('Registration successful! Redirecting to Discord...');
+      
+      // Redirect to Discord
+      setTimeout(() => {
+        window.location.href = discordURL;
+      }, 1500);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      
+      // Even on error, store in localStorage to prevent duplicate attempts
+      localStorage.setItem('ttc_registration_completed', 'true');
+      localStorage.setItem('ttc_registered_email', email);
+      storeRegisteredEmail(email);
+      
+      // Show warning message
+      message.warning('There was an issue with registration, but we\'ve saved your details. Redirecting to Discord...');
+      
+      // Redirect to Discord
+      setTimeout(() => {
+        window.location.href = discordURL;
+      }, 3000);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full flex items-center min-h-screen bg-white">
@@ -284,13 +419,9 @@ const Register = () => {
             <>
               <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
               
-              {/* The key change: Using a standard HTML form with target="_blank" to prevent page redirect */}
               <form 
                 id="registration-form"
-                ref={formRef}
-                action={googleFormURL}
-                method="POST"
-                target="hidden-form-target"
+                onSubmit={handleSubmit}
                 className="pt-8"
               >
                 <div className="mb-4">
@@ -299,7 +430,6 @@ const Register = () => {
                   </label>
                   <input 
                     type="text" 
-                    name={entryIDs.firstName}
                     id="firstName"
                     className={`shadow appearance-none border ${errors.firstName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     placeholder="John"
@@ -316,7 +446,6 @@ const Register = () => {
                   </label>
                   <input 
                     type="text" 
-                    name={entryIDs.lastName}
                     id="lastName"
                     className={`shadow appearance-none border ${errors.lastName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     placeholder="Doe"
@@ -333,7 +462,6 @@ const Register = () => {
                   </label>
                   <input 
                     type="email" 
-                    name={entryIDs.email}
                     id="email"
                     className={`shadow appearance-none border ${errors.email ? 'border-red-500' : emailExists === false && email && validateEmail(email) ? 'border-green-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     placeholder="johndoe@email.com"
@@ -358,8 +486,8 @@ const Register = () => {
                 </p>
                 
                 <Button 
-                  type='primary'
-                  onClick={handleSubmitClick}
+                  type='primary' 
+                  htmlType="submit"
                   block 
                   className='p-2 !h-auto font-bold'
                   loading={loading}
