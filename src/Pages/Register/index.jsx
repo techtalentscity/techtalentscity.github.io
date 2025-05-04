@@ -3,7 +3,7 @@ import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, message } from 'antd';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -15,39 +15,28 @@ const Register = () => {
   const [emailExists, setEmailExists] = useState(false);
   const [checkingEmail, setCheckingEmail] = useState(false);
   
-  // Google Form configuration
+  // Form reference for direct submission
+  const formRef = useRef(null);
+  
+  // Your Google Form ID from the URL
   const googleFormID = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
+  
+  // Form submission URL - using the formResponse endpoint
   const googleFormURL = `https://docs.google.com/forms/d/e/${googleFormID}/formResponse`;
+  
+  // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
-
-  // Entry IDs from the Google Form (verified from HTML)
+  
+  // Entry IDs from the Google Form (based on the HTML provided)
   const entryIDs = {
     firstName: "entry.2120631500", // First Name field entry ID
     lastName: "entry.976572827",   // Last Name field entry ID
-    email: "entry.1043611405"      // Email field entry ID (verify this matches your form)
-  };
-
-  // Create a custom hook to debounce function calls
-  const useDebounce = (callback, delay) => {
-    const [timeoutId, setTimeoutId] = useState(null);
-    
-    const debouncedFn = (...args) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      
-      const newTimeoutId = setTimeout(() => {
-        callback(...args);
-      }, delay);
-      
-      setTimeoutId(newTimeoutId);
-    };
-    
-    return debouncedFn;
+    email: "entry.1043611405"      // Email field entry ID
   };
 
   // Check if user has already registered when component mounts
   useEffect(() => {
+    // Check if the user has already registered on this device
     const registrationStatus = localStorage.getItem('ttc_registration_completed');
     if (registrationStatus === 'true') {
       setHasRegistered(true);
@@ -60,9 +49,10 @@ const Register = () => {
     return re.test(String(email).toLowerCase());
   };
   
-  // Get registered emails from localStorage
+  // Get registered emails from localStorage with error handling
   const getRegisteredEmails = () => {
     try {
+      // Parse the JSON array of registered emails
       const emailsJson = localStorage.getItem('ttc_registered_emails');
       if (!emailsJson) return [];
       
@@ -82,6 +72,7 @@ const Register = () => {
       const emailsLowerCase = email.toLowerCase();
       const existingEmails = getRegisteredEmails();
       
+      // Check if email already exists (case-insensitive)
       if (!existingEmails.some(e => e.toLowerCase() === emailsLowerCase)) {
         existingEmails.push(emailsLowerCase);
         localStorage.setItem('ttc_registered_emails', JSON.stringify(existingEmails));
@@ -91,8 +82,8 @@ const Register = () => {
     }
   };
 
-  // Check if the email already exists
-  const checkExistingEmailBase = async (emailToCheck) => {
+  // Check if the email already exists in the system
+  const checkExistingEmail = (emailToCheck) => {
     if (!emailToCheck || !validateEmail(emailToCheck)) {
       setCheckingEmail(false);
       return false;
@@ -101,7 +92,7 @@ const Register = () => {
     setCheckingEmail(true);
     
     try {
-      // First check localStorage for previously registered emails
+      // Check if email exists in localStorage
       const localEmails = getRegisteredEmails();
       const emailLowerCase = emailToCheck.toLowerCase();
       
@@ -112,7 +103,7 @@ const Register = () => {
         return true;
       }
       
-      // If we get here, the email is available
+      // If not in localStorage, assume it's not registered
       setEmailExists(false);
       
       // Clear any existing email error if it was about registration
@@ -133,15 +124,13 @@ const Register = () => {
       return false;
     }
   };
-  
-  // Create a debounced version of the email check function
-  const checkExistingEmail = useDebounce(checkExistingEmailBase, 300);
 
   // Handle email input change
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
     
+    // Clear existing email error if field is empty
     if (!newEmail) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -152,9 +141,11 @@ const Register = () => {
       return;
     }
     
+    // Validate email format
     if (!validateEmail(newEmail)) {
       setErrors(prev => ({ ...prev, email: 'Please enter a valid email' }));
     } else {
+      // Clear format error if it exists
       if (errors.email === 'Please enter a valid email') {
         setErrors(prev => {
           const newErrors = { ...prev };
@@ -162,21 +153,18 @@ const Register = () => {
           return newErrors;
         });
       }
-      
-      setCheckingEmail(true);
-      checkExistingEmail(newEmail);
     }
   };
   
-  // Handle email blur (when user leaves the email field)
-  const handleEmailBlur = async () => {
+  // Check email when focus leaves the field
+  const handleEmailBlur = () => {
     if (email && validateEmail(email)) {
-      await checkExistingEmailBase(email);
+      checkExistingEmail(email);
     }
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  // Handle form pre-submission validation
+  const handleSubmitClick = (e) => {
     e.preventDefault();
     
     // Check if already registered via localStorage
@@ -213,9 +201,8 @@ const Register = () => {
       isValid = false;
     }
     
-    // Double-check if email already exists before submission
-    setLoading(true);
-    const emailAlreadyExists = await checkExistingEmailBase(email);
+    // Check if email already exists
+    const emailAlreadyExists = checkExistingEmail(email);
     
     if (emailAlreadyExists) {
       newErrors.email = 'This email has already been registered';
@@ -225,54 +212,47 @@ const Register = () => {
     
     if (!isValid) {
       setErrors(newErrors);
-      setLoading(false);
       return;
     }
     
-    // Prepare form data for Google Forms submission
-    const formData = new FormData();
-    formData.append(entryIDs.firstName, firstName);
-    formData.append(entryIDs.lastName, lastName);
-    formData.append(entryIDs.email, email);
+    // Set loading state
+    setLoading(true);
     
-    // Additional hidden fields required by Google Forms
-    formData.append("fvv", "1");
-    formData.append("partialResponse", JSON.stringify([null,null,"-2735622603155026322"]));
-    formData.append("pageHistory", "0");
-    formData.append("fbzx", "-2735622603155026322");
+    // Store registration info in localStorage before submission
+    localStorage.setItem('ttc_registration_completed', 'true');
+    localStorage.setItem('ttc_registered_email', email);
+    storeRegisteredEmail(email);
     
-    // Submit to Google Form
-    try {
-      // Using fetch with no-cors mode
-      const response = await fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors', // Required for cross-origin requests to Google Forms
-        body: formData
-      });
-      
-      // Even with no-cors, we can't read the response but we can assume it worked
-      console.log('Form submitted to Google Forms');
-      
-      // Store registration info in localStorage
-      localStorage.setItem('ttc_registration_completed', 'true');
-      localStorage.setItem('ttc_registered_email', email);
-      
-      // Add to local registry of emails
-      storeRegisteredEmail(email);
-      
-      // Show success message
-      message.success('Registration successful! Redirecting to Discord...');
-      
-      // Redirect to Discord
-      setTimeout(() => {
-        window.location.href = discordURL;
-      }, 1500);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      message.error('Something went wrong. Please try again.');
-      setLoading(false);
-    }
+    // Show success message before form submission
+    message.success('Submitting registration... Please wait.');
+    
+    // Use a timeout to ensure the user sees the message before the form is submitted
+    setTimeout(() => {
+      // Submit the form directly
+      if (formRef.current) {
+        formRef.current.submit();
+        
+        // Redirect to Discord after a delay
+        setTimeout(() => {
+          window.location.href = discordURL;
+        }, 2000);
+      }
+    }, 1000);
   };
+  
+  // Create the hidden target iframe for form submission
+  useEffect(() => {
+    // Create a hidden iframe for the form target
+    const iframe = document.createElement('iframe');
+    iframe.name = 'hidden-form-target';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
+    // Clean up on component unmount
+    return () => {
+      document.body.removeChild(iframe);
+    };
+  }, []);
 
   return (
     <div className="w-full flex items-center min-h-screen bg-white">
@@ -304,13 +284,22 @@ const Register = () => {
             <>
               <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
               
-              <form onSubmit={handleSubmit} className="pt-8">
+              {/* The key change: Using a standard HTML form with target="_blank" to prevent page redirect */}
+              <form 
+                id="registration-form"
+                ref={formRef}
+                action={googleFormURL}
+                method="POST"
+                target="hidden-form-target"
+                className="pt-8"
+              >
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
                     First Name *
                   </label>
                   <input 
                     type="text" 
+                    name={entryIDs.firstName}
                     id="firstName"
                     className={`shadow appearance-none border ${errors.firstName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     placeholder="John"
@@ -327,6 +316,7 @@ const Register = () => {
                   </label>
                   <input 
                     type="text" 
+                    name={entryIDs.lastName}
                     id="lastName"
                     className={`shadow appearance-none border ${errors.lastName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     placeholder="Doe"
@@ -343,6 +333,7 @@ const Register = () => {
                   </label>
                   <input 
                     type="email" 
+                    name={entryIDs.email}
                     id="email"
                     className={`shadow appearance-none border ${errors.email ? 'border-red-500' : emailExists === false && email && validateEmail(email) ? 'border-green-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     placeholder="johndoe@email.com"
@@ -363,12 +354,12 @@ const Register = () => {
                 
                 <p className='pb-6 text-sm'>
                   By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
-                  acknowledge you've read our <span className='text-primary font-medium'>Privacy Policy</span>.
+                  acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
                 </p>
                 
                 <Button 
-                  type='primary' 
-                  htmlType="submit"
+                  type='primary'
+                  onClick={handleSubmitClick}
                   block 
                   className='p-2 !h-auto font-bold'
                   loading={loading}
