@@ -166,9 +166,6 @@ const Register = () => {
             <p>
               Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a>
             </p>
-            <p className="text-xs mt-3 text-gray-500">
-              Having trouble? Try submitting the <a href={`https://docs.google.com/forms/d/e/${googleFormID}/viewform`} target="_blank" rel="noopener noreferrer" className="text-primary underline">form directly</a>.
-            </p>
           </div>
         </Container>
       </div>
