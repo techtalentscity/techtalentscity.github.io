@@ -12,15 +12,8 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({});
   const [hasRegistered, setHasRegistered] = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
   
-  // Check if user has already registered when component mounts
-  useEffect(() => {
-    const registrationStatus = localStorage.getItem('ttc_registration_completed');
-    if (registrationStatus === 'true') {
-      setHasRegistered(true);
-    }
-  }, []);
-
   // Your updated Google Form ID from the new URL
   const googleFormID = "1FAIpQLSdc7dgkqLO6xXSZPlvIBUK61_6I3kcXGwM4GLJbuQdneBpVyA";
   
@@ -29,13 +22,50 @@ const Register = () => {
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
+  
+  // Additional validation for email uniqueness across devices
+  const checkExistingEmail = async (email) => {
+    try {
+      // This is just a client-side check that mimics a server check
+      // In a real application, you would call an API endpoint that checks against your database
+      
+      // For now, we'll use localStorage as a simple demonstration
+      const existingEmails = JSON.parse(localStorage.getItem('ttc_registered_emails') || '[]');
+      return existingEmails.includes(email);
+    } catch (error) {
+      console.error('Error checking email:', error);
+      return false;
+    }
+  };
+  
+  const storeRegisteredEmail = (email) => {
+    try {
+      const existingEmails = JSON.parse(localStorage.getItem('ttc_registered_emails') || '[]');
+      if (!existingEmails.includes(email)) {
+        existingEmails.push(email);
+        localStorage.setItem('ttc_registered_emails', JSON.stringify(existingEmails));
+      }
+    } catch (error) {
+      console.error('Error storing email:', error);
+    }
+  };
 
+  // Check if user has already registered when component mounts
+  useEffect(() => {
+    // Check if the user has already registered on this device
+    const registrationStatus = localStorage.getItem('ttc_registration_completed');
+    if (registrationStatus === 'true') {
+      setHasRegistered(true);
+    }
+  }, []);
+  
+  // Validate email format
   const validateEmail = (email) => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Check if already registered via localStorage
@@ -72,8 +102,18 @@ const Register = () => {
       isValid = false;
     }
     
+    // Check if email already exists in global registration list
+    const emailAlreadyExists = await checkExistingEmail(email);
+    if (emailAlreadyExists) {
+      newErrors.email = 'This email has already been registered';
+      message.error('This email has already been registered. Please use a different email.');
+      setEmailExists(true);
+      isValid = false;
+    }
+    
     if (!isValid) {
       setErrors(newErrors);
+      setLoading(false);
       return;
     }
     
@@ -97,6 +137,9 @@ const Register = () => {
       localStorage.setItem('ttc_registration_completed', 'true');
       localStorage.setItem('ttc_registered_email', email);
       
+      // Add to global list of registered emails
+      storeRegisteredEmail(email);
+      
       // Show success message
       message.success('Registration successful! Redirecting to Discord...');
       
@@ -110,6 +153,7 @@ const Register = () => {
       message.error('Something went wrong. Please try again.');
       setLoading(false);
     });
+  };
   };
 
   return (
