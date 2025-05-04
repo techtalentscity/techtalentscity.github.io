@@ -3,60 +3,22 @@ import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, Form, Input, message } from 'antd';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const Register = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [emailCheckLoading, setEmailCheckLoading] = useState(false);
-  const [emailExists, setEmailExists] = useState(false);
 
-  // Google Form submission URL
+  // Google Form submission URL - updated with the actual form URL
   const googleFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
-  // Function to check if email exists
-  const checkEmailExists = async (email) => {
-    if (!email || !email.includes('@')) return false;
-    
-    try {
-      setEmailCheckLoading(true);
-      
-      // Simulate API call to check if email exists in Google Sheet
-      // In a real implementation, this would be a fetch to your backend API
-      
-      // For testing purposes, let's check against a hardcoded list of emails
-      // Replace this with actual API implementation
-      const existingEmails = ['test@example.com', 'john@example.com', 'jane@example.com'];
-      const exists = existingEmails.includes(email.toLowerCase());
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      setEmailExists(exists);
-      return exists;
-    } catch (error) {
-      console.error('Error checking email:', error);
-      return false;
-    } finally {
-      setEmailCheckLoading(false);
-    }
-  };
-
   // Handle form submission
   const handleSubmit = async (values) => {
     try {
-      // Check one more time if email exists
-      const exists = await checkEmailExists(values.email);
-      
-      if (exists) {
-        message.error('This email is already registered');
-        return;
-      }
-      
       setLoading(true);
       
       // Create form data for submission
@@ -91,27 +53,6 @@ const Register = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Custom validator for email that also checks if email exists
-  const validateEmail = async (_, value) => {
-    if (!value) {
-      return Promise.reject('Email is required');
-    }
-
-    // Check email format
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (!emailRegex.test(value)) {
-      return Promise.reject('Invalid email format');
-    }
-
-    // Check if email already exists
-    const exists = await checkEmailExists(value);
-    if (exists) {
-      return Promise.reject('This email is already registered');
-    }
-
-    return Promise.resolve();
   };
 
   return (
@@ -154,16 +95,11 @@ const Register = () => {
               label="Email Address" 
               name="email" 
               rules={[
-                { validator: validateEmail }
+                { required: true, message: 'Email is required' },
+                { type: "email", message: 'Please enter a valid email' }
               ]}
-              validateStatus={emailExists ? 'error' : undefined}
-              help={emailExists ? 'This email is already registered' : undefined}
             >
-              <Input 
-                placeholder="johndoe@email.com" 
-                className='p-2' 
-                onChange={() => setEmailExists(false)}
-              />
+              <Input placeholder="johndoe@email.com" className='p-2' />
             </Form.Item>
             
             <p className='pb-6 text-sm'>
@@ -177,7 +113,6 @@ const Register = () => {
               className='p-2 !h-auto font-bold' 
               htmlType="submit"
               loading={loading}
-              disabled={emailCheckLoading || emailExists}
             >
               Register with us
             </Button>
