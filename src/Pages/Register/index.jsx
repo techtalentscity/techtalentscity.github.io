@@ -154,7 +154,6 @@ const Register = () => {
       setLoading(false);
     });
   };
-  };
 
   return (
     <div className="w-full flex items-center min-h-screen bg-white">
