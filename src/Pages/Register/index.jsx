@@ -1,100 +1,55 @@
-import { useState, useEffect } from 'react';
-import { Button, message } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import IMAGE from '../../assets/images/signupbg.png';
+import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
+import { Button, Form, Input, message } from 'antd';
+import { useState } from 'react';
 
 const Register = () => {
-  // Your specific Apps Script URL
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPlmv0E8XNRmocu5MUeOtbfmJH0K4EPUFvl6Wlsp3JtJ7dk4PzM0b1fCYESwKMngsX/exec';
-  const DISCORD_URL = "https://discord.gg/FwNQc7VJVk";
-
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: ''
-  });
-  const [errors, setErrors] = useState({});
-  const [hasRegistered, setHasRegistered] = useState(false);
 
-  // Check existing registration
-  useEffect(() => {
-    const registered = localStorage.getItem('ttc_registration_completed') === 'true';
-    setHasRegistered(registered);
-  }, []);
+  // Google Form submission URL - updated with the actual form URL
+  const googleFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
+  
+  // Discord redirect URL
+  const discordURL = "https://discord.gg/FwNQc7VJVk";
 
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const submitForm = async () => {
+  // Handle form submission
+  const handleSubmit = async (values) => {
     try {
-      // Important: Add no-cors mode and specific headers
-      const response = await fetch(APPS_SCRIPT_URL, {
+      setLoading(true);
+      
+      // Create form data for submission
+      const formData = new FormData();
+      
+      // Add entry fields with the correct Google Form field IDs
+      formData.append('emailAddress', values.email); // Email field
+      formData.append('entry.2137692021', values.firstName); // First Name field
+      formData.append('entry.1640115864', values.lastName); // Last Name field
+      
+      // Submit the form data
+      await fetch(googleFormURL, {
         method: 'POST',
-        mode: 'no-cors', // Required for Apps Script
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        mode: 'no-cors', // Important for cross-origin requests to Google Forms
+        body: formData
       });
       
-      // With no-cors mode, we can't read the response directly
-      // So we'll assume success if no network error
-      return true;
-    } catch (error) {
-      console.error('Submission error:', error);
-      throw new Error('Failed to submit form. Please try again.');
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (hasRegistered) {
-      window.location.href = DISCORD_URL;
-      return;
-    }
-    
-    if (!validateForm()) return;
-    
-    setLoading(true);
-    
-    try {
-      await submitForm();
+      // Show success message
+      message.success('Registration successful! Redirecting to Discord...');
       
-      // Store registration locally
-      localStorage.setItem('ttc_registration_completed', 'true');
-      localStorage.setItem('ttc_registered_email', formData.email);
+      // Clear form
+      form.resetFields();
       
-      message.success('Registration successful! Redirecting...');
+      // Redirect to Discord after a short delay
       setTimeout(() => {
-        window.location.href = DISCORD_URL;
-      }, 1500);
+        window.location.href = discordURL;
+      }, 2000);
+      
     } catch (error) {
-      message.error(error.message);
+      console.error('Error submitting form:', error);
+      message.error('Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -102,96 +57,89 @@ const Register = () => {
 
   return (
     <div className="w-full flex items-center min-h-screen bg-white">
-      <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto md:min-h-screen pt-12 md:pt-0">
-        <div className="md:px-16 lg:px-0 md:min-h-screen pt-6 md:pt-12 pb-12">
-          <Link to="/">
+      <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:min-h-screen pt-12 md:pt-0">
+        <Container className={'md:!px-16 lg:!px-0 md:min-h-screen pt-6 md:pt-12 pb-12'}>
+          <Link to={'/'}>
             <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
           </Link>
-          <p className="font-bold text-4xl py-5">Welcome to TechTalents City👋</p>
+          <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
+          <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
           
-          {hasRegistered ? (
-            <div className="text-center py-8">
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-5 rounded mb-6">
-                <p className="font-bold text-xl mb-2">You have already registered!</p>
-                <p>Your registration has been recorded.</p>
-                <p className="mt-2">
-                  Email: <span className="font-medium">{localStorage.getItem('ttc_registered_email')}</span>
-                </p>
-              </div>
-              <Button 
-                type="primary" 
-                onClick={() => window.location.href = DISCORD_URL}
-                className="p-2 !h-auto font-bold"
-              >
-                Join our Discord Community
-              </Button>
-            </div>
-          ) : (
-            <>
-              <p className="text-[#A2A2A2]">Kindly fill in your details below to create an account</p>
-              
-              <form onSubmit={handleSubmit} className="pt-8">
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    First Name *
-                  </label>
-                  <input 
-                    type="text"
-                    name="firstName"
-                    className={`shadow appearance-none border ${errors.firstName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                    placeholder="John"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                  />
-                  {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName}</p>}
-                </div>
-                
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Last Name *
-                  </label>
-                  <input 
-                    type="text"
-                    name="lastName"
-                    className={`shadow appearance-none border ${errors.lastName ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                    placeholder="Doe"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                  />
-                  {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName}</p>}
-                </div>
-                
-                <div className="mb-6">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Email Address *
-                  </label>
-                  <input 
-                    type="email"
-                    name="email"
-                    className={`shadow appearance-none border ${errors.email ? 'border-red-500' : ''} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                    placeholder="johndoe@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                  {errors.email && <p className="text-red-500 text-xs italic mt-1">{errors.email}</p>}
-                </div>
-                
-                <p className="pb-6 text-sm">
-                  By continuing, you agree to our Terms of Service and Privacy Policy.
-                </p>
-                
-                <Button 
-                  type="primary" 
-                  htmlType="submit"
-                  block 
-                  className="p-2 !h-auto font-bold"
-                  loading={loading}
-                >
-                  Register with us
-                </Button>
-              </form>
-            </>
-          )}
+          <Form 
+            layout='vertical' 
+            className='pt-8'
+            form={form}
+            onFinish={handleSubmit}
+          >
+            <Form.Item 
+              label="Email Address" 
+              name="email" 
+              rules={[
+                { required: true, message: 'Email is required' },
+                { type: "email", message: 'Please enter a valid email' }
+              ]}
+            >
+              <Input placeholder="johndoe@email.com" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="First Name" 
+              name="firstName" 
+              rules={[
+                { required: true, message: 'First Name is required' }
+              ]}
+            >
+              <Input placeholder="John" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Last Name" 
+              name="lastName" 
+              rules={[
+                { required: true, message: 'Last Name is required' }
+              ]}
+            >
+              <Input placeholder="Doe" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Password" 
+              name="password" 
+              rules={[
+                { required: true, message: 'Password is required' },
+                { min: 8, message: 'Password must be at least 8 characters' }
+              ]}
+            >
+              <Input.Password placeholder='*********' className='p-2' />
+            </Form.Item>
+            
+            <p className='pb-6 text-sm'>
+              By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
+              acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
+            </p>
+            
+            <Button 
+              type='primary' 
+              block 
+              className='p-2 !h-auto font-bold' 
+              htmlType="submit"
+              loading={loading}
+            >
+              Register with us
+            </Button>
+          </Form>
+          
+          <div className="mt-6 text-center">
+            <p>Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a></p>
+          </div>
+        </Container>
+      </div>
+      
+      <div className="hidden lg:w-[50%] h-full lg:flex justify-center items-center rounded-l-[60px] relative">
+        <img src={IMAGE} alt="login" className='w-full h-full object-cover rounded-l-[60px]' />
+        <div className="absolute top-40 left-20 2xl:left-40 inset-0 flex flex-col justify-center items-center bg-white bg-opacity-20 w-[400px] xl:w-[500px] h-[350px] text-white p-8">
+          <h2 className="text-3xl xl:text-5xl font-bold mb-4">Connecting Talents to Opportunities</h2>
+          <p className="text-lg text-[#F6F6F8]">Connect talent to opportunities and speed up your TechTalent badge earnings by creating and collaborating on projects.</p>
         </div>
       </div>
     </div>
