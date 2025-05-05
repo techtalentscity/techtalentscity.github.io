@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
-import { Button, Form, Input, Select, Steps, Collapse, Divider, Radio, Checkbox } from 'antd';
+import { Button, Form, Input, Select, Steps, Collapse } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 
 const { Step } = Steps;
 const { Panel } = Collapse;
-const { TextArea } = Input;
 const { Option } = Select;
 
 const CareerTest = () => {
@@ -309,13 +309,13 @@ const CareerTest = () => {
         name="learningComfort"
         rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Radio.Group>
-          <Radio value="very_comfortable">Very comfortable</Radio>
-          <Radio value="comfortable">Comfortable</Radio>
-          <Radio value="neutral">Neutral</Radio>
-          <Radio value="uncomfortable">Somewhat uncomfortable</Radio>
-          <Radio value="very_uncomfortable">Very uncomfortable</Radio>
-        </Radio.Group>
+        <Select placeholder="Select an option">
+          <Option value="very_comfortable">Very comfortable</Option>
+          <Option value="comfortable">Comfortable</Option>
+          <Option value="neutral">Neutral</Option>
+          <Option value="uncomfortable">Somewhat uncomfortable</Option>
+          <Option value="very_uncomfortable">Very uncomfortable</Option>
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -381,11 +381,11 @@ const CareerTest = () => {
         name="emergingTech"
         rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Radio.Group>
-          <Radio value="yes">Yes</Radio>
-          <Radio value="no">No</Radio>
-          <Radio value="maybe">Maybe</Radio>
-        </Radio.Group>
+        <Select placeholder="Select an option">
+          <Option value="yes">Yes</Option>
+          <Option value="no">No</Option>
+          <Option value="maybe">Maybe</Option>
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -393,10 +393,10 @@ const CareerTest = () => {
         name="certifications"
         rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Radio.Group>
-          <Radio value="yes">Yes</Radio>
-          <Radio value="no">No</Radio>
-        </Radio.Group>
+        <Select placeholder="Select an option">
+          <Option value="yes">Yes</Option>
+          <Option value="no">No</Option>
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -412,18 +412,20 @@ const CareerTest = () => {
         name="toolsUsed"
         rules={[{ required: true, message: 'Please select at least one option' }]}
       >
-        <Checkbox.Group>
-          <div className="grid grid-cols-2 gap-2">
-            <Checkbox value="git">Git/GitHub</Checkbox>
-            <Checkbox value="vscode">VS Code</Checkbox>
-            <Checkbox value="terminal">Command Line/Terminal</Checkbox>
-            <Checkbox value="figma">Figma/Design Tools</Checkbox>
-            <Checkbox value="aws">AWS/Cloud Platforms</Checkbox>
-            <Checkbox value="docker">Docker/Containers</Checkbox>
-            <Checkbox value="databases">Databases</Checkbox>
-            <Checkbox value="none">None of these</Checkbox>
-          </div>
-        </Checkbox.Group>
+        <Select
+          mode="multiple"
+          placeholder="Select options"
+          allowClear
+        >
+          <Option value="git">Git/GitHub</Option>
+          <Option value="vscode">VS Code</Option>
+          <Option value="terminal">Command Line/Terminal</Option>
+          <Option value="figma">Figma/Design Tools</Option>
+          <Option value="aws">AWS/Cloud Platforms</Option>
+          <Option value="docker">Docker/Containers</Option>
+          <Option value="databases">Databases</Option>
+          <Option value="none">None of these</Option>
+        </Select>
       </Form.Item>
 
       {/* Commitment & Goals */}
