@@ -75,18 +75,18 @@ const ProjectDetail = () => {
         </div>
 
         <div className="fixed bottom-8 right-8">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform" target="_blank" rel="noopener noreferrer">
+          <Link to="src/Pages/Apply/application.jsx">
             <Button type="primary" size="large" className="rounded-full px-8 py-4 font-bold">
               Apply for this Project
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
       <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform" target="_blank" rel="noopener noreferrer">
+        <Link to="src/Pages/Apply/application.jsx">
           <Button type="primary" size="large" block>Apply for this Project</Button>
-        </a>
+        </Link>
       </div>
     </Container>
   );
