@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom'; // For local routing
-import careerImg from '../../assets/images/vr2.png'; // Adjust path if needed
+import { useNavigate } from 'react-router-dom';
+import careerImg from '../../assets/images/vr2.png';
 
 const CareerTest = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/career/test'); // Navigates to the test route
+    navigate('/career/test'); // Route to test page
   };
 
   return (
