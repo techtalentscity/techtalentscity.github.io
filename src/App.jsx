@@ -28,7 +28,6 @@ import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
 // 404 Not Found Page
 import NotFound from "./Pages/NotFound";
-
 function App() {
   return (
     <>
@@ -48,6 +47,8 @@ function App() {
               {/* Project posting and application routes */}
               <Route path='/projectpost' element={<ProjectPost />} />
               <Route path='/apply' element={<Application />} />
+              {/* Added new route that also points to the Application component */}
+              <Route path='/apply/application' element={<Application />} />
             </Route>
             {/* Authentication Pages */}
             <Route path='/signin' element={<Login />} />
@@ -70,5 +71,4 @@ function App() {
     </>
   );
 }
-
 export default App;
