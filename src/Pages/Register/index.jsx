@@ -15,7 +15,7 @@ const Register = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { token } = theme.useToken();
 
-  // Google Form submission URL
+  // Google Form submission URL - from the screenshots
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
@@ -83,99 +83,74 @@ const Register = () => {
     try {
       setLoading(true);
       
-      // Creating an iframe to target form submission
-      const iframe = document.createElement('iframe');
-      iframe.name = 'hidden-iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
+      // Creating a hidden form for submission
+      const hiddenForm = document.createElement('form');
+      hiddenForm.method = 'POST';
+      hiddenForm.action = googleFormURL;
+      hiddenForm.target = '_blank'; // This opens the response in a new tab
+      hiddenForm.style.display = 'none';
       
-      // Create an actual HTML form element
-      const htmlForm = document.createElement('form');
-      htmlForm.method = 'POST';
-      htmlForm.action = googleFormURL;
-      htmlForm.target = 'hidden-iframe';
-      
-      // Set up field mappings - these must match exactly with the Google Form
-      const fieldMappings = {
-        firstName: 'entry.2120631500',
-        lastName: 'entry.976572827',
-        email: 'entry.721402290',
-        phone: 'entry.1212098036',
-        address: 'entry.219720729',
-        fieldOfStudy: 'entry.2063377438',
-        linkedinURL: 'entry.1917214759',
-        education: 'entry.1274339765',
-        ethnicity: 'entry.2100632816',
-        country: 'entry.1993189343',
-        participationType: 'entry.297604174',
-        businessName: 'entry.704048168',
-        businessWebsite: 'entry.810219629',
-        businessAddress: 'entry.1439399845'
+      // Adding all the form fields with the correct entry IDs
+      const fields = {
+        'entry.2120631500': values.firstName || '',
+        'entry.976572827': values.lastName || '',
+        'entry.721402290': values.email || '',
+        'entry.1212098036': values.phone || '',
+        'entry.219720729': values.address || '',
+        'entry.2063377438': values.fieldOfStudy || '',
+        'entry.1917214759': values.linkedinURL || '',
+        'entry.1274339765': values.education || '',
+        'entry.2100632816': values.ethnicity || '',
+        'entry.1993189343': values.country || '',
+        'entry.297604174': values.participationType || 'As an Individual',
+        'entry.704048168': values.businessName || 'N/A',
+        'entry.810219629': values.businessWebsite || 'N/A',
+        'entry.1439399845': values.businessAddress || 'N/A',
+        'fvv': '1',
+        'draftResponse': '[]',
+        'pageHistory': '0',
+        'fbzx': '-2539973905582193134' // Form ID from screenshots
       };
       
-      // Add form data as hidden inputs
-      Object.entries(fieldMappings).forEach(([fieldName, entryId]) => {
+      // Create hidden inputs for each field
+      Object.entries(fields).forEach(([name, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
-        input.name = entryId;
-        input.value = values[fieldName] || '';
-        htmlForm.appendChild(input);
+        input.name = name;
+        input.value = value;
+        hiddenForm.appendChild(input);
       });
       
-      // Add required Google Form metadata
-      const metadataFields = [
-        { name: 'fvv', value: '1' },
-        { name: 'draftResponse', value: '[]' },
-        { name: 'pageHistory', value: '0' },
-        { name: 'fbzx', value: '-2539973905582193134' } // Taken from the Google Form HTML
-      ];
-      
-      metadataFields.forEach(field => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = field.name;
-        input.value = field.value;
-        htmlForm.appendChild(input);
-      });
-      
-      // Append form to body and submit
-      document.body.appendChild(htmlForm);
-      
-      // Event listener for iframe load to detect submission completion
-      iframe.onload = () => {
-        // Remove the form and iframe
-        if (htmlForm.parentNode) {
-          htmlForm.parentNode.removeChild(htmlForm);
-        }
-        
-        if (iframe.parentNode) {
-          iframe.parentNode.removeChild(iframe);
-        }
-        
-        // Show success message and redirect
-        message.success('Registration successful! Redirecting to Discord...');
-        
-        // Clear form
-        form.resetFields();
-        
-        // Reset captcha verification
-        setCaptchaVerified(false);
-        generateMathProblem();
-        
-        // Redirect to Discord after a short delay
-        setTimeout(() => {
-          window.location.href = discordURL;
-        }, 2000);
-        
-        setLoading(false);
-      };
+      // Add the form to the body
+      document.body.appendChild(hiddenForm);
       
       // Submit the form
-      htmlForm.submit();
+      hiddenForm.submit();
+      
+      // Remove the form from the DOM after submission
+      setTimeout(() => {
+        document.body.removeChild(hiddenForm);
+      }, 500);
+      
+      // Show success message
+      message.success('Registration successful! Redirecting to Discord...');
+      
+      // Clear form
+      form.resetFields();
+      
+      // Reset captcha verification
+      setCaptchaVerified(false);
+      generateMathProblem();
+      
+      // Redirect to Discord after a short delay
+      setTimeout(() => {
+        window.location.href = discordURL;
+      }, 3000);
       
     } catch (error) {
       console.error('Error submitting form:', error);
       message.error('Registration failed. Please try again.');
+    } finally {
       setLoading(false);
     }
   };
