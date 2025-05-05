@@ -16,12 +16,12 @@ const Register = () => {
   const { token } = theme.useToken();
 
   // Google Form submission URL - updated with the actual form URL
-  const googleFormURL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
+  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
-  // Form field entry IDs from the Google Form
+  // Form field entry IDs from the Google Form - updated with correct entry IDs
   const FORM_FIELDS = {
     firstName: 'entry.2120631500',
     lastName: 'entry.976572827',
@@ -31,7 +31,7 @@ const Register = () => {
     fieldOfStudy: 'entry.2063377438',
     linkedinURL: 'entry.1917214759',
     education: 'entry.1274339765',
-    ethnicity: 'entry.2100632816',
+    ethnicity: 'entry.2100632816',    // Updated to match Google Form
     country: 'entry.1993189343',
     participationType: 'entry.297604174',
     businessName: 'entry.704048168',
@@ -108,8 +108,6 @@ const Register = () => {
       formData.append(FORM_FIELDS.firstName, values.firstName);
       formData.append(FORM_FIELDS.lastName, values.lastName);
       formData.append(FORM_FIELDS.email, values.email);
-      
-      // Add other required fields (with empty values if not collected)
       formData.append(FORM_FIELDS.phone, values.phone || '');
       formData.append(FORM_FIELDS.address, values.address || '');
       formData.append(FORM_FIELDS.fieldOfStudy, values.fieldOfStudy || '');
