@@ -2,9 +2,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
-import { Button, Form, Input, message, Select, Radio, Steps, theme } from 'antd';
+import { Button, Form, Input, message, Steps, theme } from 'antd';
 import { useState, useEffect } from 'react';
-import { UserOutlined, SolutionOutlined, BankOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { UserOutlined, SolutionOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Register = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { token } = theme.useToken();
 
-  // Google Form submission URL - from the screenshots
+  // Updated Google Form submission URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
@@ -54,11 +54,10 @@ const Register = () => {
   // Handle next step
   const next = async () => {
     try {
-      // Validate current step fields
+      // Validate current step fields based on the updated form structure
       await form.validateFields(
-        currentStep === 0 ? ['firstName', 'lastName', 'email', 'phone', 'address'] :
-        currentStep === 1 ? ['fieldOfStudy', 'linkedinURL', 'education', 'ethnicity', 'country'] :
-        currentStep === 2 ? ['participationType', 'businessName', 'businessWebsite', 'businessAddress'] : 
+        currentStep === 0 ? ['firstName', 'lastName', 'email', 'phone'] :
+        currentStep === 1 ? ['fieldOfStudy'] : 
         ['captcha']
       );
       
@@ -90,26 +89,17 @@ const Register = () => {
       hiddenForm.target = '_blank'; // This opens the response in a new tab
       hiddenForm.style.display = 'none';
       
-      // Adding all the form fields with the correct entry IDs
+      // Adding the updated form fields with the correct entry IDs
       const fields = {
         'entry.2120631500': values.firstName || '',
         'entry.976572827': values.lastName || '',
         'entry.721402290': values.email || '',
         'entry.1212098036': values.phone || '',
-        'entry.219720729': values.address || '',
         'entry.2063377438': values.fieldOfStudy || '',
-        'entry.1917214759': values.linkedinURL || '',
-        'entry.1274339765': values.education || '',
-        'entry.2100632816': values.ethnicity || '',
-        'entry.1993189343': values.country || '',
-        'entry.297604174': values.participationType || 'As an Individual',
-        'entry.704048168': values.businessName || 'N/A',
-        'entry.810219629': values.businessWebsite || 'N/A',
-        'entry.1439399845': values.businessAddress || 'N/A',
         'fvv': '1',
         'draftResponse': '[]',
         'pageHistory': '0',
-        'fbzx': '-2539973905582193134' // Form ID from screenshots
+        'fbzx': '-569501532876574451' // Updated form ID from the form HTML
       };
       
       // Create hidden inputs for each field
@@ -155,7 +145,7 @@ const Register = () => {
     }
   };
   
-  // Steps configuration
+  // Updated steps configuration to match the simplified Google Form
   const steps = [
     {
       title: 'Personal Info',
@@ -196,23 +186,11 @@ const Register = () => {
           >
             <Input placeholder="+1234567890" className='p-2' />
           </Form.Item>
-          
-          <Form.Item 
-            label="Address" 
-            name="address" 
-            rules={[{ required: true, message: 'Address is required' }]}
-          >
-            <Input.TextArea 
-              placeholder="123 Main St, City, Country" 
-              className='p-2' 
-              autoSize={{ minRows: 2, maxRows: 4 }}
-            />
-          </Form.Item>
         </>
       ),
     },
     {
-      title: 'Education',
+      title: 'Field of Study',
       icon: <SolutionOutlined />,
       content: (
         <>
@@ -220,113 +198,9 @@ const Register = () => {
             label="Field of Study" 
             name="fieldOfStudy" 
             rules={[{ required: true, message: 'Field of study is required' }]}
-            tooltip="Kindly tell us your highest-level course of study (e.g., Nursing, Project Management, etc.)"
+            tooltip="Kindly tell us your field of study (e.g., Computer Science, Nursing, Project Management, etc.)"
           >
             <Input placeholder="Computer Science" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="LinkedIn Profile URL" 
-            name="linkedinURL" 
-            rules={[
-              { required: true, message: 'LinkedIn profile URL is required' },
-              { type: "url", message: 'Please enter a valid URL' }
-            ]}
-            tooltip="Share the link to your LinkedIn profile"
-          >
-            <Input placeholder="https://linkedin.com/in/yourprofile" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Highest Level of Education" 
-            name="education" 
-            rules={[{ required: true, message: 'Education level is required' }]}
-          >
-            <Select placeholder="Select your education level">
-              <Select.Option value="High School Diploma or Equivalent">High School Diploma or Equivalent</Select.Option>
-              <Select.Option value="Associate Degree">Associate Degree</Select.Option>
-              <Select.Option value="Bachelor's Degree">Bachelor's Degree</Select.Option>
-              <Select.Option value="Master's Degree">Master's Degree</Select.Option>
-              <Select.Option value="Professional Degree (e.g., JD, MD)">Professional Degree (e.g., JD, MD)</Select.Option>
-              <Select.Option value="Doctorate (Ph.D., Ed.D., etc.)">Doctorate (Ph.D., Ed.D., etc.)</Select.Option>
-            </Select>
-          </Form.Item>
-          
-          <Form.Item 
-            label="Ethnicity" 
-            name="ethnicity" 
-            rules={[{ required: true, message: 'Ethnicity is required' }]}
-            tooltip="Your response is confidential and will be used for demographic insights only"
-          >
-            <Select placeholder="Select your ethnicity">
-              <Select.Option value="African">African</Select.Option>
-              <Select.Option value="African American">African American</Select.Option>
-              <Select.Option value="Asian">Asian</Select.Option>
-              <Select.Option value="Hispanic / Latino">Hispanic / Latino</Select.Option>
-              <Select.Option value="Native American / Indigenous">Native American / Indigenous</Select.Option>
-              <Select.Option value="Middle Eastern / North African">Middle Eastern / North African</Select.Option>
-              <Select.Option value="Pacific Islander">Pacific Islander</Select.Option>
-              <Select.Option value="White / Caucasian">White / Caucasian</Select.Option>
-            </Select>
-          </Form.Item>
-          
-          <Form.Item 
-            label="Country of Residence" 
-            name="country" 
-            rules={[{ required: true, message: 'Country is required' }]}
-          >
-            <Input placeholder="United States" className='p-2' />
-          </Form.Item>
-        </>
-      ),
-    },
-    {
-      title: 'Business Info',
-      icon: <BankOutlined />,
-      content: (
-        <>
-          <Form.Item 
-            label="How would you like to participate?" 
-            name="participationType" 
-            rules={[{ required: true, message: 'Participation type is required' }]}
-            initialValue="As an Individual"
-          >
-            <Radio.Group>
-              <Radio value="As an Individual">As an Individual</Radio>
-              <Radio value="As a Company">As a Company</Radio>
-              <Radio value="In Both Capacities">In Both Capacities</Radio>
-            </Radio.Group>
-          </Form.Item>
-          
-          <Form.Item 
-            label="Business or Company Name" 
-            name="businessName" 
-            tooltip="If you are not representing a company, please enter 'N/A'"
-            initialValue="N/A"
-          >
-            <Input placeholder="Company Name or N/A" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Business Website" 
-            name="businessWebsite" 
-            tooltip="If you are not representing a company, please enter 'N/A'"
-            initialValue="N/A"
-          >
-            <Input placeholder="https://company.com or N/A" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Business Address" 
-            name="businessAddress" 
-            tooltip="If you are not representing a company, please enter 'N/A'"
-            initialValue="N/A"
-          >
-            <Input.TextArea 
-              placeholder="Business Address or N/A" 
-              className='p-2' 
-              autoSize={{ minRows: 2, maxRows: 4 }}
-            />
           </Form.Item>
         </>
       ),
