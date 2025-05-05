@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeWrapper from "./components/HomeWrapper";
 import TopScroll from "./components/TopScroll";
 
-// Pages
+// Main Pages
 import { 
   About, 
   AllProjects, 
@@ -24,8 +24,8 @@ import ProjectPost from "./Pages/post/projectpost";
 import Application from "./Pages/Apply/application";
 
 // Career Test Pages
-import CareerTestLanding from "./Pages/Home/CareerTest"; // ✅ Landing with button
-import CareerTestPage from "./Pages/career/test";        // ✅ Actual test content
+import CareerTestLanding from "./Pages/Home/CareerTestLanding"; // ✅ CTA with button
+import CareerTest from "./Pages/career/test";                   // ✅ Actual test page
 
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
@@ -34,7 +34,7 @@ import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notifica
 import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
 
-// 404 Not Found
+// Not Found Page
 import NotFound from "./Pages/NotFound";
 
 function App() {
@@ -42,7 +42,8 @@ function App() {
     <BrowserRouter>
       <TopScroll>
         <Routes>
-          {/* Public Pages inside HomeWrapper */}
+
+          {/* Public Pages wrapped in layout */}
           <Route element={<HomeWrapper />}>
             <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
@@ -55,17 +56,17 @@ function App() {
             <Route path='/projectpost' element={<ProjectPost />} />
             <Route path='/apply' element={<Application />} />
             <Route path='/apply/application' element={<Application />} />
-            
+
             {/* Career Test Routes */}
-            <Route path='/career' element={<CareerTestLanding />} />      {/* CTA landing with button */}
-            <Route path='/career/test' element={<CareerTestPage />} />    {/* Test page */}
+            <Route path='/career' element={<CareerTestLanding />} />  {/* Landing page with button */}
+            <Route path='/career/test' element={<CareerTest />} />    {/* Test form/page */}
           </Route>
 
-          {/* Authentication Pages */}
+          {/* Authentication Routes */}
           <Route path='/signin' element={<Login />} />
           <Route path='/signup' element={<Register />} />
 
-          {/* Dashboard Pages */}
+          {/* Dashboard Routes */}
           <Route element={<Dashboard />}>
             <Route path='/dashboard' element={<MainDashboard />} />
             <Route path='/all-projects' element={<AllProjects />} />
@@ -76,7 +77,7 @@ function App() {
             <Route path='/settings/edit-profile' element={<EditProfile />} />
           </Route>
 
-          {/* Catch-all for unmatched routes */}
+          {/* Catch-All for 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </TopScroll>
