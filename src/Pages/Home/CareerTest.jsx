@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button } from 'antd'; // ✅ Import Ant Design Button
-import careerImg from '../../assets/images/vr2.png'; // ✅ Corrected path
+import { Button } from 'antd'; // Import Ant Design Button
+import careerImg from '../../assets/images/vr2.png'; // Corrected path
 
 const CareerTest = () => {
   const handleClick = () => {
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform', '_blank');
+    // Updated URL to the career test instead of Google Forms
+    window.open('/career/test', '_self');
   };
 
   return (
@@ -12,7 +13,7 @@ const CareerTest = () => {
       <div className="container mx-auto px-6">
         <div className="bg-white rounded-xl p-10 shadow-xl">
           <h3 className="text-3xl font-bold text-gray-800 mb-6">Know Your Career Path in Tech</h3>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="mb-8">
             To help you navigate your career path toward tech and discover the right project for you, take our career test now.
           </p>
           <div className="relative h-[32rem] overflow-hidden rounded-xl group">
