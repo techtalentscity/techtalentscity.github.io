@@ -7,7 +7,6 @@ import TextArea from 'antd/es/input/TextArea';
 
 const { Step } = Steps;
 const { Panel } = Collapse;
-
 const ProjectPost = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
