@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
@@ -8,7 +8,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaLinkedin } from 'react-icons/fa';
 
 const Register = () => {
-  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -67,67 +66,6 @@ const Register = () => {
       setLoading(false);
     }
   };
-
-  // Handle form submission
-  const handleSubmit = async (values) => {
-    if (!captchaVerified) {
-      message.error('Please verify you are human by solving the math problem');
-      return;
-    }
-
-    try {
-      setLoading(true);
-      
-      // Create form data for submission
-      const formData = new FormData();
-      
-      // Add entry fields with the correct Google Form field IDs
-      formData.append(FORM_FIELDS.firstName, values.firstName);
-      formData.append(FORM_FIELDS.lastName, values.lastName);
-      formData.append(FORM_FIELDS.email, values.email);
-      formData.append(FORM_FIELDS.phone, values.phone || '');
-      formData.append(FORM_FIELDS.address, values.address || '');
-      formData.append(FORM_FIELDS.fieldOfStudy, values.fieldOfStudy || '');
-      formData.append(FORM_FIELDS.linkedinURL, values.linkedinURL || '');
-      formData.append(FORM_FIELDS.education, values.education || '');
-      formData.append(FORM_FIELDS.ethnicity, values.ethnicity || '');
-      formData.append(FORM_FIELDS.country, values.country || '');
-      formData.append(FORM_FIELDS.participationType, values.participationType || 'As an Individual');
-      formData.append(FORM_FIELDS.businessName, values.businessName || 'N/A');
-      formData.append(FORM_FIELDS.businessWebsite, values.businessWebsite || 'N/A');
-      formData.append(FORM_FIELDS.businessAddress, values.businessAddress || 'N/A');
-      
-      // Submit the form data
-      await fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for cross-origin requests to Google Forms
-        body: formData
-      });
-      
-      // Show success message
-      message.success('Registration successful! Redirecting to Discord...');
-      
-      // Clear form
-      form.resetFields();
-      
-      // Reset captcha verification
-      setCaptchaVerified(false);
-      generateMathProblem();
-      
-      // Redirect to Discord after a short delay
-      setTimeout(() => {
-        window.location.href = discordURL;
-      }, 2000);
-      
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      message.error('Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  // Form content
 
   return (
     <div className="w-full flex items-center min-h-screen bg-white">
