@@ -4,8 +4,6 @@ import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, Form, Input, message } from 'antd';
-import { FcGoogle } from 'react-icons/fc';
-import { FaLinkedin } from 'react-icons/fa';
 
 const Register = () => {
   const [form] = Form.useForm();
@@ -144,9 +142,6 @@ const Register = () => {
           
           <div className="mt-6 text-center">
             <p>Already have an account? <Link to='/signin' className='text-primary font-bold'>Log In</Link></p>
-            <p className="my-4">Or</p>
-            <Button className='mb-4 h-auto p-2' block>Register with Google <FcGoogle size={17} /></Button>
-            <Button className='mb-2 h-auto p-2' block>Register with LinkedIn <FaLinkedin size={17} color='#0288D1' /></Button>
           </div>
         </Container>
       </div>
