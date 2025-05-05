@@ -10,10 +10,13 @@ const { Step } = Steps;
 const Application = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Google Form URL for project applications
+  // Google Form URL for project applications - DO NOT CHANGE THIS URL
   const applicationFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdutVajcCzd-S2wuFfUNbnkx8KoklFFn8clR0xbYG9XBRdkvg/viewform";
   
-  // Function to direct user to Google Form
+  // URL for viewing all available projects
+  const projectsListURL = "/projects"; // Update this with your actual projects listing page URL
+  
+  // Function to direct user to Google Form - ensures form opens correctly
   const redirectToApplicationForm = () => {
     window.open(applicationFormURL, '_blank');
   };
@@ -29,7 +32,7 @@ const Application = () => {
             <div className="mb-4">
               <h4 className="font-bold mb-2">Introduction</h4>
               <p className="mb-3">
-                Welcome to <strong>TechTalents City</strong>! We're excited that you're interested in applying to work on a project. 
+                Welcome to <strong>TechTalents City Project Application Form</strong>! We're excited that you're interested in applying to work on a project. 
                 This guide will help you understand what information you need to provide in your application.
               </p>
               <p>
@@ -39,17 +42,53 @@ const Application = () => {
             </div>
             
             <div className="mb-4">
-              <h4 className="font-bold mb-2">Badge Roles and Skill Levels</h4>
+              <h4 className="font-bold mb-2">Project Selection</h4>
               <p className="mb-3">
-                When applying, you'll need to specify your Badge Role and Skill Level:
+                To start, you'll need to <strong>enter the title of the project</strong> you are applying for. This should be clear and concise.
+              </p>
+              <p className="mb-2">
+                👉 <em>If you're unsure of the project title, <Link to={projectsListURL} className="text-primary font-medium">click here to view all available projects</Link>.</em>
+              </p>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Badge Roles</h4>
+              <p className="mb-3">
+                Next, <strong>select the badge role</strong> that best represents your expected contribution to the project. Badge roles reflect the area in which you'll be most active:
               </p>
               <ul className="list-disc pl-6 mb-3">
-                <li><strong>Badge Roles:</strong> TechDev, TechLead, or TechArch</li>
-                <li><strong>Skill Levels:</strong> Novice, Beginner, Intermediate, or Expert</li>
+                <li><strong>TechPO</strong> – Product Owners (Project direction and management)</li>
+                <li><strong>TechQA</strong> – Quality Assurance/Testers</li>
+                <li><strong>TechLeads</strong> – Non-technical contributors (e.g., project coordinators)</li>
+                <li><strong>TechArchs</strong> – Low-code/No-code developers and solution architects</li>
+                <li><strong>TechGuard</strong> – Network and Cybersecurity professionals</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Skill Levels</h4>
+              <p className="mb-3">
+                You will then be asked to <strong>indicate your skill level</strong>, based on the number of projects you've completed within your domain:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li><strong>Novice</strong> – 2 or more completed projects</li>
+                <li><strong>Beginner</strong> – 5 or more completed projects</li>
+                <li><strong>Intermediate</strong> – 10 or more completed projects</li>
+                <li><strong>Expert</strong> – 15 or more completed projects</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Relevant Skills</h4>
+              <p className="mb-3">
+                After that, <strong>enter the skills you have</strong> that are relevant to your chosen role. These may include:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li><strong>Technical skills</strong> such as programming, cloud tools, design, or data analysis</li>
+                <li><strong>Non-technical skills</strong> such as communication, research, planning, or user testing</li>
               </ul>
               <p>
-                Your role and skill level will determine the type of projects you're matched with and
-                any compensation for paid projects.
+                Make sure your skills align with the requirements of the project and the role you selected.
               </p>
             </div>
             
@@ -61,8 +100,8 @@ const Application = () => {
                 project's private channel where you can collaborate with other team members.
               </p>
               <p>
-                If you have any questions during the application process, feel free to reach out to us 
-                for assistance!
+                By submitting a well-prepared application, you increase your chances of being selected and positioned 
+                where your skills can make the greatest impact. We look forward to seeing how you'll contribute to TechTalents City!
               </p>
             </div>
           </div>
@@ -97,13 +136,14 @@ const Application = () => {
               <li className="mb-2">• First and Last Name</li>
               <li className="mb-2">• Email Address</li>
               <li className="mb-2">• Project Title you're applying for</li>
-              <li className="mb-2">• TechTalents Badge Role (TechDev, TechLead, TechArch)</li>
-              <li className="mb-2">• Your relevant skills</li>
+              <li className="mb-2">• TechTalents Badge Role (TechPO, TechQA, TechLeads, TechArchs, TechGuard)</li>
+              <li className="mb-2">• Your relevant skills (technical and non-technical)</li>
               <li className="mb-2">• Badge Skill Level (Novice, Beginner, Intermediate, Expert)</li>
               <li className="mb-2">• Contact number</li>
             </ul>
           </div>
           
+          {/* Important: This button must remain visible and functional */}
           <Button 
             type="primary" 
             block 
