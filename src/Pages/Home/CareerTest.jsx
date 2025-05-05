@@ -4,8 +4,8 @@ import careerImg from '../../assets/images/vr2.png'; // Corrected path
 
 const CareerTest = () => {
   const handleClick = () => {
-    // Updated URL to the career test instead of Google Forms
-    window.open('/career/test', '_self');
+    // Updated URL to the correct career test route
+    window.open('/career-test', '_self');
   };
 
   return (
