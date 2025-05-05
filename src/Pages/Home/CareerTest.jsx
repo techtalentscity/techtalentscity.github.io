@@ -1,11 +1,13 @@
 import React from 'react';
-import { Button } from 'antd'; // Import Ant Design Button
-import careerImg from '../../assets/images/vr2.png'; // Corrected path
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom'; // For local routing
+import careerImg from '../../assets/images/vr2.png'; // Adjust path if needed
 
 const CareerTest = () => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    // Updated URL to the correct career test route
-    window.open('/career/test', '_self');
+    navigate('/career/test'); // Navigates to the test route
   };
 
   return (
@@ -13,7 +15,7 @@ const CareerTest = () => {
       <div className="container mx-auto px-6">
         <div className="bg-white rounded-xl p-10 shadow-xl">
           <h3 className="text-3xl font-bold text-gray-800 mb-6">Know Your Career Path in Tech</h3>
-          <p className="mb-8">
+          <p className="text-xl text-gray-600 mb-8">
             To help you navigate your career path toward tech and discover the right project for you, take our career test now.
           </p>
           <div className="relative h-[32rem] overflow-hidden rounded-xl group">
@@ -23,10 +25,6 @@ const CareerTest = () => {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-center items-center text-white p-8">
-              <div className="text-7xl mb-6 transition-transform hover:scale-110">
-                <div className="bg-white/30 rounded-full p-4 backdrop-blur-md border-2 border-white/20">
-                </div>
-              </div>
               <h4 className="mt-4 text-2xl font-bold text-center">Find Your Best-Fit Tech Role</h4>
               <p className="text-lg mt-3 bg-black/40 px-4 py-2 rounded-lg">Career Test: 5 minutes</p>
               <Button 
