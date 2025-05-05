@@ -75,7 +75,7 @@ const ProjectDetail = () => {
         </div>
 
         <div className="fixed bottom-8 right-8">
-          <Link to="src/Pages/Apply/application.jsx">
+          <Link to="/apply/application">
             <Button type="primary" size="large" className="rounded-full px-8 py-4 font-bold">
               Apply for this Project
             </Button>
@@ -84,7 +84,7 @@ const ProjectDetail = () => {
       </div>
       <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
         <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
-        <Link to="src/Pages/Apply/application.jsx">
+        <Link to="/apply/application">
           <Button type="primary" size="large" block>Apply for this Project</Button>
         </Link>
       </div>
