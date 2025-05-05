@@ -200,7 +200,7 @@ const Register = () => {
           </Form>
           
           <div className="mt-6 text-center">
-            <p>Already have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/viewform" target="_blank" rel="noopener noreferrer" className='text-primary font-bold'>Log In</a></p>
+            <p>Already have an account? <Link to="/signin" className='text-primary font-bold'>Log In</Link></p>
           </div>
         </Container>
       </div>
