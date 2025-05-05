@@ -152,7 +152,7 @@ const Application = () => {
                 Next, <strong>select the badge role</strong> that best represents your expected contribution to the project. Badge roles reflect the area in which you'll be most active:
               </p>
               <ul className="list-disc pl-6 mb-3">
-                <li><strong>TechPO</strong> – Product Owners</li>
+                <li><strong>TechMO</strong> – Mentors</li>
                 <li><strong>TechQA</strong> – Quality Assurance/Testers</li>
                 <li><strong>TechLeads</strong> – Non-technical contributors</li>
                 <li><strong>TechArchs</strong> – Low-code/No-code developers</li>
@@ -263,7 +263,7 @@ const Application = () => {
         rules={[{ required: true, message: 'Badge role is required' }]}
       >
         <Select placeholder="Select your badge role" className="w-full">
-          <Select.Option value="TechPO">TechPO – Product Owners</Select.Option>
+          <Select.Option value="TechMO">TechMO – Mentors</Select.Option>
           <Select.Option value="TechQA">TechQA – Quality Assurance/Testers</Select.Option>
           <Select.Option value="TechLeads">TechLeads – Non-technical contributors</Select.Option>
           <Select.Option value="TechArchs">TechArchs – Low-code/No-code developers</Select.Option>
