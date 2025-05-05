@@ -1,8 +1,12 @@
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const PostAProject = () => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing', '_blank');
+    // Navigate to your internal project post form instead of opening Google Form
+    navigate('/projectpost');
   };
 
   return (
