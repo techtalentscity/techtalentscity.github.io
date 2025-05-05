@@ -24,11 +24,10 @@ const Login = () => {
       // Create form data for submission
       const formData = new FormData();
       
-      // Add entry fields with the correct Google Form field IDs
-      // We're only collecting email, but the form requires first and last name
+      // Add entry fields with the correct Google Form field IDs from the Login form
+      formData.append('entry.2120631500', values.firstName); // First Name field
+      formData.append('entry.976572827', values.lastName); // Last Name field
       formData.append('entry.1086641252', values.email); // Email field
-      formData.append('entry.2120631500', ''); // First Name field (empty)
-      formData.append('entry.976572827', ''); // Last Name field (empty)
       
       // Submit the form data
       await fetch(googleFormURL, {
@@ -38,7 +37,7 @@ const Login = () => {
       });
       
       // Show success message
-      message.success('Email verification successful! Redirecting to Discord...');
+      message.success('Login successful! Redirecting to Discord...');
       
       // Clear form
       form.resetFields();
@@ -50,7 +49,7 @@ const Login = () => {
       
     } catch (error) {
       console.error('Error submitting form:', error);
-      message.error('Verification failed. Please try again.');
+      message.error('Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -64,13 +63,33 @@ const Login = () => {
             <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
           </Link>
           <p className='font-bold text-4xl py-5'>Welcome back👋</p>
-          <p className='text-[#A2A2A2]'>Please enter the email address used during registration. We will direct you to our channel if found. If not, you will be asked to register first.</p>
+          <p className='text-[#A2A2A2]'>Please enter your details to access our community</p>
           <Form 
             form={form}
             layout='vertical' 
             className='pt-8'
             onFinish={handleSubmit}
           >
+            <Form.Item 
+              label="First Name" 
+              name="firstName" 
+              rules={[
+                { required: true, message: 'First Name is required' }
+              ]}
+            >
+              <Input placeholder="John" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Last Name" 
+              name="lastName" 
+              rules={[
+                { required: true, message: 'Last Name is required' }
+              ]}
+            >
+              <Input placeholder="Doe" className='p-2' />
+            </Form.Item>
+            
             <Form.Item 
               label="Email address" 
               name="email" 
@@ -89,7 +108,7 @@ const Login = () => {
               className='p-2 !h-auto font-bold'
               loading={loading}
             >
-              Check Email
+              Login
             </Button>
           </Form>
           <div className="mt-6 text-center">
