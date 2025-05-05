@@ -1,37 +1,99 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
-import logo from '../../assets/images/logo-black.png'
-import { Button, Form, Input } from 'antd';
-import { FcGoogle } from 'react-icons/fc';
-import { FaLinkedin } from 'react-icons/fa';
+import logo from '../../assets/images/logo-black.png';
+import { Button, Form, Input, message } from 'antd';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+
+  // Google Form submission URL
+  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSd52W9tUiUlS_THFr9HFI_xzds11rvUq_7IfHeT-oqMPD6aCg/formResponse";
+  
+  // Discord redirect URL
+  const discordURL = "https://discord.gg/U3RkU6gR";
+
+  // Handle form submission
+  const handleSubmit = async (values) => {
+    try {
+      setLoading(true);
+      
+      // Create form data for submission
+      const formData = new FormData();
+      
+      // Add entry fields with the correct Google Form field IDs
+      // We're only collecting email, but the form requires first and last name
+      formData.append('entry.1086641252', values.email); // Email field
+      formData.append('entry.2120631500', ''); // First Name field (empty)
+      formData.append('entry.976572827', ''); // Last Name field (empty)
+      
+      // Submit the form data
+      await fetch(googleFormURL, {
+        method: 'POST',
+        mode: 'no-cors', // Important for cross-origin requests to Google Forms
+        body: formData
+      });
+      
+      // Show success message
+      message.success('Email verification successful! Redirecting to Discord...');
+      
+      // Clear form
+      form.resetFields();
+      
+      // Redirect to Discord after a short delay
+      setTimeout(() => {
+        window.location.href = discordURL;
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      message.error('Verification failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="w-full flex items-center h-screen bg-white">
-      <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:h-screen pt-12 md:pt-0">
-        <Container className={'md:!px-16 lg:!px-0 md:h-screen pt-6 md:pt-12 pb-12'}>
+    <div className="w-full flex items-center min-h-screen bg-white">
+      <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:min-h-screen pt-12 md:pt-0">
+        <Container className={'md:!px-16 lg:!px-0 md:min-h-screen pt-6 md:pt-12 pb-12'}>
           <Link to={'/'}>
             <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
           </Link>
           <p className='font-bold text-4xl py-5'>Welcome back👋</p>
-          <p className='text-[#A2A2A2]'>Login to access all your data</p>
-          <Form layout='vertical' className='pt-8'>
-            <Form.Item label="Email address" name="email" rules={[{ required: true, message: 'Email is required', type: "email" }]}>
+          <p className='text-[#A2A2A2]'>Please enter the email address used during registration. We will direct you to our channel if found. If not, you will be asked to register first.</p>
+          <Form 
+            form={form}
+            layout='vertical' 
+            className='pt-8'
+            onFinish={handleSubmit}
+          >
+            <Form.Item 
+              label="Email address" 
+              name="email" 
+              rules={[
+                { required: true, message: 'Email is required' },
+                { type: "email", message: 'Please enter a valid email' }
+              ]}
+            >
               <Input placeholder="johndoe@email.com" className='p-2' />
             </Form.Item>
-            <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Password is required' }]}>
-              <Input.Password placeholder='*********' className='p-2' />
-            </Form.Item>
-            <p className='pb-6 font-bold text-primary'>Forgot Password?</p>
-            <Button type='primary' block className='p-2 !h-auto font-bold'>Log in</Button>
+            
+            <Button 
+              type='primary' 
+              htmlType="submit"
+              block 
+              className='p-2 !h-auto font-bold'
+              loading={loading}
+            >
+              Check Email
+            </Button>
           </Form>
           <div className="mt-6 text-center">
-            <p>Don&apos;t have an account? <Link to='/signup' className='text-primary font-bold'>Register with us</Link></p>
-            <p className="my-4">Or</p>
-            <Button className='mb-4 h-auto p-2' block>Register with Google <FcGoogle size={17} /></Button>
-            <Button className='mb-2 h-auto p-2' block>Register with LinkedIn <FaLinkedin size={17} color='#0288D1' /></Button>
-            {/* <Button block> with Microsoft</Button> */}
+            <p>Don&apos;t have an account? <Link to='/register' className='text-primary font-bold'>Register with us</Link></p>
           </div>
         </Container>
       </div>
