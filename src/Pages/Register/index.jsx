@@ -15,13 +15,13 @@ const Register = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { token } = theme.useToken();
 
-  // Google Form submission URL - updated with the actual form URL
+  // Google Form submission URL - direct form response URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
-  // Form field entry IDs from the Google Form - updated with correct entry IDs
+  // Form field entry IDs from the Google Form - exact matches from the HTML
   const FORM_FIELDS = {
     firstName: 'entry.2120631500',
     lastName: 'entry.976572827',
@@ -31,7 +31,7 @@ const Register = () => {
     fieldOfStudy: 'entry.2063377438',
     linkedinURL: 'entry.1917214759',
     education: 'entry.1274339765',
-    ethnicity: 'entry.2100632816',    // Updated to match Google Form
+    ethnicity: 'entry.2100632816',
     country: 'entry.1993189343',
     participationType: 'entry.297604174',
     businessName: 'entry.704048168',
@@ -91,6 +91,45 @@ const Register = () => {
     setCurrentStep(currentStep - 1);
   };
 
+  // Create a hidden iframe for form submission
+  const createHiddenIframe = () => {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    return iframe;
+  };
+
+  // Alternative direct form submission method
+  const submitFormDirectly = (formData) => {
+    // Create the form element
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = googleFormURL;
+    form.target = '_blank';
+
+    // Add all the form data as hidden input fields
+    for (const [key, value] of formData.entries()) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      form.appendChild(input);
+    }
+
+    // Append the form to the document body
+    document.body.appendChild(form);
+
+    // Submit the form
+    form.submit();
+
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(form);
+    }, 100);
+
+    return true;
+  };
+
   // Handle form submission
   const handleSubmit = async (values) => {
     if (!captchaVerified) {
@@ -120,12 +159,56 @@ const Register = () => {
       formData.append(FORM_FIELDS.businessWebsite, values.businessWebsite || 'N/A');
       formData.append(FORM_FIELDS.businessAddress, values.businessAddress || 'N/A');
       
-      // Submit the form data
-      await fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for cross-origin requests to Google Forms
-        body: formData
-      });
+      // Add required form submission fields (these are often needed for Google Forms)
+      formData.append('fvv', '1');
+      formData.append('pageHistory', '0');
+      formData.append('fbzx', '5976024385900961541'); // Use the fbzx value from the Google Form
+      
+      // Try direct form submission method
+      const submissionResult = submitFormDirectly(formData);
+      
+      // Fallback method
+      if (!submissionResult) {
+        try {
+          // Use fetch API with no-cors mode
+          await fetch(googleFormURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          });
+        } catch (fetchError) {
+          console.error('Fetch error:', fetchError);
+          
+          // Final fallback: create iframe and submit form inside it
+          try {
+            const iframe = createHiddenIframe();
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            const formInIframe = iframeDoc.createElement('form');
+            formInIframe.action = googleFormURL;
+            formInIframe.method = 'POST';
+            
+            for (const [key, value] of formData.entries()) {
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = key;
+              input.value = value;
+              formInIframe.appendChild(input);
+            }
+            
+            iframeDoc.body.appendChild(formInIframe);
+            formInIframe.submit();
+            
+            // Remove iframe after form submission
+            setTimeout(() => {
+              document.body.removeChild(iframe);
+            }, 1000);
+          } catch (iframeError) {
+            console.error('Iframe submission error:', iframeError);
+            throw new Error('All submission methods failed');
+          }
+        }
+      }
       
       // Show success message
       message.success('Registration successful! Redirecting to Discord...');
