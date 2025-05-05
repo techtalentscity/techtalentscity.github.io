@@ -152,10 +152,11 @@ const Application = () => {
                 Next, <strong>select the badge role</strong> that best represents your expected contribution to the project. Badge roles reflect the area in which you'll be most active:
               </p>
               <ul className="list-disc pl-6 mb-3">
-                <li><strong>TechPO</strong> – Product Owners (Project direction and management)</li>
-                <li><strong>TechQA</strong> – Quality Assurance/Testers</li>
-                <li><strong>TechLeads</strong> – Non-technical contributors (e.g., project coordinators)</li>
-                <li><strong>TechArchs</strong> – Low-code/No-code developers and solution architects</li>
+                <li><strong>TechMO</strong> – Tech Mentors</li>
+                <li><strong>TechQA</strong> – Quality Testers</li>
+                <li><strong>TechDev</strong> – Coding Developers</li>
+                <li><strong>TechLeads</strong> – Non-Technical Professionals</li>
+                <li><strong>TechArchs</strong> – Low/No-Coding Developers</li>
                 <li><strong>TechGuard</strong> – Network and Cybersecurity professionals</li>
               </ul>
             </div>
