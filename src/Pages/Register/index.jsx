@@ -15,7 +15,7 @@ const Register = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { token } = theme.useToken();
 
-  // Google Form submission URL - updated with the actual form URL
+  // Google Form submission URL - updated with the formResponse endpoint
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
@@ -98,6 +98,12 @@ const Register = () => {
       formData.append(FORM_FIELDS.email, values.email);
       formData.append(FORM_FIELDS.phone, values.phone || '');
       formData.append(FORM_FIELDS.fieldOfStudy, values.fieldOfStudy || '');
+      
+      // Add required form metadata for successful submission
+      formData.append('fvv', '1');
+      formData.append('pageHistory', '0');
+      formData.append('fbzx', '4159064419365296645'); // Form identifier from the form HTML
+      formData.append('submit', 'Submit');
       
       // Submit the form data
       await fetch(googleFormURL, {
