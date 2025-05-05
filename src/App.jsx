@@ -17,8 +17,9 @@ import {
   ResetPassword, 
   Settings 
 } from "./Pages";
-// Import ProjectPost component with the EXACT correct path
+// Import Project Posting and Application components
 import ProjectPost from "./Pages/post/projectpost";
+import Application from "./Pages/Apply/application";
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
@@ -44,8 +45,9 @@ function App() {
               <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
               <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
               <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
-              {/* ProjectPost route with capital P to match your URL convention */}
-              <Route path='/ProjectPost' element={<ProjectPost />} />
+              {/* Project posting and application routes */}
+              <Route path='/projectpost' element={<ProjectPost />} />
+              <Route path='/apply' element={<Application />} />
             </Route>
             {/* Authentication Pages */}
             <Route path='/signin' element={<Login />} />
