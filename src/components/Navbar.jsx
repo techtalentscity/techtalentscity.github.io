@@ -48,10 +48,12 @@ const Navbar = () => {
                     <NavLink to={'/about'} className={({ isActive }) => isActive ? "font-bold text-[#3B3CC6]" : "" }>About</NavLink>
                 </div>
                 <div className="hidden lg:flex items-center gap-2">
-                    {/* Login button still goes to Google Form directly */}
-                    <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">Login</a>
-                    </Button>
+                    {/* Updated Login button to use internal login page */}
+                    <Link to={'/login'}>
+                        <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">
+                            Login
+                        </Button>
+                    </Link>
                     
                     {/* Sign Up button now links to your registration page */}
                     <Link to={'/signup'}>
@@ -77,8 +79,10 @@ const Navbar = () => {
                     </ul>
                     <div className="text-primary font-semibold bg-[#fff] px-4 py-4 text-sm lg:text-sm grid grid-cols-2 gap-2">
                         <div className='flex justify-center items-center border-r-2'>
-                            {/* Login link remains the same */}
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpsu5--x7KuLo4UMhJ19KCLKSPmpsnZrwpoYf2iA3X--XxDQ/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">Login</a>
+                            {/* Updated Login link to use internal login page */}
+                            <Link to={'/login'} onClick={() => setFlip(!flip)}>
+                                Login
+                            </Link>
                         </div>
                         <div className='flex justify-center items-center'>
                             {/* Sign Up now links to your registration page */}
