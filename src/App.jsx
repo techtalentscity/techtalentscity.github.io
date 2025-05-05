@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeWrapper from "./components/HomeWrapper";
 import TopScroll from "./components/TopScroll";
-
 // Pages
 import { 
   About, 
@@ -18,14 +17,14 @@ import {
   ResetPassword, 
   Settings 
 } from "./Pages";
-
+// Import ProjectPost component
+import ProjectPost from "./Pages/Projects/ProjectPost";
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
 import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notification-System";
 import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
-
 // 404 Not Found Page
 import NotFound from "./Pages/NotFound";
 
@@ -35,7 +34,6 @@ function App() {
       <BrowserRouter>
         <TopScroll>
           <Routes>
-
             {/* Public Pages inside HomeWrapper */}
             <Route element={<HomeWrapper />}>
               <Route path='/' element={<Home />} />
@@ -46,12 +44,12 @@ function App() {
               <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
               <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
               <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
+              {/* Add the Project Posting Form */}
+              <Route path='/project-post' element={<ProjectPost />} />
             </Route>
-
             {/* Authentication Pages */}
             <Route path='/signin' element={<Login />} />
             <Route path='/signup' element={<Register />} />
-
             {/* Dashboard Pages */}
             <Route element={<Dashboard />}>
               <Route path='/dashboard' element={<MainDashboard />} />
@@ -62,10 +60,8 @@ function App() {
               <Route path='/settings/reset-password' element={<ResetPassword />} />
               <Route path='/settings/edit-profile' element={<EditProfile />} />
             </Route>
-
             {/* 404 Catch-All Page */}
             <Route path="*" element={<NotFound />} />
-
           </Routes>
         </TopScroll>
       </BrowserRouter>
