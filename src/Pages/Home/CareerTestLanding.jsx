@@ -1,9 +1,11 @@
+// src/Pages/Home/CareerTestLanding.jsx
+
 import React from 'react';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import careerImg from '../../assets/images/vr2.png';
 
-const CareerTest = () => {
+const CareerTestLanding = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -42,4 +44,4 @@ const CareerTest = () => {
   );
 };
 
-export default CareerTest;
+export default CareerTestLanding;
