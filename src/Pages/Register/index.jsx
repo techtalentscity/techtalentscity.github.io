@@ -15,7 +15,7 @@ const Register = () => {
   // Google Form submission URL - with formResponse endpoint
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
-  // Discord redirect URL
+  // Discord redirect URL - consider making this configurable
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
   // Form field entry IDs from the Google Form
@@ -82,16 +82,16 @@ const Register = () => {
       formData.append('pageHistory', '0');
       formData.append('fbzx', '4159064419365296645'); // Form identifier from the form HTML
       formData.append('draftResponse', '[]');
-      formData.append('pageHistory', '0');
       formData.append('submit', 'Submit');
       
       // Submit the form data
-      await fetch(googleFormURL, {
+      const response = await fetch(googleFormURL, {
         method: 'POST',
         mode: 'no-cors', // Important for cross-origin requests to Google Forms
         body: formData
       });
       
+      // Note: With no-cors mode, we can't check response status
       // Show success message
       message.success('Registration successful! Redirecting to Discord...');
       
@@ -120,7 +120,7 @@ const Register = () => {
       <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:min-h-screen pt-12 md:pt-0">
         <Container className={'md:!px-16 lg:!px-0 md:min-h-screen pt-6 md:pt-12 pb-12'}>
           <Link to={'/'}>
-            <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
+            <img src={logo} alt="TechTalents City Logo" className="w-[250px] object-cover object-center" />
           </Link>
           <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
           <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
@@ -235,7 +235,7 @@ const Register = () => {
       </div>
       
       <div className="hidden lg:w-[50%] h-full lg:flex justify-center items-center rounded-l-[60px] relative">
-        <img src={IMAGE} alt="login" className='w-full h-full object-cover rounded-l-[60px]' />
+        <img src={IMAGE} alt="TechTalents City Signup Background" className='w-full h-full object-cover rounded-l-[60px]' />
         <div className="absolute top-40 left-20 2xl:left-40 inset-0 flex flex-col justify-center items-center bg-white bg-opacity-20 w-[400px] xl:w-[500px] h-[350px] text-white p-8">
           <h2 className="text-3xl xl:text-5xl font-bold mb-4">Connecting Talents to Opportunities</h2>
           <p className="text-lg text-[#F6F6F8]">Connect talent to opportunities and speed up your TechTalent badge earnings by creating and collaborating on projects.</p>
