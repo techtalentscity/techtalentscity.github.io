@@ -1,7 +1,7 @@
 import Hero from "./Hero";
 import HireTalent from "./HireTalent";
 import HomeProjects from "./HomeProjects";
-import CareerTest from "./CareerTest"; // ✅ New import added
+import CareerTestLanding from "./CareerTestLanding"; // ✅ Updated import name
 import TechPathNavigator from "./TechPathNavigator";
 import TechBadges from "./TechBadges";
 import Testimonials from "./Testimonial";
@@ -11,7 +11,7 @@ const Home = () => {
     <div>
       <Hero />
       <HomeProjects />
-      <CareerTest /> {/* ✅ Insert CareerTest here after HomeProjects */}
+      <CareerTestLanding /> {/* ✅ Updated usage */}
       <TechPathNavigator />
       <TechBadges />
       <Testimonials />
