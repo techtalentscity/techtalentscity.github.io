@@ -48,14 +48,11 @@ const Navbar = () => {
                     <NavLink to={'/about'} className={({ isActive }) => isActive ? "font-bold text-[#3B3CC6]" : "" }>About</NavLink>
                 </div>
                 <div className="hidden lg:flex items-center gap-2">
-                    {/* Updated Login button to use internal login page */}
-                    <Link to={'/login'}>
+                    <Link to={'/signin'}>
                         <Button className="rounded-2xl py-[10px] px-8 font-bold bg-[#F3F3FF] hover:!bg-[#F3F3FF] border-0">
                             Login
                         </Button>
                     </Link>
-                    
-                    {/* Sign Up button now links to your registration page */}
                     <Link to={'/signup'}>
                         <Button type="primary" className="rounded-2xl py-[10px] px-8 font-bold shadow-none">Sign Up</Button>
                     </Link>
@@ -79,13 +76,11 @@ const Navbar = () => {
                     </ul>
                     <div className="text-primary font-semibold bg-[#fff] px-4 py-4 text-sm lg:text-sm grid grid-cols-2 gap-2">
                         <div className='flex justify-center items-center border-r-2'>
-                            {/* Updated Login link to use internal login page */}
-                            <Link to={'/login'} onClick={() => setFlip(!flip)}>
+                            <Link to={'/signin'} onClick={() => setFlip(!flip)}>
                                 Login
                             </Link>
                         </div>
                         <div className='flex justify-center items-center'>
-                            {/* Sign Up now links to your registration page */}
                             <Link to={'/signup'} onClick={() => setFlip(!flip)}>
                                 Sign Up
                             </Link>
