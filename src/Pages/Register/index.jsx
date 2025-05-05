@@ -2,9 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
-import { Button, Form, Input, message, Steps, theme } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useState, useEffect } from 'react';
-import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,16 +11,14 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [mathProblem, setMathProblem] = useState({ num1: 0, num2: 0, result: 0 });
   const [captchaVerified, setCaptchaVerified] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const { token } = theme.useToken();
 
-  // Google Form submission URL - updated with the formResponse endpoint
+  // Google Form submission URL - with formResponse endpoint
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
-  // Form field entry IDs from the Google Form - updated with correct entry IDs
+  // Form field entry IDs from the Google Form
   const FORM_FIELDS = {
     firstName: 'entry.2120631500',
     lastName: 'entry.976572827',
@@ -60,25 +57,6 @@ const Register = () => {
     }
   };
 
-  // Handle next step
-  const next = async () => {
-    try {
-      // Validate current step fields
-      await form.validateFields(
-        currentStep === 0 ? ['firstName', 'lastName', 'email', 'phone', 'fieldOfStudy'] : ['captcha']
-      );
-      
-      setCurrentStep(currentStep + 1);
-    } catch (error) {
-      console.error('Validation failed:', error);
-    }
-  };
-
-  // Handle previous step
-  const prev = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
   // Handle form submission
   const handleSubmit = async (values) => {
     if (!captchaVerified) {
@@ -103,6 +81,8 @@ const Register = () => {
       formData.append('fvv', '1');
       formData.append('pageHistory', '0');
       formData.append('fbzx', '4159064419365296645'); // Form identifier from the form HTML
+      formData.append('draftResponse', '[]');
+      formData.append('pageHistory', '0');
       formData.append('submit', 'Submit');
       
       // Submit the form data
@@ -134,110 +114,6 @@ const Register = () => {
       setLoading(false);
     }
   };
-  
-  // Steps configuration
-  const steps = [
-    {
-      title: 'Registration Info',
-      icon: <UserOutlined />,
-      content: (
-        <>
-          <Form.Item 
-            label="First Name" 
-            name="firstName" 
-            rules={[{ required: true, message: 'First Name is required' }]}
-          >
-            <Input placeholder="John" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Last Name" 
-            name="lastName" 
-            rules={[{ required: true, message: 'Last Name is required' }]}
-          >
-            <Input placeholder="Doe" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Email Address" 
-            name="email" 
-            rules={[
-              { required: true, message: 'Email is required' },
-              { type: "email", message: 'Please enter a valid email' }
-            ]}
-          >
-            <Input placeholder="johndoe@email.com" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Contact No" 
-            name="phone" 
-            rules={[{ required: true, message: 'Contact number is required' }]}
-          >
-            <Input placeholder="+1234567890" className='p-2' />
-          </Form.Item>
-          
-          <Form.Item 
-            label="Field of Study" 
-            name="fieldOfStudy" 
-            rules={[{ required: true, message: 'Field of study is required' }]}
-            tooltip="Please tell us your field of study"
-          >
-            <Input placeholder="Computer Science" className='p-2' />
-          </Form.Item>
-        </>
-      ),
-    },
-    {
-      title: 'Verification',
-      icon: <CheckCircleOutlined />,
-      content: (
-        <>
-          <div className="bg-gray-100 p-4 mb-6 rounded-md">
-            <p className="font-medium mb-2">Verify you're human</p>
-            <p className="mb-4">Solve this simple math problem: {mathProblem.num1} + {mathProblem.num2} = ?</p>
-            
-            <Form.Item 
-              name="captcha" 
-              rules={[{ required: true, message: 'Please solve the math problem' }]}
-            >
-              <Input 
-                placeholder="Enter your answer" 
-                className='p-2 mb-2' 
-                type="number"
-              />
-            </Form.Item>
-            
-            <div className="flex gap-2">
-              <Button 
-                onClick={verifyCaptcha} 
-                className="font-medium"
-              >
-                Verify
-              </Button>
-              <Button 
-                onClick={generateMathProblem} 
-                className="font-medium"
-              >
-                New Problem
-              </Button>
-            </div>
-            
-            {captchaVerified && (
-              <div className="mt-2 text-green-600 font-medium">
-                ✓ Verification successful
-              </div>
-            )}
-          </div>
-          
-          <p className='pb-6 text-sm'>
-            By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
-            acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
-          </p>
-        </>
-      ),
-    },
-  ];
 
   return (
     <div className="w-full flex items-center min-h-screen bg-white">
@@ -249,52 +125,107 @@ const Register = () => {
           <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
           <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
           
-          <div className="mt-8 mb-8">
-            <Steps
-              current={currentStep}
-              items={steps.map(item => ({
-                title: item.title,
-                icon: item.icon,
-              }))}
-            />
-          </div>
-          
           <Form 
             layout='vertical' 
             form={form}
             onFinish={handleSubmit}
             className="mt-8"
           >
-            <div className="steps-content">
-              {steps[currentStep].content}
-            </div>
-            <div className="steps-action mt-6 flex justify-between">
-              {currentStep > 0 && (
-                <Button 
-                  style={{ margin: '0 8px' }} 
-                  onClick={prev}
-                >
-                  Previous
-                </Button>
-              )}
+            <Form.Item 
+              label="First Name" 
+              name="firstName" 
+              rules={[{ required: true, message: 'First Name is required' }]}
+            >
+              <Input placeholder="John" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Last Name" 
+              name="lastName" 
+              rules={[{ required: true, message: 'Last Name is required' }]}
+            >
+              <Input placeholder="Doe" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Email Address" 
+              name="email" 
+              rules={[
+                { required: true, message: 'Email is required' },
+                { type: "email", message: 'Please enter a valid email' }
+              ]}
+            >
+              <Input placeholder="johndoe@email.com" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Contact No" 
+              name="phone" 
+              rules={[{ required: true, message: 'Contact number is required' }]}
+            >
+              <Input placeholder="+1234567890" className='p-2' />
+            </Form.Item>
+            
+            <Form.Item 
+              label="Field of Study" 
+              name="fieldOfStudy" 
+              rules={[{ required: true, message: 'Field of study is required' }]}
+              tooltip="Please tell us your field of study"
+            >
+              <Input placeholder="Computer Science" className='p-2' />
+            </Form.Item>
+            
+            <div className="bg-gray-100 p-4 mb-6 rounded-md">
+              <p className="font-medium mb-2">Verify you're human</p>
+              <p className="mb-4">Solve this simple math problem: {mathProblem.num1} + {mathProblem.num2} = ?</p>
               
-              {currentStep < steps.length - 1 && (
-                <Button type="primary" onClick={next}>
-                  Next
-                </Button>
-              )}
+              <Form.Item 
+                name="captcha" 
+                rules={[{ required: true, message: 'Please solve the math problem' }]}
+              >
+                <Input 
+                  placeholder="Enter your answer" 
+                  className='p-2 mb-2' 
+                  type="number"
+                />
+              </Form.Item>
               
-              {currentStep === steps.length - 1 && (
+              <div className="flex gap-2">
                 <Button 
-                  type="primary" 
-                  htmlType="submit" 
-                  loading={loading}
-                  disabled={!captchaVerified}
+                  onClick={verifyCaptcha} 
+                  className="font-medium"
                 >
-                  Register with us
+                  Verify
                 </Button>
+                <Button 
+                  onClick={generateMathProblem} 
+                  className="font-medium"
+                >
+                  New Problem
+                </Button>
+              </div>
+              
+              {captchaVerified && (
+                <div className="mt-2 text-green-600 font-medium">
+                  ✓ Verification successful
+                </div>
               )}
             </div>
+            
+            <p className='pb-6 text-sm'>
+              By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
+              acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
+            </p>
+            
+            <Button 
+              type="primary" 
+              htmlType="submit" 
+              loading={loading}
+              disabled={!captchaVerified}
+              className="w-full"
+            >
+              Register with us
+            </Button>
           </Form>
           
           <div className="mt-6 text-center">
