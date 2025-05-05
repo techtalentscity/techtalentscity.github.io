@@ -1,16 +1,10 @@
 // src/Pages/Home/CareerTestLanding.jsx
 import React from 'react';
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import careerImg from '../../assets/images/vr2.png'; // Make sure this path is correct
 
 const CareerTestLanding = () => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/career/test'); // Route to the actual test page
-  };
-
   return (
     <section className="py-24 bg-white" id="career-test">
       <div className="container mx-auto px-6">
@@ -19,7 +13,6 @@ const CareerTestLanding = () => {
           <p className="text-xl text-gray-600 mb-8">
             To help you navigate your career path toward tech and discover the right project for you, take our career test now.
           </p>
-
           <div className="relative h-[32rem] overflow-hidden rounded-xl group">
             <img 
               src={careerImg} 
@@ -31,13 +24,15 @@ const CareerTestLanding = () => {
               <h4 className="mt-4 text-2xl font-bold text-center">Find Your Best-Fit Tech Role</h4>
               <p className="text-lg mt-3 bg-black/40 px-4 py-2 rounded-lg">Career Test: 5 minutes</p>
               
-              <Button 
-                type="primary"
-                className="mt-8 py-5 px-12 font-bold text-lg"
-                onClick={handleClick}
-              >
-                Take Career Test Now
-              </Button>
+              {/* Using an anchor tag with target="_blank" to open in a new page */}
+              <a href="/career/test" target="_blank" rel="noopener noreferrer">
+                <Button 
+                  type="primary"
+                  className="mt-8 py-5 px-12 font-bold text-lg"
+                >
+                  Take Career Test Now
+                </Button>
+              </a>
             </div>
           </div>
         </div>
