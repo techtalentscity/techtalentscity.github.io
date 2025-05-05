@@ -1,5 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+
+// Form field entry IDs from the Google Form - moved outside component for better performance
+const FORM_FIELDS = {
+  fullName: 'entry.2120631500',
+  emailAddress: 'entry.289230066',
+  whatDoYouLikeDoing: 'entry.826500830',
+  workingFor: 'entry.90149729',
+  preferToWork: 'entry.103804273',
+  learningComfort: 'entry.126397704',
+  techExcitement: 'entry.2046710176',
+  techAreas: 'entry.1595563124',
+  techActivities: 'entry.608716717',
+  personalStrength: 'entry.1388922789',
+  motivation: 'entry.1879980715',
+  experienceLevel: 'entry.75336198',
+  emergingAreas: 'entry.614410637',
+  certifications: 'entry.1379512189',
+  certificationsList: 'entry.1262447611',
+  toolsUsed: 'entry.141495548',
+  timeCommitment: 'entry.44204949',
+  workImpact: 'entry.2125471600',
+  guidanceNeeded: 'entry.1508247044',
+  futureGoals: 'entry.686755157'
+};
 
 const TTCCareerForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -33,35 +57,11 @@ const TTCCareerForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [showGuide, setShowGuide] = useState(false);
 
-  // Google Form submission URL - this would connect to the response sheet
+  // Google Form submission URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSe1ZJ2I0uhJg1xDywYRgwaYpqBGzwAg-zIZ-Exjey2CORZhvA/formResponse";
   
-  // Form field entry IDs from the Google Form
-  const FORM_FIELDS = {
-    fullName: 'entry.2120631500',
-    emailAddress: 'entry.289230066',
-    whatDoYouLikeDoing: 'entry.826500830',
-    workingFor: 'entry.90149729',
-    preferToWork: 'entry.103804273',
-    learningComfort: 'entry.126397704',
-    techExcitement: 'entry.2046710176',
-    techAreas: 'entry.1595563124',
-    techActivities: 'entry.608716717',
-    personalStrength: 'entry.1388922789',
-    motivation: 'entry.1879980715',
-    experienceLevel: 'entry.75336198',
-    emergingAreas: 'entry.614410637',
-    certifications: 'entry.1379512189',
-    certificationsList: 'entry.1262447611',
-    toolsUsed: 'entry.141495548',
-    timeCommitment: 'entry.44204949',
-    workImpact: 'entry.2125471600',
-    guidanceNeeded: 'entry.1508247044',
-    futureGoals: 'entry.686755157'
-  };
-
-  // Generate new math problem for CAPTCHA
-  const generateMathProblem = () => {
+  // Generate new math problem for CAPTCHA - wrapped in useCallback
+  const generateMathProblem = useCallback(() => {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
     const result = num1 + num2;
@@ -69,19 +69,19 @@ const TTCCareerForm = () => {
     setMathProblem({ num1, num2, result });
     setCaptchaAnswer('');
     setCaptchaVerified(false);
-  };
+  }, []);
 
   // Initialize with a math problem on component mount
   useEffect(() => {
     generateMathProblem();
-  }, []);
+  }, [generateMathProblem]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+    setFormValues(prev => ({
+      ...prev,
       [name]: value
-    });
+    }));
   };
 
   const validateEmail = (email) => {
@@ -111,13 +111,19 @@ const TTCCareerForm = () => {
 
   // Verify CAPTCHA and submit form if correct
   const handleVerifyCaptcha = () => {
-    if (parseInt(captchaAnswer) === mathProblem.result) {
-      setCaptchaVerified(true);
-      submitFormToGoogleSheet();
-    } else {
-      setCaptchaVerified(false);
-      generateMathProblem();
-      setErrorMessage("Incorrect answer. Please try again.");
+    try {
+      const userAnswer = parseInt(captchaAnswer, 10);
+      if (userAnswer === mathProblem.result) {
+        setCaptchaVerified(true);
+        submitFormToGoogleSheet();
+      } else {
+        setCaptchaVerified(false);
+        generateMathProblem();
+        setErrorMessage("Incorrect answer. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error verifying CAPTCHA:", error);
+      setErrorMessage("An error occurred. Please try again.");
     }
   };
   
@@ -182,6 +188,36 @@ const TTCCareerForm = () => {
       }
     }, 1500);
   };
+
+  // Reset form to initial state
+  const resetForm = useCallback(() => {
+    setCurrentStep(0);
+    setFormValues({
+      fullName: '',
+      emailAddress: '',
+      whatDoYouLikeDoing: '',
+      workingFor: '',
+      preferToWork: '',
+      learningComfort: '',
+      techExcitement: '',
+      techAreas: '',
+      techActivities: '',
+      personalStrength: '',
+      motivation: '',
+      experienceLevel: '',
+      emergingAreas: '',
+      certifications: '',
+      certificationsList: '',
+      toolsUsed: '',
+      timeCommitment: '',
+      workImpact: '',
+      guidanceNeeded: '',
+      futureGoals: ''
+    });
+    setSubmissionComplete(false);
+    generateMathProblem();
+    setErrorMessage("");
+  }, [generateMathProblem]);
 
   // Career Guide Component
   const CareerGuide = () => (
@@ -457,7 +493,6 @@ const TTCCareerForm = () => {
             onChange={handleInputChange}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
-            multiple={false}
           >
             <option value="">Select your primary interest</option>
             <option value="Software Development">Software Development</option>
@@ -680,9 +715,9 @@ const TTCCareerForm = () => {
           </select>
         </div>
         
-        <p className='pb-6 text-sm text-gray-600'>
-          By continuing, you agree to the <span className='text-blue-600 font-medium'>Terms of Service</span> and 
-          acknowledge you've read our <span className='text-blue-600 font-medium'>Privacy Policy</span>.
+        <p className="pb-6 text-sm text-gray-600">
+          By continuing, you agree to the <span className="text-blue-600 font-medium">Terms of Service</span> and 
+          acknowledge you've read our <span className="text-blue-600 font-medium">Privacy Policy</span>.
         </p>
         
         <button 
@@ -696,137 +731,143 @@ const TTCCareerForm = () => {
     </div>
   );
 
-  // CAPTCHA Verification Step Component
-  const CaptchaStep = () => (
+  // Verification Step Component
+  const VerificationStep = () => (
     <div className="max-w-4xl mx-auto px-4">
-      <h1 className="text-3xl font-bold mb-2">Verify your Identity</h1>
-      <p className="text-gray-600 mb-6">Please complete this verification to submit your career test</p>
+      <h1 className="text-3xl font-bold mb-2">Verify Your Submission</h1>
+      <p className="text-gray-600 mb-6">One last step before submitting your career test</p>
       
       <Steps />
       
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-lg font-medium mb-4">Verify you're human</h3>
-        <p className="mb-6">Please solve this math problem to submit your application:</p>
+      {errorMessage && (
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6">
+          <p>{errorMessage}</p>
+        </div>
+      )}
+      
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-semibold mb-4">Please Complete This Simple Verification</h2>
         
-        {errorMessage && (
-          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6">
-            <p>{errorMessage}</p>
+        <div className="mb-6">
+          <p className="mb-4">To prevent automated submissions, please solve this simple math problem:</p>
+          
+          <div className="p-4 bg-gray-50 rounded-lg mb-4 text-center">
+            <span className="text-xl font-bold">{mathProblem.num1} + {mathProblem.num2} = ?</span>
           </div>
-        )}
-        
-        <div className="text-center mb-6 bg-gray-50 p-6 rounded-lg">
-          <span className="text-2xl font-bold">{mathProblem.num1} + {mathProblem.num2} = ?</span>
+          
+          <div className="mb-4">
+            <input
+              type="number"
+              value={captchaAnswer}
+              onChange={(e) => setCaptchaAnswer(e.target.value)}
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your answer"
+            />
+          </div>
         </div>
         
-        <input 
-          placeholder="Enter your answer" 
-          className="w-full p-3 mb-4 border rounded" 
-          value={captchaAnswer}
-          onChange={(e) => setCaptchaAnswer(e.target.value)}
-          type="number"
-        />
-        
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
           <button 
-            className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded disabled:bg-blue-300"
-            onClick={handleVerifyCaptcha}
-            disabled={loading}
+            type="button" 
+            onClick={handleBack}
+            className="md:flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded"
           >
-            {loading ? 'Submitting...' : 'Verify & Submit'}
+            Go Back
           </button>
           
-          <div className="flex gap-3">
-            <button 
-              className="flex-1 border border-gray-300 py-2 rounded hover:bg-gray-50"
-              onClick={generateMathProblem}
-              disabled={loading}
-            >
-              New Problem
-            </button>
-            
-            <button 
-              className="flex-1 border border-gray-300 py-2 rounded hover:bg-gray-50"
-              onClick={handleBack}
-              disabled={loading}
-            >
-              Back to Form
-            </button>
-          </div>
+          <button 
+            type="button" 
+            onClick={handleVerifyCaptcha}
+            disabled={loading}
+            className={`md:flex-1 py-3 px-4 rounded ${
+              loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'
+            }`}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Submitting...
+              </span>
+            ) : 'Submit Application'}
+          </button>
         </div>
       </div>
     </div>
   );
-
-  // Success Step Component
-  const SuccessStep = () => (
+  
+  // Complete Step Component
+  const CompleteStep = () => (
     <div className="max-w-4xl mx-auto px-4">
-      <h1 className="text-3xl font-bold mb-2">Submission Complete</h1>
-      <p className="text-gray-600 mb-6">Thank you for completing the TTC Career Test</p>
+      <h1 className="text-3xl font-bold mb-2">Application Submitted!</h1>
+      <p className="text-gray-600 mb-6">Thank you for applying to TechTalents City</p>
       
       <Steps />
       
-      <div className="bg-white p-8 rounded-lg shadow-md text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-500 mb-4">
-          <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+      <div className="bg-white rounded-lg shadow-md p-6 text-center">
+        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
         
-        <h3 className="text-xl font-medium mb-4">Form Submitted Successfully!</h3>
-        <p className="mb-6">Thank you for completing the TTC Career Test. We will review your submission and get back to you shortly.</p>
-        <p className="mb-6 text-sm text-gray-600">If your details match our records, you'll receive a login link soon. Not registered yet? <a href="#" className="text-blue-600 underline">Register here</a>.</p>
+        <h2 className="text-2xl font-bold mb-4">Submission Complete!</h2>
         
-        <button 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
-          onClick={() => {
-            setCurrentStep(0);
-            setFormValues({
-              fullName: '',
-              emailAddress: '',
-              whatDoYouLikeDoing: '',
-              workingFor: '',
-              preferToWork: '',
-              learningComfort: '',
-              techExcitement: '',
-              techAreas: '',
-              techActivities: '',
-              personalStrength: '',
-              motivation: '',
-              experienceLevel: '',
-              emergingAreas: '',
-              certifications: '',
-              certificationsList: '',
-              toolsUsed: '',
-              timeCommitment: '',
-              workImpact: '',
-              guidanceNeeded: '',
-              futureGoals: ''
-            });
-            setSubmissionComplete(false);
-            generateMathProblem();
-            setErrorMessage("");
-          }}
-        >
-          Submit Another Response
-        </button>
-      </div>
-      
-      <div className="text-center text-gray-500 text-sm mt-8">
-        <p>
-          By submitting this form, you agree to the <span className="text-blue-600 font-medium">Terms of Service</span> and 
-          acknowledge you've read our <span className="text-blue-600 font-medium">Privacy Policy</span>.
+        <p className="mb-6">
+          Your career test has been successfully submitted. Our team will review your application and get back to you soon.
         </p>
-        <p className="mt-2">
-          Only registered members will be granted access to TechTalents City upon acceptance.
-        </p>
+        
+        <div className="mb-8">
+          <p className="font-medium mb-2">What happens next?</p>
+          <ol className="text-left list-decimal pl-6 space-y-2">
+            <li>You'll receive a confirmation email shortly.</li>
+            <li>Within 3-5 business days, we'll send you a personalized career roadmap based on your responses.</li>
+            <li>We'll schedule an initial consultation to discuss your tech journey.</li>
+          </ol>
+        </div>
+        
+        <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
+          <Link to="/" className="md:flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded">
+            Back to Home
+          </Link>
+          
+          <button 
+            type="button" 
+            onClick={resetForm}
+            className="md:flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded"
+          >
+            Submit Another Application
+          </button>
+        </div>
       </div>
     </div>
   );
-
+  
   return (
-    <div className="w-full bg-gray-50 min-h-screen py-8">
+    <div className="py-10 bg-gray-50 min-h-screen">
       {currentStep === 0 && <ApplicationFormStep />}
-      {currentStep === 1 && <CaptchaStep />}
-      {currentStep === 2 && <SuccessStep />}
+      {currentStep === 1 && <VerificationStep />}
+      {currentStep === 2 && <CompleteStep />}
     </div>
   );
+};
+
+// Export both the component and a test export
+export default TTCCareerForm;
+
+// Test export for testing purposes
+export const test = {
+  validateEmail: (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  },
+  generateMathProblem: () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const result = num1 + num2;
+    return { num1, num2, result };
+  },
+  FORM_FIELDS: FORM_FIELDS
+};
