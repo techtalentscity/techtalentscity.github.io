@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeWrapper from "./components/HomeWrapper";
 import TopScroll from "./components/TopScroll";
+
 // Pages
 import { 
   About, 
@@ -17,63 +18,69 @@ import {
   ResetPassword, 
   Settings 
 } from "./Pages";
-// Import Project Posting and Application components
+
+// Project Posting and Application
 import ProjectPost from "./Pages/post/projectpost";
 import Application from "./Pages/Apply/application";
-// Import Career Test component
-import CareerTest from "./Pages/career/test";
+
+// Career Test Pages
+import CareerTestLanding from "./Pages/Home/CareerTest"; // ✅ Landing with button
+import CareerTestPage from "./Pages/career/test";        // ✅ Actual test content
+
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
 import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notification-System";
 import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
-// 404 Not Found Page
+
+// 404 Not Found
 import NotFound from "./Pages/NotFound";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <TopScroll>
-          <Routes>
-            {/* Public Pages inside HomeWrapper */}
-            <Route element={<HomeWrapper />}>
-              <Route path='/' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/projects' element={<Projects />} />
-              <Route path='/projects/ai-agent' element={<AiAgentDetail />} />
-              <Route path='/projects/mental-app' element={<MentalAppDetail />} />
-              <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
-              <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
-              <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
-              {/* Project posting and application routes */}
-              <Route path='/projectpost' element={<ProjectPost />} />
-              <Route path='/apply' element={<Application />} />
-              {/* Added new route that also points to the Application component */}
-              <Route path='/apply/application' element={<Application />} />
-              {/* Career Test route */}
-              <Route path='/career/test' element={<CareerTest />} />
-            </Route>
-            {/* Authentication Pages */}
-            <Route path='/signin' element={<Login />} />
-            <Route path='/signup' element={<Register />} />
-            {/* Dashboard Pages */}
-            <Route element={<Dashboard />}>
-              <Route path='/dashboard' element={<MainDashboard />} />
-              <Route path='/all-projects' element={<AllProjects />} />
-              <Route path='/recruit' element={<Recruit />} />
-              <Route path='/recruit/:slug' element={<RecruitProfile />} />
-              <Route path='/settings' element={<Settings />} />
-              <Route path='/settings/reset-password' element={<ResetPassword />} />
-              <Route path='/settings/edit-profile' element={<EditProfile />} />
-            </Route>
-            {/* 404 Catch-All Page */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </TopScroll>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <TopScroll>
+        <Routes>
+          {/* Public Pages inside HomeWrapper */}
+          <Route element={<HomeWrapper />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/projects' element={<Projects />} />
+            <Route path='/projects/ai-agent' element={<AiAgentDetail />} />
+            <Route path='/projects/mental-app' element={<MentalAppDetail />} />
+            <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
+            <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
+            <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
+            <Route path='/projectpost' element={<ProjectPost />} />
+            <Route path='/apply' element={<Application />} />
+            <Route path='/apply/application' element={<Application />} />
+            
+            {/* Career Test Routes */}
+            <Route path='/career' element={<CareerTestLanding />} />      {/* CTA landing with button */}
+            <Route path='/career/test' element={<CareerTestPage />} />    {/* Test page */}
+          </Route>
+
+          {/* Authentication Pages */}
+          <Route path='/signin' element={<Login />} />
+          <Route path='/signup' element={<Register />} />
+
+          {/* Dashboard Pages */}
+          <Route element={<Dashboard />}>
+            <Route path='/dashboard' element={<MainDashboard />} />
+            <Route path='/all-projects' element={<AllProjects />} />
+            <Route path='/recruit' element={<Recruit />} />
+            <Route path='/recruit/:slug' element={<RecruitProfile />} />
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/settings/reset-password' element={<ResetPassword />} />
+            <Route path='/settings/edit-profile' element={<EditProfile />} />
+          </Route>
+
+          {/* Catch-all for unmatched routes */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </TopScroll>
+    </BrowserRouter>
   );
 }
 
