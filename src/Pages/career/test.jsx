@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, Form, Input, Select, Radio, Checkbox, Steps } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
 
+const { TextArea } = Input;
 const { Step } = Steps;
 const { Option } = Select;
 
@@ -202,7 +202,7 @@ const Test = () => {
             <div className="flex flex-col gap-3">
               <Checkbox value="Software Development">Software Development</Checkbox>
               <Checkbox value="Cybersecurity">Cybersecurity</Checkbox>
-              <Checkbox value="Artificial Intelligence & Machine Learning">Artificial Intelligence & Machine Learning</Checkbox>
+              <Checkbox value="Artificial Intelligence & Machine Learning">AI & Machine Learning</Checkbox>
               <Checkbox value="Blockchain & Web3">Blockchain & Web3</Checkbox>
               <Checkbox value="Product Management">Product Management</Checkbox>
               <Checkbox value="UX/UI Design">UX/UI Design</Checkbox>
@@ -212,20 +212,6 @@ const Test = () => {
           </Checkbox.Group>
         </Form.Item>
       </div>
-    </div>
-  );
-
-  const SkillAssessmentSection = () => (
-    <div className="mb-8">
-      <h2 className="text-xl font-bold mb-4">Skill Assessment</h2>
-      {/* Add form items like experienceLevel, emergingTechOpenness, etc. here */}
-    </div>
-  );
-
-  const GoalSettingSection = () => (
-    <div className="mb-8">
-      <h2 className="text-xl font-bold mb-4">Goal Setting</h2>
-      {/* Add form items like techJourneyGoal, guidanceNeeded, etc. here */}
     </div>
   );
 
@@ -248,8 +234,6 @@ const Test = () => {
       case 0: return <BasicInfoSection />;
       case 1: return <SelfDiscoverySection />;
       case 2: return <CareerInterestsSection />;
-      case 3: return <SkillAssessmentSection />;
-      case 4: return <GoalSettingSection />;
       default: return <BasicInfoSection />;
     }
   };
