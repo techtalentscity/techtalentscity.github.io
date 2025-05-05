@@ -1,9 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
 import { Button, Form, Input, message, Steps, theme } from 'antd';
-import { useState, useEffect } from 'react';
 import { UserOutlined, SolutionOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
 const Register = () => {
@@ -15,7 +15,7 @@ const Register = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { token } = theme.useToken();
 
-  // Updated Google Form submission URL
+  // Google Form submission URL - this is the updated form URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
   // Discord redirect URL
@@ -54,7 +54,7 @@ const Register = () => {
   // Handle next step
   const next = async () => {
     try {
-      // Validate current step fields based on the updated form structure
+      // Validate current step fields
       await form.validateFields(
         currentStep === 0 ? ['firstName', 'lastName', 'email', 'phone'] :
         currentStep === 1 ? ['fieldOfStudy'] : 
@@ -72,7 +72,7 @@ const Register = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  // Handle form submission
+  // Handle form submission following the same pattern as the login form
   const handleSubmit = async (values) => {
     if (!captchaVerified) {
       message.error('Please verify you are human by solving the math problem');
@@ -82,45 +82,41 @@ const Register = () => {
     try {
       setLoading(true);
       
-      // Creating a hidden form for submission
+      // Create form data for submission
+      const formData = new FormData();
+      
+      // Add entry fields with the correct Google Form field IDs
+      formData.append('entry.2120631500', values.firstName); // First Name field
+      formData.append('entry.976572827', values.lastName); // Last Name field
+      formData.append('entry.721402290', values.email); // Email field
+      formData.append('entry.1212098036', values.phone); // Contact No field
+      formData.append('entry.2063377438', values.fieldOfStudy); // Field of Study
+      
+      // Create a hidden iframe for submission
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      // Create a hidden form for submission
       const hiddenForm = document.createElement('form');
-      hiddenForm.method = 'POST';
       hiddenForm.action = googleFormURL;
-      hiddenForm.target = '_blank'; // This opens the response in a new tab
+      hiddenForm.method = 'POST';
+      hiddenForm.target = 'hidden_iframe';
       hiddenForm.style.display = 'none';
       
-      // Adding the updated form fields with the correct entry IDs
-      const fields = {
-        'entry.2120631500': values.firstName || '',
-        'entry.976572827': values.lastName || '',
-        'entry.721402290': values.email || '',
-        'entry.1212098036': values.phone || '',
-        'entry.2063377438': values.fieldOfStudy || '',
-        'fvv': '1',
-        'draftResponse': '[]',
-        'pageHistory': '0',
-        'fbzx': '-569501532876574451' // Updated form ID from the form HTML
-      };
-      
-      // Create hidden inputs for each field
-      Object.entries(fields).forEach(([name, value]) => {
+      // Add all the form fields to the hidden form
+      for (const [key, value] of formData.entries()) {
         const input = document.createElement('input');
         input.type = 'hidden';
-        input.name = name;
+        input.name = key;
         input.value = value;
         hiddenForm.appendChild(input);
-      });
+      }
       
-      // Add the form to the body
+      // Add the form to the body and submit
       document.body.appendChild(hiddenForm);
-      
-      // Submit the form
       hiddenForm.submit();
-      
-      // Remove the form from the DOM after submission
-      setTimeout(() => {
-        document.body.removeChild(hiddenForm);
-      }, 500);
       
       // Show success message
       message.success('Registration successful! Redirecting to Discord...');
@@ -137,6 +133,12 @@ const Register = () => {
         window.location.href = discordURL;
       }, 3000);
       
+      // Remove the form and iframe from the DOM
+      setTimeout(() => {
+        document.body.removeChild(hiddenForm);
+        document.body.removeChild(iframe);
+      }, 1000);
+      
     } catch (error) {
       console.error('Error submitting form:', error);
       message.error('Registration failed. Please try again.');
@@ -145,7 +147,7 @@ const Register = () => {
     }
   };
   
-  // Updated steps configuration to match the simplified Google Form
+  // Steps configuration
   const steps = [
     {
       title: 'Personal Info',
