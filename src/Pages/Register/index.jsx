@@ -142,13 +142,6 @@ const Register = () => {
       setLoading(false);
     }
   };
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      message.error('Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
   
   // Steps configuration
   const steps = [
