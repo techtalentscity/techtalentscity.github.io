@@ -20,15 +20,18 @@ import {
 // Project Posting and Application
 import ProjectPost from "./Pages/post/projectpost";
 import Application from "./Pages/Apply/application";
+
 // Career Test Pages
 import CareerTestLanding from "./Pages/Home/CareerTestLanding"; // ✅ CTA with button
 import CareerTest from "./Pages/career/test";                   // ✅ Actual test page
+
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
 import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notification-System";
 import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
+
 // Not Found Page
 import NotFound from "./Pages/NotFound";
 function App() {
