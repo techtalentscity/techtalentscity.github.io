@@ -1,95 +1,131 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import logo from '../../assets/images/techtalent.png';
-import { LuArrowLeftToLine } from 'react-icons/lu';
 import Container from '../../components/Container';
+import logo from '../../assets/images/logo-black.png';
+import { Button, Steps, Collapse } from 'antd';
 
-const ProjectDetail = () => {
+const { Panel } = Collapse;
+const { Step } = Steps;
+
+const Application = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  // Google Form URL for project applications
+  const applicationFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdutVajcCzd-S2wuFfUNbnkx8KoklFFn8clR0xbYG9XBRdkvg/viewform";
+  
+  // Function to direct user to Google Form
+  const redirectToApplicationForm = () => {
+    window.open(applicationFormURL, '_blank');
+  };
+
+  // Application Guide Component
+  const ApplicationGuide = () => (
+    <div className="mb-8">
+      <Collapse ghost>
+        <Panel header={<span className="text-lg font-semibold text-primary">📋 Click here to view Project Application Guide</span>} key="guide">
+          <div className="bg-gray-50 p-6 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">Project Application Guide</h2>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Introduction</h4>
+              <p className="mb-3">
+                Welcome to <strong>TechTalents City</strong>! We're excited that you're interested in applying to work on a project. 
+                This guide will help you understand what information you need to provide in your application.
+              </p>
+              <p>
+                Please note that only <strong>registered members</strong> of TechTalents City can apply to projects. 
+                If you haven't registered yet, please do so at www.techtalentscity.com first.
+              </p>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Badge Roles and Skill Levels</h4>
+              <p className="mb-3">
+                When applying, you'll need to specify your Badge Role and Skill Level:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li><strong>Badge Roles:</strong> TechDev, TechLead, or TechArch</li>
+                <li><strong>Skill Levels:</strong> Novice, Beginner, Intermediate, or Expert</li>
+              </ul>
+              <p>
+                Your role and skill level will determine the type of projects you're matched with and
+                any compensation for paid projects.
+              </p>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Application Process</h4>
+              <p className="mb-3">
+                Once you submit your application, our team will review it to determine if your skills 
+                and experience match the project requirements. If accepted, you'll be added to the 
+                project's private channel where you can collaborate with other team members.
+              </p>
+              <p>
+                If you have any questions during the application process, feel free to reach out to us 
+                for assistance!
+              </p>
+            </div>
+          </div>
+        </Panel>
+      </Collapse>
+    </div>
+  );
+
   return (
-    <Container className='w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20'>
-      <div className="w-full flex flex-col items-start bg-white">
-        <Link to="/projects" className="text-[#101010] font-bold mb-4 flex items-center gap-2">
-          <LuArrowLeftToLine /> <span>Back to projects</span>
+    <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
+      <Container className="w-full max-w-4xl px-4 md:px-8">
+        <Link to={'/'} className="block mb-6">
+          <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
         </Link>
-        <p className="text-sm text-gray-500 mb-2">Published on May 16, 2024</p>
-        <h1 className="text-3xl font-bold mb-4">Building an AI-powered Agent for Customer Engagement</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">Free</span></p>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
+        
+        <h1 className="text-3xl font-bold mb-2">Apply to a TTC Project</h1>
+        <p className="text-gray-600 mb-6">Join a project and collaborate with talented individuals</p>
+        
+        {/* Application Guide Section */}
+        <ApplicationGuide />
+        
+        <div className="w-full bg-gray-100 p-9 rounded-lg text-center mb-8">
+          <h2 className="text-2xl xl:text-3xl font-bold">Ready to Apply?</h2>
+          <p className="text-sm xl:text-base my-6">
+            Our application process collects essential information to match you with the right project. 
+            You'll need to provide your contact details, preferred role, and skill level.
+          </p>
+          
+          <div className="mb-6">
+            <h3 className="font-bold text-lg mb-3">Required Information:</h3>
+            <ul className="text-left mx-auto max-w-md">
+              <li className="mb-2">• First and Last Name</li>
+              <li className="mb-2">• Email Address</li>
+              <li className="mb-2">• Project Title you're applying for</li>
+              <li className="mb-2">• TechTalents Badge Role (TechDev, TechLead, TechArch)</li>
+              <li className="mb-2">• Your relevant skills</li>
+              <li className="mb-2">• Badge Skill Level (Novice, Beginner, Intermediate, Expert)</li>
+              <li className="mb-2">• Contact number</li>
+            </ul>
+          </div>
+          
+          <Button 
+            type="primary" 
+            block 
+            className="py-5 px-12 font-bold" 
+            onClick={redirectToApplicationForm}
+          >
+            Apply to a Project Now
+          </Button>
+        </div>
+        
+        <div className="text-center text-gray-500 text-sm mt-8">
           <p>
-            This project will develop a conversational AI agent to improve customer service efficiency in banking. The solution will simulate human-like conversations, answer banking-related questions, and help customers carry out simple transactions such as balance inquiries or card blocking. The AI agent will be designed for deployment across web and mobile platforms.
+            By applying, you agree to the <span className="text-primary font-medium">Terms of Service</span> and 
+            acknowledge you've read our <span className="text-primary font-medium">Privacy Policy</span>.
+          </p>
+          <p className="mt-2">
+            Only registered members will be granted access to project channels upon acceptance.
           </p>
         </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Project Duration:</h2>
-          <ul className="list-disc list-inside">
-            <li><strong>Start Date:</strong> May 24, 2025</li>
-            <li><strong>End Date:</strong> July 24, 2025</li>
-            <li><strong>Total Duration:</strong> 8 weeks</li>
-          </ul>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Required Skill Sets:</h2>
-          <ul className="list-disc list-inside">
-            <li>Natural Language Processing (NLP)</li>
-            <li>Machine Learning / Deep Learning</li>
-            <li>Python Programming</li>
-            <li>Frontend Web Development (React or similar)</li>
-            <li>Backend Development (APIs, Node.js or Flask)</li>
-            <li>UI/UX Design (for chatbot interface)</li>
-            <li>Cybersecurity (basic secure communication)</li>
-          </ul>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Key Tasks and Responsibilities:</h2>
-          <ul className="list-disc list-inside">
-            <li>Design and develop the AI model for banking interactions.</li>
-            <li>Train the chatbot to handle at least 5 different banking intents.</li>
-            <li>Build secure API endpoints for backend integration.</li>
-            <li>Develop an intuitive front-end chatbot interface.</li>
-            <li>Test, deploy, and optimize the agent for both web and mobile platforms.</li>
-          </ul>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Benefits of Participation:</h2>
-          <ul className="list-disc list-inside">
-            <li>Hands-on experience with AI and real-world fintech applications.</li>
-            <li>Portfolio project showcasing machine learning, AI, and full-stack development skills.</li>
-            <li>Collaborative learning with a global tech community.</li>
-            <li>Experience working in a cross-functional agile team structure.</li>
-          </ul>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">Nice-to-have:</h2>
-          <ul className="list-disc list-inside">
-            <li>Experience with LLM (Large Language Model) APIs (e.g., OpenAI, HuggingFace)</li>
-            <li>Experience integrating AI into mobile apps (Flutter, React Native)</li>
-            <li>Experience working on fintech or banking platforms.</li>
-          </ul>
-        </div>
-
-        <div className="fixed bottom-8 right-8">
-          <Link to="src/Pages/Apply/application.jsx">
-            <Button type="primary" size="large" className="rounded-full px-8 py-4 font-bold">
-              Apply for this Project
-            </Button>
-          </Link>
-        </div>
-      </div>
-      <div className='shrink-0 w-[307px] h-[312px] rounded-2xl p-10 bg-[#F3F3FF] flex justify-center items-center flex-col gap-6'>
-        <img src={logo} alt="Project Logo" className="w-[148px] h-[148px] object-cover" />
-        <Link to="src/Pages/Apply/application.jsx">
-          <Button type="primary" size="large" block>Apply for this Project</Button>
-        </Link>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
-}
+};
 
-export default ProjectDetail;
+export default Application;
