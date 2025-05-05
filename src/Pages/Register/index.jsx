@@ -1,11 +1,12 @@
-label="LinkedIn Profile URL" 
+<Form.Item 
+              label="LinkedIn Profile URL" 
               name="linkedinURL" 
               rules={[
                 { required: true, message: 'LinkedIn profile URL is required' },
                 { type: "url", message: 'Please enter a valid URL' }
               ]}
               tooltip="Share the link to your LinkedIn profile"
-            >
+            >>
               <Input placeholder="https://linkedin.com/in/yourprofile" className='p-2' />
             </Form.Item>
             
