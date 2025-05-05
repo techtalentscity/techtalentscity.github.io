@@ -72,7 +72,7 @@ const Register = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  // Handle form submission following the same pattern as the login form
+  // Handle form submission with extra logging
   const handleSubmit = async (values) => {
     if (!captchaVerified) {
       message.error('Please verify you are human by solving the math problem');
@@ -82,63 +82,66 @@ const Register = () => {
     try {
       setLoading(true);
       
-      // Create form data for submission
-      const formData = new FormData();
+      console.log('Form values to submit:', values);
       
-      // Add entry fields with the correct Google Form field IDs
-      formData.append('entry.2120631500', values.firstName); // First Name field
-      formData.append('entry.976572827', values.lastName); // Last Name field
-      formData.append('entry.721402290', values.email); // Email field
-      formData.append('entry.1212098036', values.phone); // Contact No field
-      formData.append('entry.2063377438', values.fieldOfStudy); // Field of Study
+      // Using a direct form submission approach for better compatibility
+      const formElement = document.createElement('form');
+      formElement.method = 'POST';
+      formElement.action = googleFormURL;
+      formElement.target = '_blank'; // This will open the form response in a new tab
       
-      // Create a hidden iframe for submission
-      const iframe = document.createElement('iframe');
-      iframe.name = 'hidden_iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
+      // Add all form fields with the correct entry IDs
+      const formFields = {
+        'entry.2120631500': values.firstName,
+        'entry.976572827': values.lastName,
+        'entry.721402290': values.email,
+        'entry.1212098036': values.phone,
+        'entry.2063377438': values.fieldOfStudy
+      };
       
-      // Create a hidden form for submission
-      const hiddenForm = document.createElement('form');
-      hiddenForm.action = googleFormURL;
-      hiddenForm.method = 'POST';
-      hiddenForm.target = 'hidden_iframe';
-      hiddenForm.style.display = 'none';
+      console.log('Form fields being submitted:', formFields);
       
-      // Add all the form fields to the hidden form
-      for (const [key, value] of formData.entries()) {
+      // Create input elements for each form field
+      Object.entries(formFields).forEach(([name, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
-        input.name = key;
-        input.value = value;
-        hiddenForm.appendChild(input);
-      }
+        input.name = name;
+        input.value = value || '';
+        formElement.appendChild(input);
+      });
       
-      // Add the form to the body and submit
-      document.body.appendChild(hiddenForm);
-      hiddenForm.submit();
+      // Add the form to the body
+      document.body.appendChild(formElement);
+      
+      // Submit the form directly - this will open the response in a new tab
+      formElement.submit();
+      
+      // Remove the form from the DOM
+      setTimeout(() => {
+        document.body.removeChild(formElement);
+      }, 500);
       
       // Show success message
-      message.success('Registration successful! Redirecting to Discord...');
+      message.success('Registration submitted successfully!');
       
-      // Clear form
-      form.resetFields();
-      
-      // Reset captcha verification
-      setCaptchaVerified(false);
-      generateMathProblem();
-      
-      // Redirect to Discord after a short delay
+      // We'll redirect after the form has been submitted
       setTimeout(() => {
         window.location.href = discordURL;
       }, 3000);
       
-      // Remove the form and iframe from the DOM
-      setTimeout(() => {
-        document.body.removeChild(hiddenForm);
-        document.body.removeChild(iframe);
-      }, 1000);
+      // Clear the form
+      form.resetFields();
       
+      // Reset the captcha
+      setCaptchaVerified(false);
+      generateMathProblem();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      message.error('Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
     } catch (error) {
       console.error('Error submitting form:', error);
       message.error('Registration failed. Please try again.');
