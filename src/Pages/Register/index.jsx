@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
@@ -6,16 +6,15 @@ import { Button, Form, Input, message } from 'antd';
 import { useState, useEffect } from 'react';
 
 const Register = () => {
-  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [mathProblem, setMathProblem] = useState({ num1: 0, num2: 0, result: 0 });
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
-  // Google Form submission URL - with formResponse endpoint
+  // Google Form direct action URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
   
-  // Discord redirect URL - consider making this configurable
+  // Discord redirect URL
   const discordURL = "https://discord.gg/FwNQc7VJVk";
 
   // Form field entry IDs from the Google Form
@@ -57,61 +56,35 @@ const Register = () => {
     }
   };
 
-  // Handle form submission
-  const handleSubmit = async (values) => {
-    if (!captchaVerified) {
-      message.error('Please verify you are human by solving the math problem');
-      return;
-    }
-
+  // Handle verification and form submission
+  const handleSubmitWithVerification = async () => {
     try {
-      setLoading(true);
+      // Validate form fields
+      await form.validateFields();
       
-      // Create form data for submission
-      const formData = new FormData();
+      if (!captchaVerified) {
+        message.error('Please verify you are human by solving the math problem');
+        return;
+      }
       
-      // Add entry fields with the correct Google Form field IDs
-      formData.append(FORM_FIELDS.firstName, values.firstName);
-      formData.append(FORM_FIELDS.lastName, values.lastName);
-      formData.append(FORM_FIELDS.email, values.email);
-      formData.append(FORM_FIELDS.phone, values.phone || '');
-      formData.append(FORM_FIELDS.fieldOfStudy, values.fieldOfStudy || '');
+      // If captcha is verified, submit the HTML form programmatically
+      document.getElementById('google-form').submit();
       
-      // Add required form metadata for successful submission
-      formData.append('fvv', '1');
-      formData.append('pageHistory', '0');
-      formData.append('fbzx', '4159064419365296645'); // Form identifier from the form HTML
-      formData.append('draftResponse', '[]');
-      formData.append('submit', 'Submit');
-      
-      // Submit the form data
-      const response = await fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for cross-origin requests to Google Forms
-        body: formData
-      });
-      
-      // Note: With no-cors mode, we can't check response status
       // Show success message
       message.success('Registration successful! Redirecting to Discord...');
       
-      // Clear form
-      form.resetFields();
-      
-      // Reset captcha verification
-      setCaptchaVerified(false);
-      generateMathProblem();
-      
-      // Redirect to Discord after a short delay
+      // Reset form after short delay
       setTimeout(() => {
+        form.resetFields();
+        setCaptchaVerified(false);
+        generateMathProblem();
+        
+        // Redirect to Discord
         window.location.href = discordURL;
       }, 2000);
       
     } catch (error) {
-      console.error('Error submitting form:', error);
-      message.error('Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
+      console.error('Form validation error:', error);
     }
   };
 
@@ -120,15 +93,30 @@ const Register = () => {
       <div className="w-full lg:w-[50%] flex justify-center items-center overflow-y-auto scrollbar-hide md:min-h-screen pt-12 md:pt-0">
         <Container className={'md:!px-16 lg:!px-0 md:min-h-screen pt-6 md:pt-12 pb-12'}>
           <Link to={'/'}>
-            <img src={logo} alt="TechTalents City Logo" className="w-[250px] object-cover object-center" />
+            <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
           </Link>
           <p className='font-bold text-4xl py-5'>Welcome to TechTalents City👋</p>
           <p className='text-[#A2A2A2]'>Kindly fill in your details below to create an account</p>
           
+          {/* Hidden form that will be submitted directly to Google */}
+          <form 
+            id="google-form" 
+            action={googleFormURL} 
+            method="POST" 
+            target="_blank" 
+            style={{ display: 'none' }}
+          >
+            <input type="text" name={FORM_FIELDS.firstName} id="firstName-field" />
+            <input type="text" name={FORM_FIELDS.lastName} id="lastName-field" />
+            <input type="email" name={FORM_FIELDS.email} id="email-field" />
+            <input type="tel" name={FORM_FIELDS.phone} id="phone-field" />
+            <input type="text" name={FORM_FIELDS.fieldOfStudy} id="fieldOfStudy-field" />
+          </form>
+          
+          {/* Ant Design form for UI */}
           <Form 
             layout='vertical' 
             form={form}
-            onFinish={handleSubmit}
             className="mt-8"
           >
             <Form.Item 
@@ -136,7 +124,13 @@ const Register = () => {
               name="firstName" 
               rules={[{ required: true, message: 'First Name is required' }]}
             >
-              <Input placeholder="John" className='p-2' />
+              <Input 
+                placeholder="John" 
+                className='p-2' 
+                onChange={(e) => {
+                  document.getElementById('firstName-field').value = e.target.value;
+                }}
+              />
             </Form.Item>
             
             <Form.Item 
@@ -144,7 +138,13 @@ const Register = () => {
               name="lastName" 
               rules={[{ required: true, message: 'Last Name is required' }]}
             >
-              <Input placeholder="Doe" className='p-2' />
+              <Input 
+                placeholder="Doe" 
+                className='p-2' 
+                onChange={(e) => {
+                  document.getElementById('lastName-field').value = e.target.value;
+                }}
+              />
             </Form.Item>
             
             <Form.Item 
@@ -155,7 +155,13 @@ const Register = () => {
                 { type: "email", message: 'Please enter a valid email' }
               ]}
             >
-              <Input placeholder="johndoe@email.com" className='p-2' />
+              <Input 
+                placeholder="johndoe@email.com" 
+                className='p-2' 
+                onChange={(e) => {
+                  document.getElementById('email-field').value = e.target.value;
+                }}
+              />
             </Form.Item>
             
             <Form.Item 
@@ -163,7 +169,13 @@ const Register = () => {
               name="phone" 
               rules={[{ required: true, message: 'Contact number is required' }]}
             >
-              <Input placeholder="+1234567890" className='p-2' />
+              <Input 
+                placeholder="+1234567890" 
+                className='p-2' 
+                onChange={(e) => {
+                  document.getElementById('phone-field').value = e.target.value;
+                }}
+              />
             </Form.Item>
             
             <Form.Item 
@@ -172,7 +184,13 @@ const Register = () => {
               rules={[{ required: true, message: 'Field of study is required' }]}
               tooltip="Please tell us your field of study"
             >
-              <Input placeholder="Computer Science" className='p-2' />
+              <Input 
+                placeholder="Computer Science" 
+                className='p-2' 
+                onChange={(e) => {
+                  document.getElementById('fieldOfStudy-field').value = e.target.value;
+                }}
+              />
             </Form.Item>
             
             <div className="bg-gray-100 p-4 mb-6 rounded-md">
@@ -219,7 +237,7 @@ const Register = () => {
             
             <Button 
               type="primary" 
-              htmlType="submit" 
+              onClick={handleSubmitWithVerification}
               loading={loading}
               disabled={!captchaVerified}
               className="w-full"
@@ -235,7 +253,7 @@ const Register = () => {
       </div>
       
       <div className="hidden lg:w-[50%] h-full lg:flex justify-center items-center rounded-l-[60px] relative">
-        <img src={IMAGE} alt="TechTalents City Signup Background" className='w-full h-full object-cover rounded-l-[60px]' />
+        <img src={IMAGE} alt="login" className='w-full h-full object-cover rounded-l-[60px]' />
         <div className="absolute top-40 left-20 2xl:left-40 inset-0 flex flex-col justify-center items-center bg-white bg-opacity-20 w-[400px] xl:w-[500px] h-[350px] text-white p-8">
           <h2 className="text-3xl xl:text-5xl font-bold mb-4">Connecting Talents to Opportunities</h2>
           <p className="text-lg text-[#F6F6F8]">Connect talent to opportunities and speed up your TechTalent badge earnings by creating and collaborating on projects.</p>
