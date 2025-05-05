@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import IMAGE from '../../assets/images/signupbg.png';
 import Container from '../../components/Container';
@@ -8,6 +8,38 @@ import { Button, Form, Input, message } from 'antd';
 const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [mathProblem, setMathProblem] = useState({ num1: 0, num2: 0, result: 0 });
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  // Generate new math problem for CAPTCHA
+  const generateMathProblem = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const result = num1 + num2;
+    
+    setMathProblem({ num1, num2, result });
+    setCaptchaVerified(false);
+    form.setFieldsValue({ captcha: '' });
+  };
+
+  // Initialize with a math problem on component mount
+  useEffect(() => {
+    generateMathProblem();
+  }, []);
+
+  // Verify captcha
+  const verifyCaptcha = () => {
+    const userAnswer = form.getFieldValue('captcha');
+    
+    if (parseInt(userAnswer) === mathProblem.result) {
+      setCaptchaVerified(true);
+      message.success('Verification successful!');
+    } else {
+      setCaptchaVerified(false);
+      message.error('Incorrect answer. Please try again.');
+      generateMathProblem();
+    }
+  };
 
   // Google Form submission URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSch0F2yDodefxoGh5QyvrXzl2s7Z7Y0U04Zx8hUbar0hh-RlA/formResponse";
@@ -26,6 +58,11 @@ const Register = () => {
 
   // Handle form submission
   const handleSubmit = async (values) => {
+    if (!captchaVerified) {
+      message.error('Please verify you are human by solving the math problem');
+      return;
+    }
+
     try {
       setLoading(true);
       
@@ -51,6 +88,9 @@ const Register = () => {
       
       // Clear form
       form.resetFields();
+      
+      // Generate new CAPTCHA
+      generateMathProblem();
       
       // Redirect to Discord after a short delay
       setTimeout(() => {
@@ -125,6 +165,44 @@ const Register = () => {
               <Input placeholder="Computer Science" className='p-2' />
             </Form.Item>
             
+            {/* CAPTCHA Section */}
+            <div className="bg-gray-100 p-4 mb-6 rounded-md">
+              <p className="font-medium mb-2">Verify you're human</p>
+              <p className="mb-4">Solve this simple math problem: {mathProblem.num1} + {mathProblem.num2} = ?</p>
+              
+              <Form.Item 
+                name="captcha" 
+                rules={[{ required: true, message: 'Please solve the math problem' }]}
+              >
+                <Input 
+                  placeholder="Enter your answer" 
+                  className='p-2 mb-2' 
+                  type="number"
+                />
+              </Form.Item>
+              
+              <div className="flex gap-2">
+                <Button 
+                  onClick={verifyCaptcha} 
+                  className="font-medium"
+                >
+                  Verify
+                </Button>
+                <Button 
+                  onClick={generateMathProblem} 
+                  className="font-medium"
+                >
+                  New Problem
+                </Button>
+              </div>
+              
+              {captchaVerified && (
+                <div className="mt-2 text-green-600 font-medium">
+                  ✓ Verification successful
+                </div>
+              )}
+            </div>
+            
             <p className='pb-6 text-sm'>
               By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
               acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
@@ -134,6 +212,7 @@ const Register = () => {
               type="primary" 
               htmlType="submit" 
               loading={loading}
+              disabled={!captchaVerified}
               block
             >
               Register with us
