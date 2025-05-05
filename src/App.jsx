@@ -20,6 +20,8 @@ import {
 // Import Project Posting and Application components
 import ProjectPost from "./Pages/post/projectpost";
 import Application from "./Pages/Apply/application";
+// Import Career Test component
+import CareerTest from "./Pages/career/test";
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
@@ -28,6 +30,7 @@ import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
 // 404 Not Found Page
 import NotFound from "./Pages/NotFound";
+
 function App() {
   return (
     <>
@@ -49,6 +52,8 @@ function App() {
               <Route path='/apply' element={<Application />} />
               {/* Added new route that also points to the Application component */}
               <Route path='/apply/application' element={<Application />} />
+              {/* Career Test route */}
+              <Route path='/career/test' element={<CareerTest />} />
             </Route>
             {/* Authentication Pages */}
             <Route path='/signin' element={<Login />} />
@@ -71,4 +76,5 @@ function App() {
     </>
   );
 }
+
 export default App;
