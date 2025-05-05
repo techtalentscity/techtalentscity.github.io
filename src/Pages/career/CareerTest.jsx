@@ -404,7 +404,7 @@ const CareerTest = () => {
         name="certificationsList"
         rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <TextArea placeholder="Enter your answer" rows={4} className="p-2" />
+        <TextArea placeholder="Enter your answer (or type 'None' if you don't have any)" rows={4} className="p-2" />
       </Form.Item>
 
       <Form.Item
