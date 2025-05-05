@@ -5,7 +5,6 @@ import logo from '../../assets/images/logo-black.png';
 import { Button, Form, Input, message, Select, Radio, Steps, theme } from 'antd';
 import { useState, useEffect } from 'react';
 import { UserOutlined, SolutionOutlined, BankOutlined, CheckCircleOutlined } from '@ant-design/icons';
-
 const Register = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
