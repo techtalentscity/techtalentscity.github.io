@@ -26,8 +26,8 @@ import CareerTestLanding from "./Pages/Home/CareerTestLanding"; // ✅ CTA with 
 import CareerTest from "./Pages/career/CareerTest";              // Updated import path
 // Support Page and Legal Pages
 import Support from "./Pages/Support";                          // New Support/Feedback page
-import PrivacyPolicy from "./Pages/Privacy Policy";             // Existing Privacy Policy page
-import TermsOfService from "./Pages/Terms of Service";          // Existing Terms of Service page
+import PrivacyPolicy from "./Pages/PrivacyPolicy";             // Existing Privacy Policy page
+import TermsOfService from "./Pages/TermsOfService";          // Existing Terms of Service page
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
