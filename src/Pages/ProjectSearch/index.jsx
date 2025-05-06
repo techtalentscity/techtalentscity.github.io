@@ -2,47 +2,92 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { IoIosSearch } from 'react-icons/io';
+import { Card, Tag } from 'antd';
 import Container from '../../components/Container';
 
-// This would be replaced with your actual project data fetching logic
+// Mock fetch function - in a real app, this would be an API call
 const fetchProjects = async () => {
-  // In a real app, you would fetch this from an API
-  // For now, we'll create a sample list based on the files we saw in the GitHub repo
+  // Sample projects database based on our ProjectDetail data
   return [
     {
       id: 1,
-      title: 'Real-time Notification System',
-      description: 'A system that provides real-time notifications for users',
-      technologies: ['React', 'WebSockets', 'Node.js'],
-      filename: 'Real-time-Notification-System.jsx'
+      title: 'Building an AI-powered Agent for Customer Engagement',
+      description: 'This project will develop a conversational AI agent to improve customer service efficiency in banking.',
+      employmentType: 'Full-Time / Remote / Free',
+      publishDate: 'May 16, 2024',
+      skills: [
+        'Natural Language Processing (NLP)',
+        'Machine Learning',
+        'Python',
+        'React',
+        'Node.js',
+        'UI/UX Design',
+        'Cybersecurity'
+      ]
     },
     {
       id: 2,
-      title: 'AI Agent',
-      description: 'Intelligent agent for automating tasks',
-      technologies: ['AI', 'Machine Learning', 'React'],
-      filename: 'ai-agent.jsx'
+      title: 'Real-time Notification System',
+      description: 'Develop a comprehensive system that provides real-time notifications for users across multiple platforms.',
+      employmentType: 'Part-Time / Hybrid / Paid',
+      publishDate: 'May 10, 2024',
+      skills: [
+        'WebSockets',
+        'React',
+        'Node.js',
+        'Redis',
+        'Push Notifications',
+        'Frontend',
+        'Backend'
+      ]
     },
     {
       id: 3,
-      title: 'Blockchain Definition',
-      description: 'Decentralized blockchain implementation',
-      technologies: ['Blockchain', 'Crypto', 'Smart Contracts'],
-      filename: 'blockchain-defi.jsx'
+      title: 'Blockchain-based Supply Chain Tracking',
+      description: 'Create a decentralized application for transparent tracking of products through a global supply chain.',
+      employmentType: 'Full-Time / Remote / Paid',
+      publishDate: 'May 5, 2024',
+      skills: [
+        'Blockchain',
+        'Smart Contracts',
+        'Solidity',
+        'Web3.js',
+        'React',
+        'Supply Chain',
+        'API Development'
+      ]
     },
     {
       id: 4,
-      title: 'Climate Prediction',
-      description: 'Climate prediction and analysis platform',
-      technologies: ['Data Science', 'Visualization', 'React'],
-      filename: 'climate-prediction.jsx'
+      title: 'Climate Data Visualization Platform',
+      description: 'Develop an interactive platform to visualize climate data and make environmental information accessible to the public.',
+      employmentType: 'Part-Time / Remote / Free',
+      publishDate: 'May 12, 2024',
+      skills: [
+        'Data Visualization',
+        'D3.js',
+        'React',
+        'Python',
+        'Data Analysis',
+        'UI/UX Design',
+        'API Integration'
+      ]
     },
     {
       id: 5,
-      title: 'Mental Health App',
-      description: 'Application for mental health support and resources',
-      technologies: ['React', 'Healthcare', 'UX Design'],
-      filename: 'mental-app.jsx'
+      title: 'Mental Health Support Application',
+      description: 'Create a mobile application that provides mental health resources, mood tracking, and guided meditation exercises.',
+      employmentType: 'Full-Time / Remote / Paid',
+      publishDate: 'May 8, 2024',
+      skills: [
+        'Mobile Development',
+        'React Native',
+        'UI/UX Design',
+        'Backend',
+        'API Integration',
+        'Data Security',
+        'Healthcare Tech'
+      ]
     }
   ];
 };
@@ -63,6 +108,13 @@ const ProjectSearch = () => {
         const data = await fetchProjects();
         setProjects(data);
         setLoading(false);
+        
+        // If there's an initial query, filter projects right away
+        if (initialQuery) {
+          filterProjects(initialQuery, data);
+        } else {
+          setFilteredProjects(data);
+        }
       } catch (error) {
         console.error('Error fetching projects:', error);
         setLoading(false);
@@ -70,38 +122,42 @@ const ProjectSearch = () => {
     };
 
     loadProjects();
-  }, []);
+  }, [initialQuery]);
 
-  useEffect(() => {
-    if (initialQuery) {
-      handleSearch(initialQuery);
+  const filterProjects = (query, projectsData = projects) => {
+    if (!query.trim()) {
+      setFilteredProjects(projectsData);
+      return;
     }
-  }, [initialQuery, projects]);
-
-  const handleSearch = (query) => {
+    
     const searchTerms = query.toLowerCase().split(' ');
     
-    const filtered = projects.filter(project => {
-      const projectText = `${project.title} ${project.description} ${project.technologies.join(' ')} ${project.filename}`.toLowerCase();
+    const filtered = projectsData.filter(project => {
+      const projectText = `
+        ${project.title} 
+        ${project.description} 
+        ${project.employmentType}
+        ${project.skills.join(' ')}
+      `.toLowerCase();
       
       return searchTerms.every(term => projectText.includes(term));
     });
     
     setFilteredProjects(filtered);
+  };
+
+  const handleSearch = () => {
+    filterProjects(searchQuery);
     
-    // Update URL without full page reload
-    const newUrl = `/projects/search?query=${encodeURIComponent(query)}`;
+    // Update URL without page reload
+    const newUrl = `/projects/search?query=${encodeURIComponent(searchQuery)}`;
     window.history.pushState({ path: newUrl }, '', newUrl);
   };
 
-  const handleInputSearch = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleSearch(searchQuery);
+      handleSearch();
     }
-  };
-
-  const handleSearchClick = () => {
-    handleSearch(searchQuery);
   };
 
   return (
@@ -111,17 +167,17 @@ const ProjectSearch = () => {
       <div className="mb-8 rounded-xl shadow-md bg-white flex justify-between items-center py-3 px-4">
         <input
           type="text"
-          placeholder="Refine your search..."
+          placeholder="Search projects by title, description, or skills..."
           className="w-full bg-transparent outline-none"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleInputSearch}
+          onKeyDown={handleKeyDown}
         />
         <div 
-          className="bg-black w-8 h-8 rounded-full p-2 flex justify-center items-center cursor-pointer"
-          onClick={handleSearchClick}
+          className="bg-black w-10 h-10 rounded-full p-2 flex justify-center items-center cursor-pointer"
+          onClick={handleSearch}
         >
-          <IoIosSearch size={20} color="white" />
+          <IoIosSearch size={24} color="white" />
         </div>
       </div>
       
@@ -130,23 +186,25 @@ const ProjectSearch = () => {
       ) : filteredProjects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map(project => (
-            <Link 
-              to={`/project/${project.id}`} 
-              key={project.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6"
-            >
-              <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-              <p className="text-gray-600 mb-4">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map(tech => (
-                  <span 
-                    key={tech} 
-                    className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+            <Link to={`/project/${project.id}`} key={project.id}>
+              <Card 
+                className="h-full hover:shadow-lg transition-shadow"
+                title={
+                  <div className="font-bold text-xl">{project.title}</div>
+                }
+                extra={<span className="text-sm text-gray-500">{project.publishDate}</span>}
+              >
+                <p className="text-gray-600 mb-4">{project.description}</p>
+                <p className="text-gray-700 mb-4">{project.employmentType}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.skills.slice(0, 5).map((skill, index) => (
+                    <Tag key={index} color="blue">{skill}</Tag>
+                  ))}
+                  {project.skills.length > 5 && (
+                    <Tag color="default">+{project.skills.length - 5} more</Tag>
+                  )}
+                </div>
+              </Card>
             </Link>
           ))}
         </div>
