@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomeWrapper from "./components/HomeWrapper";
 import TopScroll from "./components/TopScroll";
@@ -29,8 +30,11 @@ import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
 import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notification-System";
 import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
+// New Search Page
+import ProjectSearch from "./Pages/ProjectSearch";
 // Not Found Page
 import NotFound from "./Pages/NotFound";
+
 function App() {
   return (
     <BrowserRouter>
@@ -41,11 +45,14 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/about' element={<About />} />
             <Route path='/projects' element={<Projects />} />
+            {/* Project Detail Routes */}
             <Route path='/projects/ai-agent' element={<AiAgentDetail />} />
             <Route path='/projects/mental-app' element={<MentalAppDetail />} />
             <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
             <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
             <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
+            {/* New Search Route */}
+            <Route path='/projects/search' element={<ProjectSearch />} />
             <Route path='/projectpost' element={<ProjectPost />} />
             <Route path='/apply' element={<Application />} />
             <Route path='/apply/application' element={<Application />} />
@@ -73,4 +80,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
 export default App;
