@@ -26,6 +26,8 @@ import CareerTestLanding from "./Pages/Home/CareerTestLanding"; // ✅ CTA with 
 import CareerTest from "./Pages/career/CareerTest";              // Updated import path
 // Support Page
 import Support from "./Pages/Support";                          // Import Support page
+// Import existing Privacy Policy page (correct path with space)
+import PrivacyPolicy from "./Pages/Privacy Policy";
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
@@ -61,8 +63,9 @@ function App() {
             {/* Career Test Routes */}
             <Route path='/career' element={<CareerTestLanding />} />  {/* Landing page with button */}
             <Route path='/career/test' element={<CareerTest />} />    {/* Test form/page */}
-            {/* Support Page Route */}
+            {/* Support and Privacy Pages */}
             <Route path='/support' element={<Support />} />          {/* Support/Feedback page */}
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} /> {/* Existing Privacy Policy page */}
           </Route>
           {/* Authentication Routes */}
           <Route path='/signin' element={<Login />} />
