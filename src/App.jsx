@@ -24,10 +24,10 @@ import Application from "./Pages/Apply/application";
 // Career Test Pages
 import CareerTestLanding from "./Pages/Home/CareerTestLanding"; // ✅ CTA with button
 import CareerTest from "./Pages/career/CareerTest";              // Updated import path
-// Support Page
-import Support from "./Pages/Support";                          // Import Support page
-// Import existing Privacy Policy page (correct path with space)
-import PrivacyPolicy from "./Pages/Privacy Policy";
+// Support Page and Legal Pages
+import Support from "./Pages/Support";                          // New Support/Feedback page
+import PrivacyPolicy from "./Pages/Privacy Policy";             // Existing Privacy Policy page
+import TermsOfService from "./Pages/Terms of Service";          // Existing Terms of Service page
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
@@ -63,9 +63,10 @@ function App() {
             {/* Career Test Routes */}
             <Route path='/career' element={<CareerTestLanding />} />  {/* Landing page with button */}
             <Route path='/career/test' element={<CareerTest />} />    {/* Test form/page */}
-            {/* Support and Privacy Pages */}
+            {/* Support and Legal Pages */}
             <Route path='/support' element={<Support />} />          {/* Support/Feedback page */}
-            <Route path='/privacy-policy' element={<PrivacyPolicy />} /> {/* Existing Privacy Policy page */}
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} /> {/* Privacy Policy page */}
+            <Route path='/terms-of-service' element={<TermsOfService />} /> {/* Terms of Service page */}
           </Route>
           {/* Authentication Routes */}
           <Route path='/signin' element={<Login />} />
