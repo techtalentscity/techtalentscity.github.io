@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
-import { Button, Form, Input, Radio, Rate, Steps } from 'antd';
+import { Button, Form, Input, Rate, Steps } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 const { Step } = Steps;
@@ -11,8 +11,27 @@ const Support = () => {
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [formValues, setFormValues] = useState({});
+  const [mathProblem, setMathProblem] = useState({ num1: 0, num2: 0, result: 0 });
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [captchaVerified, setCaptchaVerified] = useState(false);
   const [submissionComplete, setSubmissionComplete] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
+
+  // Generate new math problem for CAPTCHA
+  const generateMathProblem = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const result = num1 + num2;
+    
+    setMathProblem({ num1, num2, result });
+    setCaptchaAnswer('');
+    setCaptchaVerified(false);
+  };
+
+  // Initialize with a math problem on component mount
+  useEffect(() => {
+    generateMathProblem();
+  }, []);
 
   // Google Form submission URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSfzm2aOPtXdLd5ZpCN0-A0Gadrw1L0e_nK3QvyhZ6-AliBoyw/formResponse";
@@ -27,15 +46,32 @@ const Support = () => {
     suggestions: 'entry.2083196363'
   };
 
-  // Store form values and submit directly
-  const handleFormValuesSubmit = async (values) => {
+  // Store form values and move to CAPTCHA step
+  const handleFormValuesSubmit = (values) => {
     setFormValues(values);
-    await submitFormToGoogle(values);
+    setCurrentStep(1);
+  };
+
+  // Verify CAPTCHA and submit form if correct
+  const handleVerifyCaptcha = () => {
+    if (parseInt(captchaAnswer) === mathProblem.result) {
+      setCaptchaVerified(true);
+      submitFormToGoogle();
+    } else {
+      setCaptchaVerified(false);
+      generateMathProblem();
+      alert("Incorrect answer. Please try again.");
+    }
+  };
+  
+  // Go back to the form step
+  const handleBack = () => {
+    setCurrentStep(0);
   };
 
   // Submit form to Google Form using the improved method
-  const submitFormToGoogle = async (values) => {
-    if (!values) return;
+  const submitFormToGoogle = async () => {
+    if (!formValues) return;
     
     try {
       setLoading(true);
@@ -46,14 +82,14 @@ const Support = () => {
       
       // Add fields to form data - only add fields that exist in the FORM_FIELDS object
       Object.keys(FORM_FIELDS).forEach(key => {
-        if (values[key] !== undefined && values[key] !== null) {
+        if (formValues[key] !== undefined && formValues[key] !== null) {
           let valueToSubmit;
           
           // Handle array values (like multi-select fields)
-          if (Array.isArray(values[key])) {
-            valueToSubmit = values[key].join(', ');
+          if (Array.isArray(formValues[key])) {
+            valueToSubmit = formValues[key].join(', ');
           } else {
-            valueToSubmit = values[key].toString();
+            valueToSubmit = formValues[key].toString();
           }
           
           formData.append(FORM_FIELDS[key], valueToSubmit);
@@ -70,7 +106,7 @@ const Support = () => {
       
       // Show success message
       setSubmissionComplete(true);
-      setCurrentStep(1);
+      setCurrentStep(2);
       
       // Clear form after successful submission
       setTimeout(() => {
@@ -178,12 +214,52 @@ const Support = () => {
           type="primary" 
           htmlType="submit" 
           className="w-full"
-          loading={loading}
         >
-          Submit Feedback
+          Continue to Verification
         </Button>
       </Form.Item>
     </Form>
+  );
+
+  // CAPTCHA Step Component
+  const CaptchaStep = () => (
+    <div className="mt-8">
+      <div className="bg-gray-100 p-6 rounded-lg">
+        <h3 className="text-lg font-medium mb-4">Verify you're human</h3>
+        <p className="mb-6">Please solve this math problem to submit your feedback:</p>
+        
+        <div className="text-center mb-6">
+          <span className="text-2xl font-bold">{mathProblem.num1} + {mathProblem.num2} = ?</span>
+        </div>
+        
+        <Input 
+          placeholder="Enter your answer" 
+          className="p-2 mb-4" 
+          value={captchaAnswer}
+          onChange={(e) => setCaptchaAnswer(e.target.value)}
+          type="number"
+        />
+        
+        <div className="flex flex-col gap-3">
+          <Button 
+            type="primary" 
+            onClick={handleVerifyCaptcha}
+            loading={loading}
+            block
+          >
+            Verify & Submit
+          </Button>
+          
+          <Button onClick={generateMathProblem} block>
+            New Problem
+          </Button>
+          
+          <Button onClick={handleBack} block>
+            Back to Form
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 
   // Success Step Component
@@ -200,6 +276,7 @@ const Support = () => {
             setCurrentStep(0);
             setFormValues({});
             setSubmissionComplete(false);
+            generateMathProblem();
           }}
           block
         >
@@ -244,13 +321,17 @@ const Support = () => {
               title: 'Feedback Form',
             },
             {
+              title: 'Verification',
+            },
+            {
               title: 'Complete',
             }
           ]}
         />
         
         {currentStep === 0 && <FeedbackFormStep />}
-        {currentStep === 1 && <SuccessStep />}
+        {currentStep === 1 && <CaptchaStep />}
+        {currentStep === 2 && <SuccessStep />}
         
         <div className="text-center text-gray-500 text-sm mt-8">
           <p>
