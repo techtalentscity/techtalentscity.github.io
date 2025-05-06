@@ -69,11 +69,63 @@ const CareerTest = () => {
     setCurrentStep(1);
   };
 
+  // Submit form to Google Form using the improved method
+  const submitFormToGoogle = async () => {
+    if (!formValues) return;
+    
+    try {
+      setLoading(true);
+      setSubmissionError(null);
+      
+      // Create form data for submission
+      const formData = new FormData();
+      
+      // Add fields to form data - only add fields that exist in the FORM_FIELDS object
+      Object.keys(FORM_FIELDS).forEach(key => {
+        if (formValues[key] !== undefined && formValues[key] !== null) {
+          let valueToSubmit;
+          
+          // Handle array values (like multi-select fields)
+          if (Array.isArray(formValues[key])) {
+            valueToSubmit = formValues[key].join(', ');
+          } else {
+            valueToSubmit = formValues[key].toString();
+          }
+          
+          formData.append(FORM_FIELDS[key], valueToSubmit);
+          console.log(`Adding field ${FORM_FIELDS[key]}: ${valueToSubmit}`);
+        }
+      });
+      
+      // Submit the form data
+      await fetch(googleFormURL, {
+        method: 'POST',
+        mode: 'no-cors', // Important for cross-origin requests to Google Forms
+        body: formData
+      });
+      
+      // Show success message
+      setSubmitComplete(true);
+      setCurrentStep(2);
+      
+      // Clear form after successful submission
+      setTimeout(() => {
+        form.resetFields();
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmissionError('There was an error submitting your form. Please try again or contact support.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Verify CAPTCHA and submit form if correct
   const handleVerifyCaptcha = () => {
     if (parseInt(captchaAnswer) === mathProblem.result) {
       setCaptchaVerified(true);
-      submitFormToGoogle();
+      submitFormToGoogle(); // Call the updated function directly
     } else {
       setCaptchaVerified(false);
       generateMathProblem();
@@ -84,120 +136,6 @@ const CareerTest = () => {
   // Go back to the form step
   const handleBack = () => {
     setCurrentStep(0);
-  };
-
-  // Submit form to Google Form
-  const submitFormToGoogle = () => {
-    if (!formValues) return;
-    
-    setLoading(true);
-    setSubmissionError(null);
-    
-    // Create a hidden form element for direct submission
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = googleFormURL;
-    
-    // Create hidden iframe as target
-    const iframe = document.createElement('iframe');
-    const iframeName = 'hidden-form-iframe';
-    iframe.name = iframeName;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    form.target = iframeName;
-    form.style.display = 'none';
-    
-    // Add form fields
-    Object.keys(FORM_FIELDS).forEach(key => {
-      if (formValues[key] !== undefined && formValues[key] !== null) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = FORM_FIELDS[key];
-        
-        // Handle array values (like multi-select fields)
-        if (Array.isArray(formValues[key])) {
-          input.value = formValues[key].join(', ');
-        } else {
-          input.value = formValues[key].toString();
-        }
-        
-        form.appendChild(input);
-        console.log(`Submitting field ${FORM_FIELDS[key]}: ${input.value}`);
-      }
-    });
-    
-    // Add form to the body
-    document.body.appendChild(form);
-    
-    // Set up iframe load handler to detect completion
-    iframe.onload = () => {
-      console.log('Form submitted successfully');
-      
-      // Clean up elements
-      document.body.removeChild(form);
-      document.body.removeChild(iframe);
-      
-      // Update UI
-      setLoading(false);
-      setSubmitComplete(true);
-      setCurrentStep(2);
-    };
-    
-    // Handle potential errors
-    iframe.onerror = () => {
-      console.error('Error submitting form via iframe');
-      
-      // Clean up elements
-      document.body.removeChild(form);
-      document.body.removeChild(iframe);
-      
-      // Fallback to the fetch method as a backup
-      submitViaFetchFallback();
-    };
-    
-    // Submit the form
-    form.submit();
-  };
-
-  // Fallback submission method using fetch
-  const submitViaFetchFallback = () => {
-    console.log('Trying fallback submission method');
-    setSubmissionError(null);
-    
-    // Create form data
-    const formData = new FormData();
-    
-    // Add fields to form data
-    Object.keys(FORM_FIELDS).forEach(key => {
-      if (formValues[key] !== undefined && formValues[key] !== null) {
-        let valueToSubmit;
-        if (Array.isArray(formValues[key])) {
-          valueToSubmit = formValues[key].join(', ');
-        } else {
-          valueToSubmit = formValues[key].toString();
-        }
-        
-        formData.append(FORM_FIELDS[key], valueToSubmit);
-      }
-    });
-    
-    // Submit via fetch
-    fetch(googleFormURL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: formData
-    })
-    .then(() => {
-      console.log('Form submitted via fetch');
-      setLoading(false);
-      setSubmitComplete(true);
-      setCurrentStep(2);
-    })
-    .catch(error => {
-      console.error('Error submitting form via fetch:', error);
-      setSubmissionError('There was an error submitting your form. Please try again or contact support.');
-      setLoading(false);
-    });
   };
 
   // Form Guide Component
