@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
-import logo from '../../assets/images/logo-black.png';
+// Removed logo import
 import { Button, Form, Input, Select, Steps, Collapse } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
@@ -88,7 +88,7 @@ const CareerTest = () => {
             
             <div className="mb-4">
               <p className="mb-3">
-                Welcome to the <strong>TechTalents City Career Test</strong> — a personalized tool designed to help you explore your potential and clarify your direction in the tech industry. This is more than a typical test. It's an opportunity to reflect on your strengths, interests, and motivations, and to align them with meaningful opportunities in tech. Your answers will help us recommend the best projects, mentors, and learning pathways tailored to your journey.
+                Welcome to the <strong>Career Test</strong> — a personalized tool designed to help you explore your potential and clarify your direction in the tech industry. This is more than a typical test. It's an opportunity to reflect on your strengths, interests, and motivations, and to align them with meaningful opportunities in tech. Your answers will help us recommend the best projects, mentors, and learning pathways tailored to your journey.
               </p>
             </div>
             
@@ -492,7 +492,7 @@ const CareerTest = () => {
       <div className="bg-green-50 p-6 rounded-lg">
         <div className="text-5xl mb-4 text-green-500">✓</div>
         <h3 className="text-xl font-medium mb-4">Career Test Submitted Successfully!</h3>
-        <p className="mb-6">Thank you for completing the TechTalents City Career Test. We'll review your responses and get back to you soon with personalized recommendations for your tech journey.</p>
+        <p className="mb-6">Thank you for completing the Career Test. We'll review your responses and get back to you soon with personalized recommendations for your tech journey.</p>
         
         <Button 
           type="primary" 
@@ -515,9 +515,7 @@ const CareerTest = () => {
   return (
     <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
       <Container className="w-full max-w-4xl px-4 md:px-8">
-        <Link to={'/'} className="block mb-6">
-          <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
-        </Link>
+        {/* Removed the logo section */}
         
         <h1 className="text-3xl font-bold mb-2">Career Path in Tech</h1>
         <p className="text-gray-600 mb-6">Help us understand your tech interests and experience</p>
