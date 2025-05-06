@@ -18,6 +18,7 @@ const CareerTest = () => {
   const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [submitComplete, setSubmitComplete] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
 
   // Generate new math problem for CAPTCHA
   const generateMathProblem = () => {
@@ -35,10 +36,10 @@ const CareerTest = () => {
     generateMathProblem();
   }, []);
 
-  // Google Form submission URL for the provided Spreadsheet ID: 15Y0h2UiVH1RhdFz5HtDAT3HiXGBjw-4Gpmv0KrFlAAM
-  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/formResponse";
+  // Google Form submission URL - UPDATED TO THE CORRECT FORM
+  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdeYXF8KH42MwmkdkBnLmL07yYsMcbMEa5mTIWHYh46zqI90Q/formResponse";
   
-  // Form field entry IDs extracted from the actual Google Form
+  // Form field entry IDs from the Google Form
   const FORM_FIELDS = {
     fullName: 'entry.2120631500',
     email: 'entry.289230066',
@@ -90,6 +91,7 @@ const CareerTest = () => {
     if (!formValues) return;
     
     setLoading(true);
+    setSubmissionError(null);
     
     // Create a hidden form element for direct submission
     const form = document.createElement('form');
@@ -160,6 +162,7 @@ const CareerTest = () => {
   // Fallback submission method using fetch
   const submitViaFetchFallback = () => {
     console.log('Trying fallback submission method');
+    setSubmissionError(null);
     
     // Create form data
     const formData = new FormData();
@@ -192,7 +195,7 @@ const CareerTest = () => {
     })
     .catch(error => {
       console.error('Error submitting form via fetch:', error);
-      alert('There was an error submitting your form. Please try again or contact support.');
+      setSubmissionError('There was an error submitting your form. Please try again or contact support.');
       setLoading(false);
     });
   };
@@ -224,7 +227,33 @@ const CareerTest = () => {
               </ul>
             </div>
             
-            {/* Rest of the guide content remains the same */}
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Learning Comfort Level</h4>
+              <p className="mb-3">
+                Next, we assess your <strong>learning comfort level</strong>, especially around tools and programming languages. Whether you're a fast learner, need a bit more time, or prefer structured guidance, knowing this helps us support you effectively:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Very comfortable – I pick things up quickly</li>
+                <li>Somewhat comfortable – I may need extra time</li>
+                <li>Not comfortable – I need structured support</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Tech Motivations</h4>
+              <p className="mb-3">
+                Your <strong>motivations for working in tech</strong> are equally important. People are driven by different passions, and we want to know what excites you most so we can match you with relevant opportunities. These may include:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Solving complex problems</li>
+                <li>Building applications and platforms</li>
+                <li>Exploring data and gaining insights</li>
+                <li>Ensuring system security and reliability</li>
+                <li>Driving real-world innovation and impact</li>
+              </ul>
+            </div>
+            
+            {/* Rest of the guide can remain the same */}
             
           </div>
         </Panel>
@@ -465,18 +494,27 @@ const CareerTest = () => {
         <Input placeholder="Enter your answer" className="p-2" />
       </Form.Item>
 
+      {/* Display submission error if any */}
+      {submissionError && (
+        <div className="bg-red-50 text-red-600 p-3 rounded mb-4">
+          {submissionError}
+        </div>
+      )}
+
       <p className='pb-6 text-sm'>
         By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
         acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
       </p>
 
-      <Button 
-        type="primary" 
-        htmlType="submit" 
-        className="w-full"
-      >
-        Continue to Verification
-      </Button>
+      <Form.Item>
+        <Button 
+          type="primary" 
+          htmlType="submit" 
+          className="w-full"
+        >
+          Continue to Verification
+        </Button>
+      </Form.Item>
     </Form>
   );
 
