@@ -307,9 +307,7 @@ const Support = () => {
             For urgent issues, you can reach our support team at:
           </p>
           <ul className="list-disc pl-6 mb-3">
-            <li><strong>Email:</strong> <a href="mailto:support@techtalentscity.com" className="text-primary">support@techtalentscity.com</a></li>
-            <li><strong>Discord:</strong> Join our <a href="https://discord.gg/techtalents" className="text-primary">community Discord</a></li>
-            <li><strong>Response time:</strong> We aim to respond to all queries within 24 hours</li>
+            <li><strong>Response time:</strong> We aim to respond to all queries within 5 business days</li>
           </ul>
         </div>
         
