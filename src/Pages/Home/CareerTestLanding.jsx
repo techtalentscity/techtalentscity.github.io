@@ -1,14 +1,13 @@
 import React from 'react';
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import careerImg from '../../assets/images/vr2.png'; // ✅ Ensure image exists
 
 const CareerTestLanding = () => {
-  const navigate = useNavigate();
-  
+  // Function to handle navigation to career test
   const handleClick = () => {
-    // Navigate to the career test page using React Router
-    navigate('/career/CareerTest');
+    // For GitHub Pages, we need to use window.location.href
+    // This will refresh the page but will work with GitHub's routing
+    window.location.href = `${window.location.origin}/career/CareerTest`;
   };
 
   return (
