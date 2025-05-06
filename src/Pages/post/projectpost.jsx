@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
-import logo from '../../assets/images/logo-black.png';
+// Removed logo import
 import { Button, Form, Input, Select, InputNumber, Steps, Collapse, Divider } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
@@ -444,9 +444,7 @@ const ProjectPost = () => {
   return (
     <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
       <Container className="w-full max-w-4xl px-4 md:px-8">
-        <Link to={'/'} className="block mb-6">
-          <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
-        </Link>
+        {/* Removed logo section */}
         
         <h1 className="text-3xl font-bold mb-2">TTC Project Posting Form</h1>
         <p className="text-gray-600 mb-6">Submit your project to collaborate with talented individuals</p>
