@@ -3,11 +3,9 @@ import { Button } from 'antd';
 import careerImg from '../../assets/images/vr2.png'; // ✅ Ensure image exists
 
 const CareerTestLanding = () => {
-  // Function to handle navigation to career test
   const handleClick = () => {
-    // For GitHub Pages, we need to use window.location.href
-    // This will refresh the page but will work with GitHub's routing
-    window.location.href = `${window.location.origin}/career/CareerTest`;
+    // Using the same approach as PostAProject but for the career test page
+    window.location.href = '/career/CareerTest';
   };
 
   return (
