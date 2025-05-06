@@ -4,23 +4,19 @@ import Container from '../../components/Container';
 const features = [
   {
     title: "AI-Powered Skill Discovery",
-    description: "Our AI analyzes your project contributions and learning patterns to uncover strengths and identify transferable skills relevant to high-demand tech roles.",
-    emoji: "🧠",
+    description: "Our AI analyzes your project contributions and learning patterns to uncover strengths and identify transferable skills relevant to high-demand tech roles."
   },
   {
     title: "Personalized Roadmap",
-    description: "Get a personalized project roadmap aligned with your career goals and track your growth by solving real-world problems.",
-    emoji: "🗺️",
+    description: "Get a personalized project roadmap aligned with your career goals and track your growth by solving real-world problems."
   },
   {
     title: "Explore Career Paths",
     description: "Explore different tech career paths by solving problems that mirror in-demand roles and gain clarity on your next step as you grow from novice to expert.",
-    emoji: "🚀",
   },
   {
     title: "TechMentor Guidance",
     description: "Connect with experienced tech mentors who provide learning resources and guide you in applying your skills to real-world problems.",
-    emoji: "🎓", // 🎓 graduation cap emoji to symbolize mentorship and learning
   },
 ];
 
