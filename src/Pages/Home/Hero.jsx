@@ -1,7 +1,7 @@
 // Updated Hero.jsx with search functionality
 import { useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { IoIosSearch } from 'react-icons/io';
 import image from '../../assets/images/heroImage.png';
 import Container from '../../components/Container';
 
