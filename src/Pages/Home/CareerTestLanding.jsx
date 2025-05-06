@@ -7,7 +7,7 @@ const CareerTestLanding = () => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    // Using the same approach as your other working pages
+    // Navigate to the career test page using React Router
     navigate('/career/CareerTest');
   };
 
