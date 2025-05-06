@@ -20,7 +20,7 @@ const CareerTestLanding = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-center items-center text-white p-8">
               <h4 className="mt-4 text-2xl font-bold text-center">Find Your Best-Fit Tech Role</h4>
               <p className="text-lg mt-3 bg-black/40 px-4 py-2 rounded-lg">Career Test: 5 minutes</p>
-              <a href="/career/test" target="_blank" rel="noopener noreferrer">
+              <a href="/career/CareerTest" target="_blank" rel="noopener noreferrer">
                 <Button 
                   type="primary"
                   className="mt-8 py-5 px-12 font-bold text-lg"
