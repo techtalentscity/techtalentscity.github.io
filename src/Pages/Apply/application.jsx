@@ -192,8 +192,7 @@ const Application = () => {
               <h4 className="font-bold mb-2">Application Process</h4>
               <p className="mb-3">
                 Once you submit your application, our team will review it to determine if your skills 
-                and experience match the project requirements. If accepted, you'll be added to the 
-                project's private channel where you can collaborate with other team members.
+                and experience match the project requirements. If selected, you’ll receive further instructions to begin your project onboarding and connect with your team.
               </p>
               <p>
                 By submitting a well-prepared application, you increase your chances of being selected and positioned 
@@ -423,7 +422,7 @@ const Application = () => {
             acknowledge you've read our <span className="text-primary font-medium">Privacy Policy</span>.
           </p>
           <p className="mt-2">
-            Only registered members will be granted access to project channels upon acceptance.
+            Only registered members will be granted access to projects upon acceptance.
           </p>
         </div>
       </Container>
