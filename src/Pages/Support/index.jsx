@@ -298,7 +298,7 @@ const Support = () => {
   return (
     <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
       <Container className="w-full max-w-4xl px-4 md:px-8">
-        <h1 className="text-3xl font-bold mb-2">TechTalents Support</h1>
+        <h1 className="text-3xl font-bold mb-2">TechTalents City Support</h1>
         <p className="text-gray-600 mb-6">We value your feedback and are here to help with any issues you encounter.</p>
         
         <div className="bg-blue-50 p-6 rounded-lg mb-8">
