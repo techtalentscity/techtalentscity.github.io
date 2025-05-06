@@ -24,6 +24,8 @@ import Application from "./Pages/Apply/application";
 // Career Test Pages
 import CareerTestLanding from "./Pages/Home/CareerTestLanding"; // ✅ CTA with button
 import CareerTest from "./Pages/career/CareerTest";              // Updated import path
+// Support Page
+import Support from "./Pages/Support";                          // Import Support page
 // Project Detail Pages
 import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
@@ -61,6 +63,8 @@ function App() {
             {/* Career Test Routes */}
             <Route path='/career' element={<CareerTestLanding />} />  {/* Landing page with button */}
             <Route path='/career/test' element={<CareerTest />} />    {/* Test form/page */}
+            {/* Support Page Route */}
+            <Route path='/support' element={<Support />} />          {/* Support/Feedback page */}
             {/* Privacy Policy */}
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           </Route>
