@@ -32,6 +32,8 @@ import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
 import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
 // New Search Page
 import ProjectSearch from "./Pages/ProjectSearch";
+// Privacy Policy Page
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
 // Not Found Page
 import NotFound from "./Pages/NotFound";
 
@@ -51,7 +53,7 @@ function App() {
             <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
             <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
             <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
-            {/* New Search Route */}
+            {/* Search Route */}
             <Route path='/projects/search' element={<ProjectSearch />} />
             <Route path='/projectpost' element={<ProjectPost />} />
             <Route path='/apply' element={<Application />} />
@@ -59,6 +61,8 @@ function App() {
             {/* Career Test Routes */}
             <Route path='/career' element={<CareerTestLanding />} />  {/* Landing page with button */}
             <Route path='/career/test' element={<CareerTest />} />    {/* Test form/page */}
+            {/* Privacy Policy */}
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           </Route>
           {/* Authentication Routes */}
           <Route path='/signin' element={<Login />} />
