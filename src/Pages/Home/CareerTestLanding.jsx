@@ -1,11 +1,14 @@
 import React from 'react';
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import careerImg from '../../assets/images/vr2.png'; // ✅ Ensure image exists
 
 const CareerTestLanding = () => {
+  const navigate = useNavigate();
+  
   const handleClick = () => {
-    // Using the same approach as PostAProject but for the career test page
-    window.location.href = '/career/CareerTest';
+    // Using the same approach as your other working pages
+    navigate('/career/CareerTest');
   };
 
   return (
