@@ -7,8 +7,8 @@ const CareerTestLanding = () => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    // Using the same approach as your other working pages
-    navigate('/career/CareerTest');
+    // Navigate to the CORRECT path as defined in your router
+    navigate('/career/test');
   };
 
   return (
