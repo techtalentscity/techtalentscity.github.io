@@ -17,14 +17,14 @@ const Support = () => {
   // Google Form submission URL
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSfzm2aOPtXdLd5ZpCN0-A0Gadrw1L0e_nK3QvyhZ6-AliBoyw/formResponse";
   
-  // Form field entry IDs from the Google Form - update these with the correct IDs
+  // Form field entry IDs from the Google Form - updated with verified IDs
   const FORM_FIELDS = {
-    firstName: 'entry.1863182387',
-    lastName: 'entry.1533659631',
-    email: 'entry.1171142492',
-    rating: 'entry.2110451934',
-    feedback: 'entry.520138674',
-    suggestions: 'entry.2050201867'
+    firstName: 'entry.2120631500',
+    lastName: 'entry.976572827',
+    email: 'entry.1556369182',
+    rating: 'entry.162050771',
+    feedback: 'entry.1343188993', 
+    suggestions: 'entry.2083196363'
   };
 
   // Store form values and submit directly
