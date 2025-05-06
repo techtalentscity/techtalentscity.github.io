@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import { FaFacebook, FaInstagram, FaLinkedin, FaPinterest, FaXTwitter } from "react-icons/fa6"
 
 const Footer = () => {
-
     const currentYear = new Date().getFullYear();
   return (
     <div className="bg-white">
@@ -19,9 +18,9 @@ const Footer = () => {
                     <li className="mb-2"><Link to={'/about'}>About</Link></li>
                 </ul>
                 <ul className="text-[#101010]">
-                    <li className="mb-2">Support</li>
-                    <li className="mb-2">Privacy Policy</li>
-                    <li className="mb-2">Terms of Service</li>
+                    <li className="mb-2"><Link to={'/support'}>Support</Link></li>
+                    <li className="mb-2"><Link to={'/privacy-policy'}>Privacy Policy</Link></li>
+                    <li className="mb-2"><Link to={'/terms-of-service'}>Terms of Service</Link></li>
                 </ul>
             </div>
             <div className="flex flex-col md:flex-row justify-between md:items-center border-t py-6 mt-3 gap-5">
