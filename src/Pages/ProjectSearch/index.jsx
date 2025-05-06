@@ -7,14 +7,15 @@ import Container from '../../components/Container';
 
 // Mock fetch function - in a real app, this would be an API call
 const fetchProjects = async () => {
-  // Sample projects database based on our ProjectDetail data
+  // Sample projects database with route paths matching your structure
   return [
     {
       id: 1,
-      title: 'Building an AI-powered Agent for Customer Engagement',
+      title: 'AI Agent for Customer Engagement',
       description: 'This project will develop a conversational AI agent to improve customer service efficiency in banking.',
       employmentType: 'Full-Time / Remote / Free',
       publishDate: 'May 16, 2024',
+      routePath: '/projects/ai-agent',
       skills: [
         'Natural Language Processing (NLP)',
         'Machine Learning',
@@ -31,6 +32,7 @@ const fetchProjects = async () => {
       description: 'Develop a comprehensive system that provides real-time notifications for users across multiple platforms.',
       employmentType: 'Part-Time / Hybrid / Paid',
       publishDate: 'May 10, 2024',
+      routePath: '/projects/real-time-notification-system',
       skills: [
         'WebSockets',
         'React',
@@ -47,6 +49,7 @@ const fetchProjects = async () => {
       description: 'Create a decentralized application for transparent tracking of products through a global supply chain.',
       employmentType: 'Full-Time / Remote / Paid',
       publishDate: 'May 5, 2024',
+      routePath: '/projects/blockchain-defi',
       skills: [
         'Blockchain',
         'Smart Contracts',
@@ -63,6 +66,7 @@ const fetchProjects = async () => {
       description: 'Develop an interactive platform to visualize climate data and make environmental information accessible to the public.',
       employmentType: 'Part-Time / Remote / Free',
       publishDate: 'May 12, 2024',
+      routePath: '/projects/climate-prediction',
       skills: [
         'Data Visualization',
         'D3.js',
@@ -79,6 +83,7 @@ const fetchProjects = async () => {
       description: 'Create a mobile application that provides mental health resources, mood tracking, and guided meditation exercises.',
       employmentType: 'Full-Time / Remote / Paid',
       publishDate: 'May 8, 2024',
+      routePath: '/projects/mental-app',
       skills: [
         'Mobile Development',
         'React Native',
@@ -186,7 +191,7 @@ const ProjectSearch = () => {
       ) : filteredProjects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map(project => (
-            <Link to={`/project/${project.id}`} key={project.id}>
+            <Link to={project.routePath} key={project.id}>
               <Card 
                 className="h-full hover:shadow-lg transition-shadow"
                 title={
