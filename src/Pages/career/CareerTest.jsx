@@ -15,6 +15,7 @@ const CareerTest = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formValues, setFormValues] = useState({});
   const [submitComplete, setSubmitComplete] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
 
   // Google Form submission URL for the provided Spreadsheet ID: 15Y0h2UiVH1RhdFz5HtDAT3HiXGBjw-4Gpmv0KrFlAAM
   const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/formResponse";
@@ -47,33 +48,111 @@ const CareerTest = () => {
   const handleFormSubmit = (values) => {
     setFormValues(values);
     setLoading(true);
+    setSubmissionError(null);
     
-    // Create form data for submission
-    const formData = new FormData();
+    // This is the direct form submission approach - most reliable for Google Forms
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = googleFormURL;
     
-    // Add fields to form data using the correct entry IDs
+    // Create hidden iframe as target
+    const iframe = document.createElement('iframe');
+    const iframeName = 'hidden-form-iframe';
+    iframe.name = iframeName;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    form.target = iframeName;
+    form.style.display = 'none';
+    
+    // Add form fields
     Object.keys(FORM_FIELDS).forEach(key => {
       if (values[key] !== undefined && values[key] !== null) {
-        formData.append(FORM_FIELDS[key], values[key].toString());
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = FORM_FIELDS[key];
+        
+        // Handle array values (like multi-select)
+        if (Array.isArray(values[key])) {
+          input.value = values[key].join(', ');
+        } else {
+          input.value = values[key].toString();
+        }
+        
+        form.appendChild(input);
+        console.log(`Submitting field ${FORM_FIELDS[key]}: ${input.value}`);
       }
     });
     
-    // Submit the form data to Google Forms
+    // Add form to the body
+    document.body.appendChild(form);
+    
+    // Set up iframe load handler to detect completion
+    iframe.onload = () => {
+      console.log('Form submitted successfully');
+      
+      // Clean up elements
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+      
+      // Update UI
+      setLoading(false);
+      setSubmitComplete(true);
+      setCurrentStep(1);
+    };
+    
+    // Handle potential errors
+    iframe.onerror = () => {
+      console.error('Error submitting form');
+      
+      // Clean up elements
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+      
+      // Fallback to the fetch method as a backup
+      submitViaFetch(values);
+    };
+    
+    // Submit the form
+    form.submit();
+  };
+
+  // Fallback method using fetch (only used if iframe method fails)
+  const submitViaFetch = (values) => {
+    console.log('Trying fallback submission method');
+    setSubmissionError(null);
+    
+    // Create form data
+    const formData = new FormData();
+    
+    // Add fields to form data
+    Object.keys(FORM_FIELDS).forEach(key => {
+      if (values[key] !== undefined && values[key] !== null) {
+        let valueToSubmit;
+        if (Array.isArray(values[key])) {
+          valueToSubmit = values[key].join(', ');
+        } else {
+          valueToSubmit = values[key].toString();
+        }
+        
+        formData.append(FORM_FIELDS[key], valueToSubmit);
+      }
+    });
+    
+    // Submit via fetch
     fetch(googleFormURL, {
       method: 'POST',
-      mode: 'no-cors', // Required for cross-origin requests to Google Forms
+      mode: 'no-cors',
       body: formData
     })
     .then(() => {
-      // Handle successful submission
+      console.log('Form submitted via fetch');
       setLoading(false);
       setSubmitComplete(true);
       setCurrentStep(1);
     })
     .catch(error => {
-      // Handle submission error
-      console.error('Error submitting form:', error);
-      alert('Submission failed. Please try again.');
+      console.error('Error submitting form via fetch:', error);
+      setSubmissionError('There was an error submitting your form. Please try again or contact support.');
       setLoading(false);
     });
   };
@@ -468,6 +547,13 @@ const CareerTest = () => {
         <Input placeholder="Enter your answer" className="p-2" />
       </Form.Item>
 
+      {/* Display submission error if any */}
+      {submissionError && (
+        <div className="bg-red-50 text-red-600 p-3 rounded mb-4">
+          {submissionError}
+        </div>
+      )}
+
       <p className='pb-6 text-sm'>
         By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
         acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
@@ -498,11 +584,6 @@ const CareerTest = () => {
           type="primary" 
           onClick={() => {
             window.location.href = '/';
-            // Alternative approach if needed:
-            // setCurrentStep(0);
-            // setFormValues({});
-            // setSubmitComplete(false);
-            // form.resetFields();
           }}
           block
         >
@@ -515,8 +596,6 @@ const CareerTest = () => {
   return (
     <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
       <Container className="w-full max-w-4xl px-4 md:px-8">
-        {/* Removed the logo section */}
-        
         <h1 className="text-3xl font-bold mb-2">Career Path in Tech</h1>
         <p className="text-gray-600 mb-6">Help us understand your tech interests and experience</p>
         
