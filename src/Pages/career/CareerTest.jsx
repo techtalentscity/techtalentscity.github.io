@@ -1,310 +1,488 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
 import logo from '../../assets/images/logo-black.png';
-import { Button, Form, Input, Select, Steps } from 'antd';
+import { Button, Form, Input, Select, Steps, Collapse } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 const { Step } = Steps;
+const { Panel } = Collapse;
+const { Option } = Select;
 
 const CareerTest = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [formValues, setFormValues] = useState({});
-  const [submissionComplete, setSubmissionComplete] = useState(false);
+  const [submitComplete, setSubmitComplete] = useState(false);
 
-  // Google Form submission URL - PLEASE REPLACE WITH THE CORRECT GOOGLE FORMS URL
-  const googleFormURL = "https://docs.google.com/forms/d/e/[YOUR_FORM_ID]/formResponse";
-
-  // Form field entry IDs from the Google Form
+  // Google Form submission URL for the provided Spreadsheet ID: 15Y0h2UiVH1RhdFz5HtDAT3HiXGBjw-4Gpmv0KrFlAAM
+  const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScIbS6ykk3RY8bXUJRg52oikbt8mcvu8eOdj2x3w9xTeFeKmg/formResponse";
+  
+  // Form field entry IDs extracted from the actual Google Form
   const FORM_FIELDS = {
     fullName: 'entry.2120631500',
-    emailAddress: 'entry.289230066',
-    doingBest: 'entry.826500830',
-    interestedWorking: 'entry.90149729',
-    preferWork: 'entry.103804273',
-    comfortableLearning: 'entry.126397704',
-    excitesTech: 'entry.2046710176',
-    curiousTechAreas: 'entry.1595563124',
-    enjoyedTechActivities: 'entry.608716717',
+    email: 'entry.289230066',
+    whatYouLikeDoing: 'entry.826500830',
+    workingForInterest: 'entry.90149729',
+    workPreference: 'entry.103804273',
+    learningComfort: 'entry.126397704',
+    techExcitement: 'entry.2046710176',
+    techAreasInterest: 'entry.1595563124',
+    techActivities: 'entry.608716717',
     personalStrength: 'entry.1388922789',
-    motivationPursuing: 'entry.1879980715',
+    motivation: 'entry.1879980715',
     experienceLevel: 'entry.75336198',
-    openEmergingTech: 'entry.614410637',
-    existingCertifications: 'entry.1379512189',
-    listCertifications: 'entry.1262447611',
-    usedToolsPlatforms: 'entry.141495548',
-    realisticTimeCommitment: 'entry.44204949',
-    impactWorkHave: 'entry.2125471600',
-    guidanceNeedNow: 'entry.1508247044',
-    next12MonthsTechJourney: 'entry.686755157',
+    emergingTech: 'entry.614410637',
+    certifications: 'entry.1379512189',
+    certificationsList: 'entry.1262447611',
+    toolsUsed: 'entry.141495548',
+    timeCommitment: 'entry.44204949',
+    desiredImpact: 'entry.2125471600',
+    guidanceNeeded: 'entry.1508247044',
+    techJourneyGoal: 'entry.686755157'
   };
 
-  // Store form values and move to the next step (currently only one step)
-  const handleFormValuesSubmit = (values) => {
+  // Handle form submission
+  const handleFormSubmit = (values) => {
     setFormValues(values);
-    submitFormToGoogle();
-  };
-
-  // Submit form to Google Form
-  const submitFormToGoogle = async () => {
-    if (!formValues) return;
-
-    try {
-      setLoading(true);
-
-      // Create form data for submission
-      const formData = new FormData();
-
-      // Add fields to form data - only add fields that exist in the FORM_FIELDS object
-      Object.keys(FORM_FIELDS).forEach(key => {
-        if (formValues[key] !== undefined && formValues[key] !== null) {
-          formData.append(FORM_FIELDS[key], formValues[key].toString());
-        }
-      });
-
-      // Submit the form data
-      await fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for cross-origin requests to Google Forms
-        body: formData
-      });
-
-      // Show success message
-      setSubmissionComplete(true);
-      setCurrentStep(1); // Move to the success step
-
-      // Clear form after successful submission
-      setTimeout(() => {
-        form.resetFields();
-        setFormValues({});
-        setSubmissionComplete(false);
-        setCurrentStep(0);
-      }, 3000);
-
-    } catch (error) {
+    setLoading(true);
+    
+    // Create form data for submission
+    const formData = new FormData();
+    
+    // Add fields to form data using the correct entry IDs
+    Object.keys(FORM_FIELDS).forEach(key => {
+      if (values[key] !== undefined && values[key] !== null) {
+        formData.append(FORM_FIELDS[key], values[key].toString());
+      }
+    });
+    
+    // Submit the form data to Google Forms
+    fetch(googleFormURL, {
+      method: 'POST',
+      mode: 'no-cors', // Required for cross-origin requests to Google Forms
+      body: formData
+    })
+    .then(() => {
+      // Handle successful submission
+      setLoading(false);
+      setSubmitComplete(true);
+      setCurrentStep(1);
+    })
+    .catch(error => {
+      // Handle submission error
       console.error('Error submitting form:', error);
       alert('Submission failed. Please try again.');
-    } finally {
       setLoading(false);
-    }
+    });
   };
 
-  // Career Test Form Step Component
-  const CareerTestFormStep = () => (
+  // Form Guide Component
+  const FormGuide = () => (
+    <div className="mb-8">
+      <Collapse ghost>
+        <Panel header={<span className="text-lg font-semibold text-primary">🧭 Click here to view Career Test Guide</span>} key="guide">
+          <div className="bg-gray-50 p-6 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">Career Test Guide</h2>
+            
+            <div className="mb-4">
+              <p className="mb-3">
+                Welcome to the <strong>TechTalents City Career Test</strong> — a personalized tool designed to help you explore your potential and clarify your direction in the tech industry. This is more than a typical test. It's an opportunity to reflect on your strengths, interests, and motivations, and to align them with meaningful opportunities in tech. Your answers will help us recommend the best projects, mentors, and learning pathways tailored to your journey.
+              </p>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Preferred Work Style</h4>
+              <p className="mb-3">
+                We start by exploring your <strong>preferred work style</strong>. Some people work best independently, others thrive in collaborative teams or aspire to lead initiatives. Understanding your preference helps us align you with the right environment. You'll choose from:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Working independently on solo projects</li>
+                <li>Collaborating within a team</li>
+                <li>Leading others and managing the vision</li>
+                <li>Being flexible and adaptable across work styles</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Learning Comfort Level</h4>
+              <p className="mb-3">
+                Next, we assess your <strong>learning comfort level</strong>, especially around tools and programming languages. Whether you're a fast learner, need a bit more time, or prefer structured guidance, knowing this helps us support you effectively:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Very comfortable – I pick things up quickly</li>
+                <li>Somewhat comfortable – I may need extra time</li>
+                <li>Not comfortable – I need structured support</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Tech Motivations</h4>
+              <p className="mb-3">
+                Your <strong>motivations for working in tech</strong> are equally important. People are driven by different passions, and we want to know what excites you most so we can match you with relevant opportunities. These may include:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Solving complex problems</li>
+                <li>Building applications and platforms</li>
+                <li>Exploring data and gaining insights</li>
+                <li>Ensuring system security and reliability</li>
+                <li>Driving real-world innovation and impact</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Preferred Organization Type</h4>
+              <p className="mb-3">
+                We also want to know your <strong>preferred type of organization</strong>, such as:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Startups and entrepreneurial ventures</li>
+                <li>Large tech companies</li>
+                <li>Nonprofit or mission-driven organizations</li>
+                <li>Private sector or government agencies</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Tech Interest Areas</h4>
+              <p className="mb-3">
+                The test explores your <strong>areas of curiosity in tech</strong>, helping us suggest the right skills to develop. You'll indicate interest in fields such as:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Software Development</li>
+                <li>Cybersecurity</li>
+                <li>Artificial Intelligence & Machine Learning</li>
+                <li>Blockchain & Web3</li>
+                <li>Product Management</li>
+                <li>UX/UI Design</li>
+                <li>Data Analysis & Engineering</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Personal Strengths & Experience</h4>
+              <p className="mb-3">
+                You'll then reflect on your <strong>personal strengths</strong>, such as creativity, communication, leadership, or perseverance — qualities that can set you apart in a tech career. You'll also be asked whether you've completed any <strong>certifications or technical courses</strong>, and which tools or platforms you've used, such as:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>GitHub</li>
+                <li>Figma</li>
+                <li>Python</li>
+                <li>JavaScript</li>
+                <li>Google Cloud</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Commitment & Goals</h4>
+              <p className="mb-3">
+                We'll ask about your <strong>weekly time commitment</strong>, helping us recommend realistic projects based on your availability. You'll also share your <strong>short-term goals</strong>, which may include:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Landing your first tech internship or job</li>
+                <li>Transitioning into a new role</li>
+                <li>Building a portfolio for job applications</li>
+                <li>Launching a startup or personal project</li>
+                <li>Creating solutions for businesses or communities</li>
+                <li>Innovating in areas like science, health, or finance</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Desired Impact</h4>
+              <p className="mb-3">
+                Understanding the <strong>impact you want to create</strong> is also essential. You'll choose aspirations such as:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Empowering underrepresented communities</li>
+                <li>Building business-focused solutions</li>
+                <li>Advancing innovation in science or healthcare</li>
+                <li>Supporting global education</li>
+                <li>Improving financial systems</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">Support Needed</h4>
+              <p className="mb-3">
+                Finally, we ask what <strong>kind of support</strong> you need most at this stage in your journey. You might need:
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>A skill development roadmap</li>
+                <li>Matching with suitable projects</li>
+                <li>Career mentorship</li>
+                <li>Help with your resume or portfolio</li>
+                <li>All of the above</li>
+              </ul>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="font-bold mb-2">12-Month Vision</h4>
+              <p className="mb-3">
+                And to help you set expectations, we'll ask: <strong>Where would you like to be in your tech journey over the next 12 months?</strong>
+              </p>
+              <ul className="list-disc pl-6 mb-3">
+                <li>Starting your first real-world project</li>
+                <li>Securing an internship or full-time position</li>
+                <li>Building and showcasing a complete portfolio</li>
+                <li>Leading a team or managing a technical initiative</li>
+              </ul>
+            </div>
+          </div>
+        </Panel>
+      </Collapse>
+    </div>
+  );
+
+  // Form Component with all questions
+  const CareerTestForm = () => (
     <Form
       form={form}
       layout="vertical"
-      onFinish={handleFormValuesSubmit}
+      onFinish={handleFormSubmit}
       initialValues={formValues}
-      className="mt-8"
+      className="mt-6"
     >
-      <p>
-        Welcome to the TechTalents City Career Test — a personalized tool designed to help you explore your potential and clarify your direction in the tech industry. This is more than a typical test. It's an opportunity to reflect on your strengths, interests, and motivations, and to align them with meaningful opportunities in tech. Your answers will help us recommend the best projects, mentors, and learning pathways tailored to your journey.
-      </p>
-
+      {/* Personal Information */}
+      <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+      
       <Form.Item
-        label="Full Name *"
+        label="Full Name"
         name="fullName"
         rules={[{ required: true, message: 'Please enter your full name' }]}
       >
-        <Input placeholder="Your full name" className="p-2" />
+        <Input placeholder="Enter your full name" className="p-2" />
       </Form.Item>
 
       <Form.Item
-        label="Email Address *"
-        name="emailAddress"
+        label="Email Address"
+        name="email"
         rules={[
-          { required: true, message: 'Please enter your email address' },
-          { type: 'email', message: 'Please enter a valid email' },
+          { required: true, message: 'Please enter your email' },
+          { type: 'email', message: 'Please enter a valid email' }
         ]}
       >
-        <Input placeholder="Your email address" className="p-2" />
+        <Input placeholder="Enter your email address" className="p-2" />
+      </Form.Item>
+
+      {/* Tech Interests & Experience */}
+      <h2 className="text-xl font-semibold mb-4 mt-8">Tech Interests & Experience</h2>
+      
+      <Form.Item
+        label="What do you like doing best?"
+        name="whatYouLikeDoing"
+        rules={[{ required: true, message: 'Please answer this question' }]}
+      >
+        <TextArea placeholder="Enter your answer" rows={4} className="p-2" />
       </Form.Item>
 
       <Form.Item
-        label="Preferred Work Style *"
-        name="doingBest"
-        rules={[{ required: true, message: 'Please select your preferred work style' }]}
+        label="Are you more interested in working for:"
+        name="workingForInterest"
+        rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Select placeholder="Select your preferred work style" className="w-full">
-          <Select.Option value="working_independently">Working independently on solo projects</Select.Option>
-          <Select.Option value="collaborating_team">Collaborating within a team</Select.Option>
-          <Select.Option value="leading_others">Leading others and managing the vision</Select.Option>
-          <Select.Option value="flexible_adaptable">Being flexible and adaptable across work styles</Select.Option>
+        <Select placeholder="Select an option">
+          <Option value="startups">Startups</Option>
+          <Option value="enterprises">Enterprise companies</Option>
+          <Option value="freelance">Freelance/independent work</Option>
+          <Option value="nonprofit">Non-profit organizations</Option>
+          <Option value="own_business">Starting my own business</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="Comfort Level with Learning New Tools/Languages *"
-        name="comfortableLearning"
-        rules={[{ required: true, message: 'Please rate your comfort level' }]}
+        label="How do you prefer to work?"
+        name="workPreference"
+        rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Select placeholder="Select your comfort level" className="w-full">
-          <Select.Option value="very_comfortable">Very comfortable – I pick things up quickly</Select.Option>
-          <Select.Option value="somewhat_comfortable">Somewhat comfortable – I may need extra time</Select.Option>
-          <Select.Option value="not_comfortable">Not comfortable – I need structured support</Select.Option>
+        <Select placeholder="Select an option">
+          <Option value="remote">Fully remote</Option>
+          <Option value="hybrid">Hybrid (mix of remote and in-office)</Option>
+          <Option value="office">In-office</Option>
+          <Option value="flexible">Flexible/depends on the project</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="What excites you most about working in tech? *"
-        name="excitesTech"
-        rules={[{ required: true, message: 'Please select what excites you' }]}
+        label="How comfortable are you with learning new tools or programming languages?"
+        name="learningComfort"
+        rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Select placeholder="Select what excites you most" className="w-full">
-          <Select.Option value="solving_problems">Solving complex problems</Select.Option>
-          <Select.Option value="building_platforms">Building applications and platforms</Select.Option>
-          <Select.Option value="exploring_data">Exploring data and gaining insights</Select.Option>
-          <Select.Option value="ensuring_security">Ensuring system security and reliability</Select.Option>
-          <Select.Option value="driving_innovation">Driving real-world innovation and impact</Select.Option>
+        <Select placeholder="Select an option">
+          <Option value="very_comfortable">Very comfortable</Option>
+          <Option value="comfortable">Comfortable</Option>
+          <Option value="neutral">Neutral</Option>
+          <Option value="uncomfortable">Somewhat uncomfortable</Option>
+          <Option value="very_uncomfortable">Very uncomfortable</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="Preferred Type of Organization *"
-        name="interestedWorking"
-        rules={[{ required: true, message: 'Please select your preferred organization type' }]}
+        label="What excites you most about working in tech?"
+        name="techExcitement"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Select placeholder="Select your preferred organization type" className="w-full">
-          <Select.Option value="startups">Startups and entrepreneurial ventures</Select.Option>
-          <Select.Option value="large_companies">Large tech companies</Select.Option>
-          <Select.Option value="nonprofit_organizations">Nonprofit or mission-driven organizations</Select.Option>
-          <Select.Option value="government_agencies">Private sector or government agencies</Select.Option>
-        </Select>
+        <Input placeholder="Enter your answer" className="p-2" />
       </Form.Item>
 
       <Form.Item
-        label="Tech Areas of Curiosity *"
-        name="curiousTechAreas"
-        rules={[{ required: true, message: 'Please select the tech areas you are curious about' }]}
+        label="Which tech areas are you most curious about or interested in learning?"
+        name="techAreasInterest"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Select mode="multiple" placeholder="Select tech areas you are curious about" className="w-full">
-          <Select.Option value="software_development">Software Development</Select.Option>
-          <Select.Option value="cybersecurity">Cybersecurity</Select.Option>
-          <Select.Option value="ai_ml">Artificial Intelligence & Machine Learning</Select.Option>
-          <Select.Option value="blockchain_web3">Blockchain & Web3</Select.Option>
-          <Select.Option value="product_management">Product Management</Select.Option>
-          <Select.Option value="ux_ui_design">UX/UI Design</Select.Option>
-          <Select.Option value="data_analysis_engineering">Data Analysis & Engineering</Select.Option>
-        </Select>
+        <Input placeholder="Enter your answer" className="p-2" />
       </Form.Item>
 
       <Form.Item
-        label="One Personal Strength *"
+        label="Which tech-related activities have you enjoyed the most so far?"
+        name="techActivities"
+        help="(even if it's informal — e.g., tinkering with websites, playing with data, cybersecurity games, etc.)"
+        rules={[{ required: true, message: 'Please answer this question' }]}
+      >
+        <TextArea placeholder="Enter your answer" rows={4} className="p-2" />
+      </Form.Item>
+
+      <Form.Item
+        label="What is one personal strength you believe will help you succeed in tech?"
         name="personalStrength"
-        rules={[{ required: true, message: 'Please describe one personal strength' }]}
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Input placeholder="e.g., creativity, communication, leadership, perseverance" className="p-2" />
+        <TextArea placeholder="Enter your answer" rows={4} className="p-2" />
       </Form.Item>
 
       <Form.Item
-        label="Completed Certifications or Courses? *"
-        name="existingCertifications"
-        rules={[{ required: true, message: 'Please indicate if you have certifications' }]}
+        label="What is your biggest motivation for pursuing a tech career?"
+        name="motivation"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Select placeholder="Select an option" className="w-full">
-          <Select.Option value="yes">Yes</Select.Option>
-          <Select.Option value="no">No</Select.Option>
+        <Input placeholder="Enter your answer" className="p-2" />
+      </Form.Item>
+
+      {/* Experience & Skills */}
+      <h2 className="text-xl font-semibold mb-4 mt-8">Experience & Skills</h2>
+      
+      <Form.Item
+        label="Which of these best describes your current experience level in tech?"
+        name="experienceLevel"
+        rules={[{ required: true, message: 'Please select an option' }]}
+      >
+        <Select placeholder="Select an option">
+          <Option value="no_experience">No experience yet</Option>
+          <Option value="beginner">Beginner (some self-learning)</Option>
+          <Option value="intermediate">Intermediate (completed courses/small projects)</Option>
+          <Option value="advanced">Advanced (worked on larger projects/some professional experience)</Option>
+          <Option value="professional">Professional (currently working in tech)</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="List Any Certifications or Courses (if applicable)"
-        name="listCertifications"
+        label="Are you open to working in emerging areas like AI, Blockchain, or Cybersecurity if given the right support?"
+        name="emergingTech"
+        rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <TextArea rows={2} placeholder="e.g., CompTIA Security+, AWS Certified, specific online courses" className="p-2" />
-      </Form.Item>
-
-      <Form.Item
-        label="Tools or Platforms Used *"
-        name="usedToolsPlatforms"
-        rules={[{ required: true, message: 'Please list the tools or platforms you have used' }]}
-      >
-        <Select mode="multiple" placeholder="e.g., GitHub, Figma, Python, JavaScript, Google Cloud" className="w-full">
-          <Select.Option value="github">GitHub</Select.Option>
-          <Select.Option value="figma">Figma</Select.Option>
-          <Select.Option value="python">Python</Select.Option>
-          <Select.Option value="javascript">JavaScript</Select.Option>
-          <Select.Option value="google_cloud">Google Cloud</Select.Option>
-          {/* Add more tools/platforms as needed */}
+        <Select placeholder="Select an option">
+          <Option value="yes">Yes</Option>
+          <Option value="no">No</Option>
+          <Option value="maybe">Maybe</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="Weekly Time Commitment *"
-        name="realisticTimeCommitment"
-        rules={[{ required: true, message: 'Please estimate your weekly commitment' }]}
+        label="Do you already have any certifications or completed courses?"
+        name="certifications"
+        rules={[{ required: true, message: 'Please select an option' }]}
       >
-        <Input placeholder="e.g., 5-10 hours, 15-20 hours" className="p-2" />
-      </Form.Item>
-
-      <Form.Item
-        label="Short-Term Goals *"
-        name="motivationPursuing"
-        rules={[{ required: true, message: 'Please select your short-term goals' }]}
-      >
-        <Select mode="multiple" placeholder="Select your short-term goals" className="w-full">
-          <Select.Option value="first_tech_role">Landing your first tech internship or job</Select.Option>
-          <Select.Option value="transition_new_role">Transitioning into a new role</Select.Option>
-          <Select.Option value="building_portfolio">Building a portfolio for job applications</Select.Option>
-          <Select.Option value="launching_project">Launching a startup or personal project</Select.Option>
-          <Select.Option value="creating_solutions">Creating solutions for businesses or communities</Select.Option>
-          <Select.Option value="innovating_fields">Innovating in areas like science, health, or finance</Select.Option>
+        <Select placeholder="Select an option">
+          <Option value="yes">Yes</Option>
+          <Option value="no">No</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="Desired Impact *"
-        name="impactWorkHave"
-        rules={[{ required: true, message: 'Please select the impact you want to create' }]}
+        label="List Any Certifications that you have"
+        name="certificationsList"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Select mode="multiple" placeholder="Select the impact you want to create" className="w-full">
-          <Select.Option value="empowering_communities">Empowering underrepresented communities</Select.Option>
-          <Select.Option value="building_business_solutions">Building business-focused solutions</Select.Option>
-          <Select.Option value="advancing_innovation">Advancing innovation in science or healthcare</Select.Option>
-          <Select.Option value="supporting_education">Supporting global education</Select.Option>
-          <Select.Option value="improving_financial_systems">Improving financial systems</Select.Option>
-          {/* Add more impact areas as needed */}
+        <TextArea placeholder="Enter your answer (or type 'None' if you don't have any)" rows={4} className="p-2" />
+      </Form.Item>
+
+      <Form.Item
+        label="Which of the following tools or platforms have you used before?"
+        name="toolsUsed"
+        rules={[{ required: true, message: 'Please select at least one option' }]}
+      >
+        <Select
+          mode="multiple"
+          placeholder="Select options"
+          allowClear
+        >
+          <Option value="git">Git/GitHub</Option>
+          <Option value="vscode">VS Code</Option>
+          <Option value="terminal">Command Line/Terminal</Option>
+          <Option value="figma">Figma/Design Tools</Option>
+          <Option value="aws">AWS/Cloud Platforms</Option>
+          <Option value="docker">Docker/Containers</Option>
+          <Option value="databases">Databases</Option>
+          <Option value="none">None of these</Option>
+        </Select>
+      </Form.Item>
+
+      {/* Commitment & Goals */}
+      <h2 className="text-xl font-semibold mb-4 mt-8">Commitment & Goals</h2>
+
+      <Form.Item
+        label="How much time can you realistically commit to learning or working on a project each week?"
+        name="timeCommitment"
+        rules={[{ required: true, message: 'Please select an option' }]}
+      >
+        <Select placeholder="Select an option">
+          <Option value="1-5">1-5 hours</Option>
+          <Option value="6-10">6-10 hours</Option>
+          <Option value="11-20">11-20 hours</Option>
+          <Option value="20+">More than 20 hours</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="Support Needed Most *"
-        name="guidanceNeedNow"
-        rules={[{ required: true, message: 'Please select the support you need' }]}
+        label="What type of impact do you want your work to have?"
+        name="desiredImpact"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Select mode="multiple" placeholder="Select the support you need most" className="w-full">
-          <Select.Option value="skill_roadmap">A skill development roadmap</Select.Option>
-          <Select.Option value="project_matching">Matching with suitable projects</Select.Option>
-          <Select.Option value="career_mentorship">Career mentorship</Select.Option>
-          <Select.Option value="resume_portfolio_help">Help with your resume or portfolio</Select.Option>
-          <Select.Option value="all_of_the_above">All of the above</Select.Option>
-        </Select>
+        <Input placeholder="Enter your answer" className="p-2" />
       </Form.Item>
 
       <Form.Item
-        label="Where would you like to be in your tech journey over the next 12 months? *"
-        name="next12MonthsTechJourney"
-        rules={[{ required: true, message: 'Please select your 12-month aspiration' }]}
+        label="What kind of guidance do you need most right now?"
+        name="guidanceNeeded"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        <Select placeholder="Select your 12-month aspiration" className="w-full">
-          <Select.Option value="starting_first_project">Starting your first real-world project</Select.Option>
-          <Select.Option value="securing_internship_job">Securing an internship or full-time position</Select.Option>
-          <Select.Option value="building_showcasing_portfolio">Building and showcasing a complete portfolio</Select.Option>
-          <Select.Option value="leading_technical_initiative">Leading a team or managing a technical initiative</Select.Option>
-        </Select>
+        <Input placeholder="Enter your answer" className="p-2" />
       </Form.Item>
 
-      <Button
-        type="primary"
-        htmlType="submit"
-        className="w-full"
-        loading={loading}
+      <Form.Item
+        label="In the next 12 months, where would you like to be in your tech journey?"
+        name="techJourneyGoal"
+        rules={[{ required: true, message: 'Please answer this question' }]}
       >
-        Submit Career Test
-      </Button>
+        <Input placeholder="Enter your answer" className="p-2" />
+      </Form.Item>
+
+      <p className='pb-6 text-sm'>
+        By continuing, you agree to the <span className='text-primary font-medium'>Terms of Service</span> and 
+        acknowledge you&apos;ve read our <span className='text-primary font-medium'>Privacy Policy</span>.
+      </p>
+
+      <Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+          className="w-full"
+        >
+          Submit Career Test
+        </Button>
+      </Form.Item>
     </Form>
   );
 
@@ -314,46 +492,56 @@ const CareerTest = () => {
       <div className="bg-green-50 p-6 rounded-lg">
         <div className="text-5xl mb-4 text-green-500">✓</div>
         <h3 className="text-xl font-medium mb-4">Career Test Submitted Successfully!</h3>
-        <p className="mb-6">Thank you for completing the career test. We will review your responses.</p>
-
-        <Button
-          type="primary"
+        <p className="mb-6">Thank you for completing the TechTalents City Career Test. We'll review your responses and get back to you soon with personalized recommendations for your tech journey.</p>
+        
+        <Button 
+          type="primary" 
           onClick={() => {
-            setCurrentStep(0);
-            setSubmissionComplete(false);
+            window.location.href = '/';
+            // Alternative approach if needed:
+            // setCurrentStep(0);
+            // setFormValues({});
+            // setSubmitComplete(false);
+            // form.resetFields();
           }}
+          block
         >
-          Return to Career Test
+          Return to Home
         </Button>
       </div>
     </div>
   );
 
   return (
-    <Container>
-      <div className="py-10">
-        <div className="flex items-center justify-center mb-6">
-          <Link to="/">
-            <img src={logo} alt="TechTalents City Logo" className="h-12" />
-          </Link>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-4">Career Test</h1>
-          <p className="text-gray-600 text-center mb-6">
-            Discover your tech strengths and find your perfect career path
-          </p>
-
-          <Steps current={currentStep} className="mb-8">
-            <Step title="Career Test" />
-            <Step title="Complete" />
-          </Steps>
-
-          {currentStep === 0 && <CareerTestFormStep />}
-          {currentStep === 1 && <SuccessStep />}
-        </div>
-      </div>
-    </Container>
+    <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
+      <Container className="w-full max-w-4xl px-4 md:px-8">
+        <Link to={'/'} className="block mb-6">
+          <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
+        </Link>
+        
+        <h1 className="text-3xl font-bold mb-2">Career Path in Tech</h1>
+        <p className="text-gray-600 mb-6">Help us understand your tech interests and experience</p>
+        
+        {/* Form Guide Section */}
+        <FormGuide />
+        
+        <Steps
+          current={currentStep}
+          className="mb-8"
+          items={[
+            {
+              title: 'Career Test',
+            },
+            {
+              title: 'Complete',
+            }
+          ]}
+        />
+        
+        {currentStep === 0 && <CareerTestForm />}
+        {currentStep === 1 && <SuccessStep />}
+      </Container>
+    </div>
   );
 };
 
