@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
-import logo from '../../assets/images/logo-black.png';
+// Removed logo import
 import { Button, Form, Input, Select, Steps, Collapse } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
@@ -127,12 +127,12 @@ const Application = () => {
             <div className="mb-4">
               <h4 className="font-bold mb-2">Introduction</h4>
               <p className="mb-3">
-                Welcome to <strong>TechTalents City Project Application Form</strong>! We're excited that you're interested in applying to work on a project. 
+                Welcome to <strong>Project Application Form</strong>! We're excited that you're interested in applying to work on a project. 
                 This guide will help you understand what information you need to provide in your application.
               </p>
               <p>
-                Please note that only <strong>registered members</strong> of TechTalents City can apply to projects. 
-                If you haven't registered yet, please do so at www.techtalentscity.com first.
+                Please note that only <strong>registered members</strong> can apply to projects. 
+                If you haven't registered yet, please do so first.
               </p>
             </div>
             
@@ -197,7 +197,7 @@ const Application = () => {
               </p>
               <p>
                 By submitting a well-prepared application, you increase your chances of being selected and positioned 
-                where your skills can make the greatest impact. We look forward to seeing how you'll contribute to TechTalents City!
+                where your skills can make the greatest impact.
               </p>
             </div>
           </div>
@@ -258,7 +258,7 @@ const Application = () => {
       </Form.Item>
       
       <Form.Item 
-        label="TechTalents Badge Role" 
+        label="Badge Role" 
         name="badgeRole" 
         rules={[{ required: true, message: 'Badge role is required' }]}
       >
@@ -389,11 +389,9 @@ const Application = () => {
   return (
     <div className="w-full flex justify-center items-center min-h-screen bg-white py-8">
       <Container className="w-full max-w-4xl px-4 md:px-8">
-        <Link to={'/'} className="block mb-6">
-          <img src={logo} alt="logo" className="w-[250px] object-cover object-center" />
-        </Link>
+        {/* Removed logo section */}
         
-        <h1 className="text-3xl font-bold mb-2">Apply to a TTC Project</h1>
+        <h1 className="text-3xl font-bold mb-2">Apply to a Project</h1>
         <p className="text-gray-600 mb-6">Join a project and collaborate with talented individuals</p>
         
         {/* Application Guide Section */}
