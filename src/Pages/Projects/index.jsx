@@ -16,6 +16,8 @@ const Projects = () => {
     free: false,
     premium: false
   });
+  // Added states for pagination
+  const [projectsPerPage, setProjectsPerPage] = useState(3); // Initially show 3 projects
   const navigate = useNavigate();
   
   const handleSearch = (e) => {
@@ -69,6 +71,13 @@ const Projects = () => {
     setFilteredProjects(result);
     setIsFiltered(true);
     setFiltersOpen(false);
+    setProjectsPerPage(3); // Reset pagination when filters are applied
+  };
+
+  // Load more projects function
+  const loadMoreProjects = () => {
+    // Increase the number of projects to show
+    setProjectsPerPage(prevCount => prevCount + 3);
   };
 
   const projects = [
@@ -154,12 +163,23 @@ const Projects = () => {
     }
   ];
   
-  // Added remote property to each project and modified filter drawer
-  
   // Reset all filters and display all projects
   const clearFilters = () => {
     resetFilters();
     setIsFiltered(false);
+    setProjectsPerPage(3); // Reset pagination when filters are cleared
+  };
+  
+  // Get current projects based on pagination
+  const getCurrentProjects = () => {
+    const projectsToUse = isFiltered ? filteredProjects : projects;
+    return projectsToUse.slice(0, projectsPerPage);
+  };
+  
+  // Check if there are more projects to load
+  const hasMoreProjects = () => {
+    const projectsToUse = isFiltered ? filteredProjects : projects;
+    return projectsPerPage < projectsToUse.length;
   };
   
   return (
@@ -213,7 +233,22 @@ const Projects = () => {
         <div className="lg:flex-grow">
           {isFiltered ? (
             filteredProjects.length > 0 ? (
-              <AllProjects projects={filteredProjects} />
+              <>
+                <AllProjects projects={getCurrentProjects()} />
+                {/* Load More button for filtered projects */}
+                {hasMoreProjects() && (
+                  <div className="flex justify-center mt-8">
+                    <Button 
+                      onClick={loadMoreProjects} 
+                      type="primary" 
+                      size="large"
+                      className="px-8 h-12 flex items-center justify-center"
+                    >
+                      Load More Projects
+                    </Button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="text-center py-10">
                 <h3 className="text-xl font-medium">No projects match your filters</h3>
@@ -224,7 +259,22 @@ const Projects = () => {
               </div>
             )
           ) : (
-            <AllProjects projects={projects} />
+            <>
+              <AllProjects projects={getCurrentProjects()} />
+              {/* Load More button for all projects */}
+              {hasMoreProjects() && (
+                <div className="flex justify-center mt-8">
+                  <Button 
+                    onClick={loadMoreProjects} 
+                    type="primary" 
+                    size="large"
+                    className="px-8 h-12 flex items-center justify-center"
+                  >
+                    Load More Projects
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
         <div className="lg:w-1/4 flex-shrink-0 !mb-8">
