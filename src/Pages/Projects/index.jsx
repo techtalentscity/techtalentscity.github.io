@@ -4,7 +4,7 @@ import Container from "../../components/Container";
 import PostAProject from "../Home/PostAProject";
 import techtalent from '../../assets/images/techtalent.png';
 import AllProjects from "./AllProjects";
-import { Input, Drawer, Checkbox, Radio, Button, Space, Divider } from "antd";
+import { Input, Drawer, Checkbox, Button, Space, Divider } from "antd";
 import { IoIosSearch } from "react-icons/io";
 import { HiOutlineAdjustments } from "react-icons/hi";
 
@@ -12,10 +12,9 @@ const Projects = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [filters, setFilters] = useState({
-    projectType: [],
-    skills: [],
-    price: 'all',
-    verified: false
+    remote: false,
+    free: false,
+    premium: false
   });
   const navigate = useNavigate();
   
@@ -31,52 +30,45 @@ const Projects = () => {
     setFiltersOpen(!filtersOpen);
   };
 
-  const handleFilterChange = (category, value) => {
-    if (category === 'projectType' || category === 'skills') {
-      if (filters[category].includes(value)) {
-        setFilters({
-          ...filters,
-          [category]: filters[category].filter(item => item !== value)
-        });
-      } else {
-        setFilters({
-          ...filters,
-          [category]: [...filters[category], value]
-        });
-      }
-    } else {
-      setFilters({
-        ...filters,
-        [category]: value
-      });
-    }
+  const handleFilterChange = (filterName, value) => {
+    setFilters({
+      ...filters,
+      [filterName]: value
+    });
   };
 
   const resetFilters = () => {
     setFilters({
-      projectType: [],
-      skills: [],
-      price: 'all',
-      verified: false
+      remote: false,
+      free: false,
+      premium: false
     });
   };
 
+  // State to hold filtered projects
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  
   const applyFilters = () => {
-    // Here you would normally filter projects based on filters
-    // For this implementation, we'll just close the drawer
+    let result = [...projects];
+    
+    // Apply filtering logic
+    if (filters.remote) {
+      result = result.filter(project => project.remote === true);
+    }
+    
+    if (filters.free) {
+      result = result.filter(project => project.price === 'Free');
+    }
+    
+    if (filters.premium) {
+      result = result.filter(project => project.premium === true);
+    }
+    
+    // Update filtered projects state
+    setFilteredProjects(result);
+    setIsFiltered(true);
     setFiltersOpen(false);
-    
-    // You could also navigate to a filtered search page
-    /*
-    const queryParams = new URLSearchParams();
-    if (searchQuery) queryParams.append('query', searchQuery);
-    if (filters.projectType.length) queryParams.append('type', filters.projectType.join(','));
-    if (filters.skills.length) queryParams.append('skills', filters.skills.join(','));
-    if (filters.price !== 'all') queryParams.append('price', filters.price);
-    if (filters.verified) queryParams.append('verified', 'true');
-    
-    navigate(`/projects/search?${queryParams.toString()}`);
-    */
   };
 
   const projects = [
@@ -93,6 +85,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
+      remote: true,
       price: '$200',
       link: '/projects/ai-agent',
     },
@@ -108,6 +101,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
+      remote: false,
       price: '$200',
       link: '/projects/mental-app',
     },
@@ -122,6 +116,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
+      remote: true,
       price: '$200',
       link: '/projects/real-time-notification-system',
     },
@@ -137,6 +132,7 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
+      remote: false,
       price: '$200',
       link: '/projects/blockchain-defi',
     },
@@ -152,13 +148,19 @@ const Projects = () => {
       logo: techtalent,
       verified: true,
       premium: false,
+      remote: true,
       price: 'Free',
       link: '/projects/climate-prediction',
     }
   ];
   
-  // Collect all unique skills from the projects for filter options
-  const allSkills = [...new Set(projects.flatMap(project => project.skills))];
+  // Added remote property to each project and modified filter drawer
+  
+  // Reset all filters and display all projects
+  const clearFilters = () => {
+    resetFilters();
+    setIsFiltered(false);
+  };
   
   return (
     <Container className={'pt-9'}>
@@ -187,16 +189,50 @@ const Projects = () => {
           </div>
         </div>
       </div>
+      
+      {/* Display applied filters if any */}
+      {isFiltered && (
+        <div className="mb-4 flex flex-wrap gap-2 items-center">
+          <span className="font-medium">Active filters:</span>
+          {filters.remote && (
+            <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Remote</span>
+          )}
+          {filters.free && (
+            <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Free</span>
+          )}
+          {filters.premium && (
+            <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Premium</span>
+          )}
+          <Button type="link" onClick={clearFilters} className="text-blue-600">
+            Clear all
+          </Button>
+        </div>
+      )}
+      
       <div className="flex flex-col lg:flex-row lg:items-start md:p-4 space-y-4 lg:space-y-0 lg:space-x-8 my-10 lg:my-[60px]">
         <div className="lg:flex-grow">
-          <AllProjects projects={projects} />
+          {isFiltered ? (
+            filteredProjects.length > 0 ? (
+              <AllProjects projects={filteredProjects} />
+            ) : (
+              <div className="text-center py-10">
+                <h3 className="text-xl font-medium">No projects match your filters</h3>
+                <p className="mt-2 text-gray-600">Try adjusting your filter criteria or clear all filters.</p>
+                <Button type="primary" className="mt-4" onClick={clearFilters}>
+                  Clear Filters
+                </Button>
+              </div>
+            )
+          ) : (
+            <AllProjects projects={projects} />
+          )}
         </div>
         <div className="lg:w-1/4 flex-shrink-0 !mb-8">
           <PostAProject />
         </div>
       </div>
       
-      {/* Filters Drawer */}
+      {/* Simplified Filters Drawer with only Remote, Free, and Premium options */}
       <Drawer
         title="Project Filters"
         placement="left"
@@ -206,92 +242,35 @@ const Projects = () => {
         footer={
           <div className="flex justify-between">
             <Button onClick={resetFilters}>Reset All</Button>
-            <Button type="primary" onClick={applyFilters}>Apply Filters</Button>
+            <Button type="primary" onClick={applyFilters} disabled={!filters.remote && !filters.free && !filters.premium}>
+              Apply Filters
+            </Button>
           </div>
         }
       >
         <div className="space-y-6">
           <div>
-            <h3 className="font-semibold mb-2">Project Type</h3>
+            <h3 className="font-semibold mb-2">Filter By</h3>
             <Space direction="vertical">
               <Checkbox
-                checked={filters.projectType.includes('fullTime')}
-                onChange={() => handleFilterChange('projectType', 'fullTime')}
-              >
-                Full Time
-              </Checkbox>
-              <Checkbox
-                checked={filters.projectType.includes('partTime')}
-                onChange={() => handleFilterChange('projectType', 'partTime')}
-              >
-                Part Time
-              </Checkbox>
-              <Checkbox
-                checked={filters.projectType.includes('contract')}
-                onChange={() => handleFilterChange('projectType', 'contract')}
-              >
-                Contract
-              </Checkbox>
-              <Checkbox
-                checked={filters.projectType.includes('remote')}
-                onChange={() => handleFilterChange('projectType', 'remote')}
+                checked={filters.remote}
+                onChange={(e) => handleFilterChange('remote', e.target.checked)}
               >
                 Remote
               </Checkbox>
               <Checkbox
-                checked={filters.projectType.includes('onsite')}
-                onChange={() => handleFilterChange('projectType', 'onsite')}
+                checked={filters.free}
+                onChange={(e) => handleFilterChange('free', e.target.checked)}
               >
-                On-site
+                Free
+              </Checkbox>
+              <Checkbox
+                checked={filters.premium}
+                onChange={(e) => handleFilterChange('premium', e.target.checked)}
+              >
+                Premium
               </Checkbox>
             </Space>
-          </div>
-          
-          <Divider />
-          
-          <div>
-            <h3 className="font-semibold mb-2">Price</h3>
-            <Radio.Group 
-              value={filters.price}
-              onChange={(e) => handleFilterChange('price', e.target.value)}
-            >
-              <Space direction="vertical">
-                <Radio value="all">All</Radio>
-                <Radio value="free">Free</Radio>
-                <Radio value="paid">Paid</Radio>
-              </Space>
-            </Radio.Group>
-          </div>
-          
-          <Divider />
-          
-          <div>
-            <h3 className="font-semibold mb-2">Verification</h3>
-            <Checkbox
-              checked={filters.verified}
-              onChange={(e) => handleFilterChange('verified', e.target.checked)}
-            >
-              Verified Projects Only
-            </Checkbox>
-          </div>
-          
-          <Divider />
-          
-          <div>
-            <h3 className="font-semibold mb-2">Skills</h3>
-            <div className="max-h-60 overflow-y-auto pr-2">
-              <Space direction="vertical">
-                {allSkills.map((skill, index) => (
-                  <Checkbox
-                    key={index}
-                    checked={filters.skills.includes(skill)}
-                    onChange={() => handleFilterChange('skills', skill)}
-                  >
-                    {skill}
-                  </Checkbox>
-                ))}
-              </Space>
-            </div>
           </div>
         </div>
       </Drawer>
