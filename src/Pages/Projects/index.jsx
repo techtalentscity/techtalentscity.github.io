@@ -252,9 +252,7 @@ const Projects = () => {
             <div className="flex justify-center mt-8">
               <Button 
                 onClick={loadMoreProjects} 
-                type="primary" 
-                size="large"
-                className="px-8 h-12 flex items-center justify-center"
+                className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 h-12 flex items-center justify-center"
               >
                 Load More Projects
               </Button>
