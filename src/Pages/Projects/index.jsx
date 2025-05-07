@@ -1,6 +1,13 @@
-// Now let's update the AllProjects component to make it work with pagination and filtering
-// This is not from the original code, but we need to add it to make the Load More functionality work properly
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Container from "../../components/Container";
+import PostAProject from "../Home/PostAProject";
+import techtalent from '../../assets/images/techtalent.png';
+import { Input, Drawer, Checkbox, Button, Space, Divider } from "antd";
+import { IoIosSearch } from "react-icons/io";
+import { HiOutlineAdjustments } from "react-icons/hi";
 
+// AllProjects component to display the projects
 const AllProjects = ({ projects }) => {
   return (
     <div className="space-y-6">
@@ -69,15 +76,7 @@ const AllProjects = ({ projects }) => {
       ))}
     </div>
   );
-};import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Container from "../../components/Container";
-import PostAProject from "../Home/PostAProject";
-import techtalent from '../../assets/images/techtalent.png';
-import AllProjects from "./AllProjects";
-import { Input, Drawer, Checkbox, Button, Space, Divider } from "antd";
-import { IoIosSearch } from "react-icons/io";
-import { HiOutlineAdjustments } from "react-icons/hi";
+};
 
 const Projects = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -87,7 +86,15 @@ const Projects = () => {
     free: false,
     premium: false
   });
+  const [projectsToShow, setProjectsToShow] = useState(5);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
   const navigate = useNavigate();
+  
+  // Function to load more projects
+  const loadMoreProjects = () => {
+    setProjectsToShow(prev => prev + 5);
+  };
   
   const handleSearch = (e) => {
     if (e.key === 'Enter' || e.type === 'click') {
@@ -115,15 +122,6 @@ const Projects = () => {
       premium: false
     });
   };
-
-  const [projectsToShow, setProjectsToShow] = useState(5);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
-
-  // Function to load more projects
-  const loadMoreProjects = () => {
-    setProjectsToShow(prev => prev + 5);
-  };
   
   const applyFilters = () => {
     let result = [...allProjects];
@@ -147,6 +145,12 @@ const Projects = () => {
     setFiltersOpen(false);
     // Reset the number of projects to show when applying new filters
     setProjectsToShow(5);
+  };
+  
+  // Reset all filters and display all projects
+  const clearFilters = () => {
+    resetFilters();
+    setIsFiltered(false);
   };
 
   // Updated projects array with more items for pagination
@@ -309,14 +313,6 @@ const Projects = () => {
     }
   ];
   
-  // Added remote property to each project and modified filter drawer
-  
-  // Reset all filters and display all projects
-  const clearFilters = () => {
-    resetFilters();
-    setIsFiltered(false);
-  };
-  
   return (
     <Container className={'pt-9'}>
       <h1 className="text-5xl md:text-6xl font-bold pb-6 text-center">Projects</h1>
@@ -366,35 +362,11 @@ const Projects = () => {
       
       <div className="flex flex-col lg:flex-row lg:items-start md:p-4 space-y-4 lg:space-y-0 lg:space-x-8 my-10 lg:my-[60px]">
         <div className="lg:flex-grow">
-            {isFiltered ? (
-              filteredProjects.length > 0 ? (
-                <>
-                  <AllProjects projects={filteredProjects.slice(0, projectsToShow)} />
-                  {projectsToShow < filteredProjects.length && (
-                    <div className="flex justify-center mt-8">
-                      <Button
-                        type="primary"
-                        className="px-8 py-2 h-auto"
-                        onClick={loadMoreProjects}
-                      >
-                        Load More
-                      </Button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="text-center py-10">
-                  <h3 className="text-xl font-medium">No projects match your filters</h3>
-                  <p className="mt-2 text-gray-600">Try adjusting your filter criteria or clear all filters.</p>
-                  <Button type="primary" className="mt-4" onClick={clearFilters}>
-                    Clear Filters
-                  </Button>
-                </div>
-              )
-            ) : (
+          {isFiltered ? (
+            filteredProjects.length > 0 ? (
               <>
-                <AllProjects projects={allProjects.slice(0, projectsToShow)} />
-                {projectsToShow < allProjects.length && (
+                <AllProjects projects={filteredProjects.slice(0, projectsToShow)} />
+                {projectsToShow < filteredProjects.length && (
                   <div className="flex justify-center mt-8">
                     <Button
                       type="primary"
@@ -406,7 +378,31 @@ const Projects = () => {
                   </div>
                 )}
               </>
-            )}
+            ) : (
+              <div className="text-center py-10">
+                <h3 className="text-xl font-medium">No projects match your filters</h3>
+                <p className="mt-2 text-gray-600">Try adjusting your filter criteria or clear all filters.</p>
+                <Button type="primary" className="mt-4" onClick={clearFilters}>
+                  Clear Filters
+                </Button>
+              </div>
+            )
+          ) : (
+            <>
+              <AllProjects projects={allProjects.slice(0, projectsToShow)} />
+              {projectsToShow < allProjects.length && (
+                <div className="flex justify-center mt-8">
+                  <Button
+                    type="primary"
+                    className="px-8 py-2 h-auto"
+                    onClick={loadMoreProjects}
+                  >
+                    Load More
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
         </div>
         <div className="lg:w-1/4 flex-shrink-0 !mb-8">
           <PostAProject />
@@ -457,6 +453,6 @@ const Projects = () => {
       </Drawer>
     </Container>
   );
-}
+};
 
 export default Projects;
