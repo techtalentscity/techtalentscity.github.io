@@ -231,6 +231,7 @@ const Projects = () => {
       
       <div className="flex flex-col lg:flex-row lg:items-start md:p-4 space-y-4 lg:space-y-0 lg:space-x-8 my-10 lg:my-[60px]">
         <div className="lg:flex-grow">
+          {/* Project list display */}
           {isFiltered ? (
             filteredProjects.length > 0 ? (
               <AllProjects projects={getCurrentProjects()} />
@@ -246,23 +247,23 @@ const Projects = () => {
           ) : (
             <AllProjects projects={getCurrentProjects()} />
           )}
-          
-          {/* Single Load More button that works for both filtered and unfiltered projects */}
-          {hasMoreProjects() && (
-            <div className="flex justify-center mt-8">
-              <Button 
-                onClick={loadMoreProjects} 
-                className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 h-12 flex items-center justify-center"
-              >
-                Load More Projects
-              </Button>
-            </div>
-          )}
         </div>
         <div className="lg:w-1/4 flex-shrink-0 !mb-8">
           <PostAProject />
         </div>
       </div>
+      
+      {/* ONLY Load More button - placed outside the main content div */}
+      {hasMoreProjects() && (
+        <div className="flex justify-center mt-8 mb-16">
+          <button 
+            onClick={loadMoreProjects} 
+            className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3 rounded-md"
+          >
+            Load More Projects
+          </button>
+        </div>
+      )}
       
       {/* Simplified Filters Drawer with only Remote, Free, and Premium options */}
       <Drawer
