@@ -3,80 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Container from "../../components/Container";
 import PostAProject from "../Home/PostAProject";
 import techtalent from '../../assets/images/techtalent.png';
+import AllProjects from "./AllProjects";
 import { Input, Drawer, Checkbox, Button, Space, Divider } from "antd";
 import { IoIosSearch } from "react-icons/io";
 import { HiOutlineAdjustments } from "react-icons/hi";
-
-// AllProjects component to display the projects
-const AllProjects = ({ projects }) => {
-  return (
-    <div className="space-y-6">
-      {projects.map((project, index) => (
-        <div 
-          key={index} 
-          className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-        >
-          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-            <div className="flex-grow">
-              <h2 className="text-xl font-semibold mb-2">
-                <a href={project.link} className="hover:text-blue-600 transition-colors">
-                  {project.title}
-                </a>
-              </h2>
-              <div className="flex flex-wrap gap-2 my-3">
-                {project.skills.slice(0, 3).map((skill, skillIndex) => (
-                  <span 
-                    key={skillIndex} 
-                    className="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full"
-                  >
-                    {skill}
-                  </span>
-                ))}
-                {project.skills.length > 3 && (
-                  <span className="text-xs text-gray-500 px-2 py-1">
-                    +{project.skills.length - 3} more
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                {project.remote && (
-                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-xs">
-                    Remote
-                  </span>
-                )}
-                {project.premium && (
-                  <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-md text-xs">
-                    Premium
-                  </span>
-                )}
-                {project.price === 'Free' && (
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-md text-xs">
-                    Free
-                  </span>
-                )}
-                {project.verified && (
-                  <span className="flex items-center gap-1 text-green-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-xs">Verified</span>
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="flex flex-col items-end gap-2">
-              <img src={project.logo} alt="Company Logo" className="w-12 h-12 object-contain" />
-              <div className="text-right">
-                <div className="text-lg font-bold">{project.price}</div>
-                <a href={project.link} className="text-blue-600 text-sm hover:underline">View Details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const Projects = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -86,15 +16,7 @@ const Projects = () => {
     free: false,
     premium: false
   });
-  const [projectsToShow, setProjectsToShow] = useState(5);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
   const navigate = useNavigate();
-  
-  // Function to load more projects
-  const loadMoreProjects = () => {
-    setProjectsToShow(prev => prev + 5);
-  };
   
   const handleSearch = (e) => {
     if (e.key === 'Enter' || e.type === 'click') {
@@ -122,9 +44,13 @@ const Projects = () => {
       premium: false
     });
   };
+
+  // State to hold filtered projects
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
   
   const applyFilters = () => {
-    let result = [...allProjects];
+    let result = [...projects];
     
     // Apply filtering logic
     if (filters.remote) {
@@ -143,18 +69,9 @@ const Projects = () => {
     setFilteredProjects(result);
     setIsFiltered(true);
     setFiltersOpen(false);
-    // Reset the number of projects to show when applying new filters
-    setProjectsToShow(5);
-  };
-  
-  // Reset all filters and display all projects
-  const clearFilters = () => {
-    resetFilters();
-    setIsFiltered(false);
   };
 
-  // Updated projects array with more items for pagination
-  const allProjects = [
+  const projects = [
     {
       title: 'Building an AI-powered Agent for Customer Engagement',
       skills: [
@@ -234,84 +151,16 @@ const Projects = () => {
       remote: true,
       price: 'Free',
       link: '/projects/climate-prediction',
-    },
-    // Additional projects for pagination
-    {
-      title: 'Cross-Platform Mobile Game Development',
-      skills: [
-        'Unity Developers',
-        'Game Designers',
-        '3D Modelers',
-        'Mobile Game Developers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: false,
-      remote: true,
-      price: 'Free',
-      link: '/projects/mobile-game-dev',
-    },
-    {
-      title: 'Healthcare Data Analytics Dashboard',
-      skills: [
-        'Data Scientists',
-        'Healthcare Analysts',
-        'React Developers',
-        'Database Engineers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      remote: true,
-      price: '$300',
-      link: '/projects/healthcare-analytics',
-    },
-    {
-      title: 'E-commerce Platform with AR Visualization',
-      skills: [
-        'AR Developers',
-        'E-commerce Specialists',
-        'Full Stack Developers',
-        'UI/UX Designers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      remote: false,
-      price: '$250',
-      link: '/projects/ar-ecommerce',
-    },
-    {
-      title: 'Open Source Sustainability Tracking Tool',
-      skills: [
-        'Open Source Contributors',
-        'Environmental Engineers',
-        'Frontend Developers',
-        'Data Visualization Experts'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: false,
-      remote: true,
-      price: 'Free',
-      link: '/projects/sustainability-tracker',
-    },
-    {
-      title: 'Decentralized Social Media Platform',
-      skills: [
-        'Blockchain Developers',
-        'P2P Network Engineers',
-        'React Developers',
-        'Privacy Specialists'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      remote: true,
-      price: '$350',
-      link: '/projects/decentralized-social',
     }
   ];
+  
+  // Added remote property to each project and modified filter drawer
+  
+  // Reset all filters and display all projects
+  const clearFilters = () => {
+    resetFilters();
+    setIsFiltered(false);
+  };
   
   return (
     <Container className={'pt-9'}>
@@ -364,20 +213,7 @@ const Projects = () => {
         <div className="lg:flex-grow">
           {isFiltered ? (
             filteredProjects.length > 0 ? (
-              <>
-                <AllProjects projects={filteredProjects.slice(0, projectsToShow)} />
-                {projectsToShow < filteredProjects.length && (
-                  <div className="flex justify-center mt-8">
-                    <Button
-                      type="primary"
-                      className="px-8 py-2 h-auto"
-                      onClick={loadMoreProjects}
-                    >
-                      Load More
-                    </Button>
-                  </div>
-                )}
-              </>
+              <AllProjects projects={filteredProjects} />
             ) : (
               <div className="text-center py-10">
                 <h3 className="text-xl font-medium">No projects match your filters</h3>
@@ -388,20 +224,7 @@ const Projects = () => {
               </div>
             )
           ) : (
-            <>
-              <AllProjects projects={allProjects.slice(0, projectsToShow)} />
-              {projectsToShow < allProjects.length && (
-                <div className="flex justify-center mt-8">
-                  <Button
-                    type="primary"
-                    className="px-8 py-2 h-auto"
-                    onClick={loadMoreProjects}
-                  >
-                    Load More
-                  </Button>
-                </div>
-              )}
-            </>
+            <AllProjects projects={projects} />
           )}
         </div>
         <div className="lg:w-1/4 flex-shrink-0 !mb-8">
@@ -453,6 +276,6 @@ const Projects = () => {
       </Drawer>
     </Container>
   );
-};
+}
 
 export default Projects;
