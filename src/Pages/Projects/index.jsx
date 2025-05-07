@@ -233,22 +233,7 @@ const Projects = () => {
         <div className="lg:flex-grow">
           {isFiltered ? (
             filteredProjects.length > 0 ? (
-              <>
-                <AllProjects projects={getCurrentProjects()} />
-                {/* Load More button for filtered projects */}
-                {hasMoreProjects() && (
-                  <div className="flex justify-center mt-8">
-                    <Button 
-                      onClick={loadMoreProjects} 
-                      type="primary" 
-                      size="large"
-                      className="px-8 h-12 flex items-center justify-center"
-                    >
-                      Load More Projects
-                    </Button>
-                  </div>
-                )}
-              </>
+              <AllProjects projects={getCurrentProjects()} />
             ) : (
               <div className="text-center py-10">
                 <h3 className="text-xl font-medium">No projects match your filters</h3>
@@ -259,22 +244,21 @@ const Projects = () => {
               </div>
             )
           ) : (
-            <>
-              <AllProjects projects={getCurrentProjects()} />
-              {/* Load More button for all projects */}
-              {hasMoreProjects() && (
-                <div className="flex justify-center mt-8">
-                  <Button 
-                    onClick={loadMoreProjects} 
-                    type="primary" 
-                    size="large"
-                    className="px-8 h-12 flex items-center justify-center"
-                  >
-                    Load More Projects
-                  </Button>
-                </div>
-              )}
-            </>
+            <AllProjects projects={getCurrentProjects()} />
+          )}
+          
+          {/* Single Load More button that works for both filtered and unfiltered projects */}
+          {hasMoreProjects() && (
+            <div className="flex justify-center mt-8">
+              <Button 
+                onClick={loadMoreProjects} 
+                type="primary" 
+                size="large"
+                className="px-8 h-12 flex items-center justify-center"
+              >
+                Load More Projects
+              </Button>
+            </div>
           )}
         </div>
         <div className="lg:w-1/4 flex-shrink-0 !mb-8">
