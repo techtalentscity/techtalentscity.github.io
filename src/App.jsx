@@ -29,11 +29,7 @@ import Support from "./Pages/Support";                          // New Support/F
 import PrivacyPolicy from "./Pages/PrivacyPolicy";             // Existing Privacy Policy page
 import TermsOfService from "./Pages/TermsOfService";          // Existing Terms of Service page
 // Project Detail Pages
-import MentalAppDetail from "./Pages/ProjectDetail/mental-app";
 import AiAgentDetail from "./Pages/ProjectDetail/ai-agent";
-import RealTimeNotificationSystem from "./Pages/ProjectDetail/Real-time-Notification-System";
-import BlockchainDeFi from "./Pages/ProjectDetail/blockchain-defi";
-import ClimatePrediction from "./Pages/ProjectDetail/climate-prediction";
 // New Search Page
 import ProjectSearch from "./Pages/ProjectSearch";
 // Not Found Page
@@ -51,10 +47,6 @@ function App() {
             <Route path='/projects' element={<Projects />} />
             {/* Project Detail Routes */}
             <Route path='/projects/ai-agent' element={<AiAgentDetail />} />
-            <Route path='/projects/mental-app' element={<MentalAppDetail />} />
-            <Route path='/projects/real-time-notification-system' element={<RealTimeNotificationSystem />} />
-            <Route path='/projects/blockchain-defi' element={<BlockchainDeFi />} />
-            <Route path='/projects/climate-prediction' element={<ClimatePrediction />} />
             {/* Search Route */}
             <Route path='/projects/search' element={<ProjectSearch />} />
             <Route path='/projectpost' element={<ProjectPost />} />
