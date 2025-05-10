@@ -19,7 +19,7 @@ const HomeProjects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
-      price: '$500',
+      price: '$1000',
       link: '/projects/ai-agent',
     }
   ];
