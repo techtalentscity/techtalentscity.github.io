@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const ProjectDetail = () => {
   // Project budget
-  const [totalBudget, setTotalBudget] = useState(200); // ✅ Total project budget: $200
+  const [totalBudget, setTotalBudget] = useState(200); // ✅ Total project budget: $500
 
   // Updated distribution percentages
   const [distribution, setDistribution] = useState({
