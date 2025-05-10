@@ -6,21 +6,25 @@ import logo from '../../assets/images/techtalent.png';
 import Container from '../../components/Container';
 
 const ProjectDetail = () => {
-  const [totalBudget, setTotalBudget] = useState(800); // Updated total project budget
+  const [totalBudget, setTotalBudget] = useState(1000);
 
   const [distribution, setDistribution] = useState({
-    techDev: 35,
-    techLeads: 30,
-    techArchs: 20,
-    techMo: 15
+    techMO: 15,
+    techQA: 15,
+    techDev: 25,
+    techLeads: 15,
+    techArchs: 15,
+    techGuard: 15
   });
 
   const calculateAmounts = () => {
     return {
+      techMO: (totalBudget * distribution.techMO / 100).toFixed(2),
+      techQA: (totalBudget * distribution.techQA / 100).toFixed(2),
       techDev: (totalBudget * distribution.techDev / 100).toFixed(2),
       techLeads: (totalBudget * distribution.techLeads / 100).toFixed(2),
       techArchs: (totalBudget * distribution.techArchs / 100).toFixed(2),
-      techMo: (totalBudget * distribution.techMo / 100).toFixed(2)
+      techGuard: (totalBudget * distribution.techGuard / 100).toFixed(2)
     };
   };
 
@@ -40,10 +44,12 @@ const ProjectDetail = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Budget Distribution:</h2>
           <ul className="list-disc list-inside">
-            <li><strong>TechDev:</strong> ${amounts.techDev}</li>
-            <li><strong>TechLeads:</strong> ${amounts.techLeads}</li>
-            <li><strong>TechArchs:</strong> ${amounts.techArchs}</li>
-            <li><strong>TechMo:</strong> ${amounts.techMo}</li>
+            <li><strong>TechMO (Mentors):</strong> ${amounts.techMO}</li>
+            <li><strong>TechQA (Quality Testers):</strong> ${amounts.techQA}</li>
+            <li><strong>TechDev (Coding Developers):</strong> ${amounts.techDev}</li>
+            <li><strong>TechLeads (Non-Technical Roles):</strong> ${amounts.techLeads}</li>
+            <li><strong>TechArchs (Low/No-Code Developers):</strong> ${amounts.techArchs}</li>
+            <li><strong>TechGuard (Cybersecurity):</strong> ${amounts.techGuard}</li>
           </ul>
         </div>
 
