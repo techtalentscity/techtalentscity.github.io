@@ -58,7 +58,7 @@ const badges = [
       title: 'TechArchs',
       description: (
         <>
-          Awarded to <strong>Low/No-Coding Developers</strong> after the successful completion of each collaborative project.
+          Awarded to <strong>low- and no-code developers and product designers</strong> after the successful completion of each collaborative project.
         </>
       ),
       bg: '#F4F3FC'
