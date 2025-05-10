@@ -1,10 +1,10 @@
+import React from 'react';
 import Container from "../../components/Container";
 import PostAProject from "./PostAProject";
 import RecentProjects from "./RecentProjects";
 import techtalent from '../../assets/images/techtalent.png';
 
 const HomeProjects = () => {
-
   const projects = [
     {
       title: 'Building an AI-powered Agent for Customer Engagement',
@@ -19,67 +19,8 @@ const HomeProjects = () => {
       logo: techtalent,
       verified: true,
       premium: true,
-      price: '$200',
+      price: '$500',
       link: '/projects/ai-agent',
-    },
-    {
-      title: 'Developing a Mobile App for Mental Health Support',
-      skills: [
-        'Mobile App Developers',
-        'UI/UX Designers',
-        'Backend Developers',
-        'Data Security Specialists',
-        'Mental Health Researchers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      price: '$200',
-      link: '/projects/mental-app',
-    },
-    {
-      title: 'Real-Time Notification System for Tech Platforms',
-      skills: [
-        'Realtime Engineers',
-        'Socket.io Developers',
-        'System Integrators',
-        'Cloud Infrastructure Specialists'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      price: '$200',
-      link: '/projects/real-time-notification-system',
-    },
-    {
-      title: 'Blockchain-based DeFi Lending Platform',
-      skills: [
-        'Solidity Developers',
-        'Smart Contract Auditors',
-        'Frontend Developers',
-        'Backend/API Developers',
-        'DeFi Strategists'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true, // ✅ changed from false to true
-      price: '$200',  // ✅ changed from '180' to '$180'
-      link: '/projects/blockchain-defi',
-    },
-    {
-      title: 'AI-Driven Climate Change Prediction Platform',
-      skills: [
-        'AI/ML Researchers',
-        'Data Scientists',
-        'Frontend Developers',
-        'Climate Experts',
-        'Visualization Engineers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: false,
-      price: 'Free',
-      link: '/projects/climate-prediction',
     }
   ];
 
