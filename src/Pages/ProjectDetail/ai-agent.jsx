@@ -6,13 +6,13 @@ import logo from '../../assets/images/techtalent.png';
 import Container from '../../components/Container';
 
 const ProjectDetail = () => {
-  const [totalBudget, setTotalBudget] = useState(200); // Total project budget
+  const [totalBudget, setTotalBudget] = useState(500); // Total project budget
 
   const [distribution, setDistribution] = useState({
-    techDev: 35,
-    techLeads: 30,
-    techArchs: 20,
-    techMo: 15
+    techDev: 140,
+    techLeads: 120,
+    techArchs: 120,
+    techMo: 120
   });
 
   const calculateAmounts = () => {
