@@ -6,27 +6,12 @@ import Container from '../../components/Container';
 import { useState } from 'react';
 
 const DataScienceProjectDetail = () => {
-  // Team roles including TechMentor (TechMo)
+  // Reduced team roles to 3 key roles
   const [teamRoles, setTeamRoles] = useState([
     {
       role: "TechDev",
-      count: 2,
-      description: "Python developers experienced in ML for time series forecasting and energy data analysis"
-    },
-    {
-      role: "TechArchs",
       count: 1,
-      description: "Data architect to design IoT data integration and cloud storage solutions"
-    },
-    {
-      role: "TechQA",
-      count: 1,
-      description: "Quality assurance specialist for model validation and prediction accuracy testing"
-    },
-    {
-      role: "TechLeads",
-      count: 1,
-      description: "Project lead with experience in energy analytics and ML implementations"
+      description: "Python developer experienced in ML for time series forecasting and energy data analysis"
     },
     {
       role: "TechDesign",
@@ -34,11 +19,19 @@ const DataScienceProjectDetail = () => {
       description: "UX/UI designer for creating intuitive energy usage dashboards and visualizations"
     },
     {
-      role: "TechMo",
+      role: "TechLeads",
       count: 1,
-      description: "Tech mentor specializing in energy analytics and ML to guide team with best practices and domain expertise"
+      description: "Project lead with experience in energy analytics and ML implementations"
     }
   ]);
+
+  // Payment information
+  const [paymentInfo, setPaymentInfo] = useState({
+    amount: 200,
+    distribution: "Equal share among team members (~$67 per person)",
+    paymentMethod: "PayPal or bank transfer",
+    schedule: "50% upon project start, 50% upon completion"
+  });
 
   return (
     <Container className="w-full flex flex-col lg:flex-row gap-2 mt-10 lg:mt-20">
@@ -48,7 +41,18 @@ const DataScienceProjectDetail = () => {
         </Link>
         <p className="text-sm text-gray-500 mb-2">Published on May 10, 2025</p>
         <h1 className="text-3xl font-bold mb-4">Using Machine Learning to Forecast Personal Energy Usage and Save Money</h1>
-        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-green-600 font-semibold">Volunteer Project (Free)</span></p>
+        <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-blue-600 font-semibold">Paid Project ($200)</span></p>
+
+        {/* Payment Information */}
+        <div className="mb-8 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
+          <h2 className="text-xl font-semibold mb-2">Payment Information:</h2>
+          <ul className="list-disc list-inside">
+            <li><strong>Total Budget:</strong> ${paymentInfo.amount}</li>
+            <li><strong>Distribution:</strong> {paymentInfo.distribution}</li>
+            <li><strong>Payment Method:</strong> {paymentInfo.paymentMethod}</li>
+            <li><strong>Payment Schedule:</strong> {paymentInfo.schedule}</li>
+          </ul>
+        </div>
 
         {/* Team Composition */}
         <div className="mb-8">
@@ -63,13 +67,6 @@ const DataScienceProjectDetail = () => {
           </ul>
         </div>
 
-        {/* New Disclaimer Section */}
-        <div className="mb-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg">
-          <p className="text-sm text-yellow-800">
-            <strong>Disclaimer:</strong> This is a volunteer-driven project. Participants will contribute their skills towards helping households reduce energy costs while gaining real-world project experience. No financial compensation is provided.
-          </p>
-        </div>
-
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
           <p>
@@ -81,8 +78,8 @@ const DataScienceProjectDetail = () => {
           <h2 className="text-xl font-semibold mb-2">Project Duration:</h2>
           <ul className="list-disc list-inside">
             <li><strong>Start Date:</strong> June 1, 2025</li>
-            <li><strong>End Date:</strong> August 10, 2025</li>
-            <li><strong>Total Duration:</strong> 10 weeks</li>
+            <li><strong>End Date:</strong> July 13, 2025</li>
+            <li><strong>Total Duration:</strong> 6 weeks</li>
           </ul>
         </div>
 
@@ -100,9 +97,7 @@ const DataScienceProjectDetail = () => {
             <li>Time Series Forecasting (ARIMA, Prophet, LSTM)</li>
             <li>Data Visualization (Matplotlib, Seaborn, Plotly)</li>
             <li>Statistical Analysis</li>
-            <li>IoT Data Processing Experience</li>
             <li>Experience with Jupyter Notebooks</li>
-            <li>Version Control (Git)</li>
             <li>UX/UI Design (for dashboard creation)</li>
           </ul>
         </div>
@@ -125,7 +120,7 @@ const DataScienceProjectDetail = () => {
             <li>Gain experience in applying machine learning to real-world energy efficiency challenges.</li>
             <li>Build a strong portfolio demonstrating forecasting, UX design, and ML skills.</li>
             <li>Contribute to sustainability efforts by helping reduce household energy consumption.</li>
-            <li>Develop expertise working with IoT data and time series forecasting.</li>
+            <li>Receive payment for your contributions ($200 total budget).</li>
             <li>Learn about energy markets and utility pricing structures.</li>
           </ul>
         </div>
@@ -137,7 +132,6 @@ const DataScienceProjectDetail = () => {
             <li>Knowledge of cloud computing platforms (AWS, GCP, Azure)</li>
             <li>Familiarity with utility rate structures and energy markets</li>
             <li>Experience with web/mobile app development</li>
-            <li>Background in energy efficiency or building systems</li>
           </ul>
         </div>
 
