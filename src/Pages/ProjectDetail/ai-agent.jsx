@@ -1,23 +1,20 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
-import logo from '../../assets/images/techtalent.png';
 import { LuArrowLeftToLine } from 'react-icons/lu';
+import logo from '../../assets/images/techtalent.png';
 import Container from '../../components/Container';
-import { useState } from 'react';
 
 const ProjectDetail = () => {
-  // Project budget
-  const [totalBudget, setTotalBudget] = useState(200); // ✅ Total project budget: $500
+  const [totalBudget, setTotalBudget] = useState(200); // Total project budget
 
-  // Updated distribution percentages
   const [distribution, setDistribution] = useState({
-    techDev: 35,    // 35%
-    techLeads: 30,  // 30%
-    techArchs: 20,  // 20%
-    techMo: 15      // 15%
+    techDev: 35,
+    techLeads: 30,
+    techArchs: 20,
+    techMo: 15
   });
 
-  // Calculate amounts based on percentages
   const calculateAmounts = () => {
     return {
       techDev: (totalBudget * distribution.techDev / 100).toFixed(2),
@@ -35,6 +32,7 @@ const ProjectDetail = () => {
         <Link to="/projects" className="text-[#101010] font-bold mb-4 flex items-center gap-2">
           <LuArrowLeftToLine /> <span>Back to projects</span>
         </Link>
+
         <p className="text-sm text-gray-500 mb-2">Published on May 16, 2024</p>
         <h1 className="text-3xl font-bold mb-4">Building an AI-powered Agent for Customer Engagement</h1>
         <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-red-500">${totalBudget}</span></p>
@@ -45,7 +43,7 @@ const ProjectDetail = () => {
             <li><strong>TechDev:</strong> ${amounts.techDev}</li>
             <li><strong>TechLeads:</strong> ${amounts.techLeads}</li>
             <li><strong>TechArchs:</strong> ${amounts.techArchs}</li>
-            <li><strong>TechMo:</strong> ${amounts.techMo}</li> {/* ✅ Only amounts shown */}
+            <li><strong>TechMo:</strong> ${amounts.techMo}</li>
           </ul>
         </div>
 
@@ -134,6 +132,6 @@ const ProjectDetail = () => {
       </div>
     </Container>
   );
-}
+};
 
 export default ProjectDetail;
