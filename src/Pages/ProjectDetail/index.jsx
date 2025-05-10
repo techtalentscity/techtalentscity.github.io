@@ -71,9 +71,9 @@ const ProjectDetail = () => {
             title: 'Building an AI-powered Agent for Customer Engagement',
             description: 'This project will develop a conversational AI agent to improve customer service efficiency in banking.',
             duration: {
-              start: 'May 24, 2025',
-              end: 'July 24, 2025',
-              total: '8 weeks'
+              start: 'June 14, 2025',
+              end: 'August 16, 2025',
+              total: '9 weeks'
             },
             employmentType: 'Full-Time / Remote / Free',
             publishDate: 'May 16, 2024',
