@@ -11,32 +11,32 @@ const DataScienceProjectDetail = () => {
     {
       role: "TechDev",
       count: 2,
-      description: "Python developers experienced in data processing pipelines and ML frameworks"
+      description: "Python developers experienced in ML for time series forecasting and energy data analysis"
     },
     {
       role: "TechArchs",
       count: 1,
-      description: "Data architect to design data storage and processing architecture"
+      description: "Data architect to design IoT data integration and cloud storage solutions"
     },
     {
       role: "TechQA",
       count: 1,
-      description: "Quality assurance specialist for model validation and testing"
+      description: "Quality assurance specialist for model validation and prediction accuracy testing"
     },
     {
       role: "TechLeads",
       count: 1,
-      description: "Project lead with experience in data science project management"
+      description: "Project lead with experience in energy analytics and ML implementations"
     },
     {
-      role: "TechGuard",
+      role: "TechDesign",
       count: 1,
-      description: "Security specialist for data protection and privacy compliance"
+      description: "UX/UI designer for creating intuitive energy usage dashboards and visualizations"
     },
     {
       role: "TechMo",
       count: 1,
-      description: "Tech mentor guiding the team with learning resources, best practices, and applying skills to real-world challenges"
+      description: "Tech mentor specializing in energy analytics and ML to guide team with best practices and domain expertise"
     }
   ]);
 
@@ -46,8 +46,8 @@ const DataScienceProjectDetail = () => {
         <Link to="/projects" className="text-[#101010] font-bold mb-4 flex items-center gap-2">
           <LuArrowLeftToLine /> <span>Back to projects</span>
         </Link>
-        <p className="text-sm text-gray-500 mb-2">Published on April 19, 2025</p>
-        <h1 className="text-3xl font-bold mb-4">Climate Change Prediction with Machine Learning</h1>
+        <p className="text-sm text-gray-500 mb-2">Published on May 10, 2025</p>
+        <h1 className="text-3xl font-bold mb-4">Using Machine Learning to Forecast Personal Energy Usage and Save Money</h1>
         <p className="text-[#131518] mb-2">Full-Time / Remote / <span className="text-green-600 font-semibold">Volunteer Project (Free)</span></p>
 
         {/* Team Composition */}
@@ -66,23 +66,23 @@ const DataScienceProjectDetail = () => {
         {/* New Disclaimer Section */}
         <div className="mb-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg">
           <p className="text-sm text-yellow-800">
-            <strong>Disclaimer:</strong> This is a volunteer-driven research project. Participants will contribute their skills towards addressing climate change challenges while gaining real-world project experience. No financial compensation is provided.
+            <strong>Disclaimer:</strong> This is a volunteer-driven project. Participants will contribute their skills towards helping households reduce energy costs while gaining real-world project experience. No financial compensation is provided.
           </p>
         </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Description:</h2>
           <p>
-            This data science project will focus on analyzing climate data and developing prediction models to forecast climate patterns. The team will work with historical weather data, satellite imagery, and other environmental datasets to build machine learning models that can predict temperature changes, precipitation patterns, and extreme weather events. The project aims to contribute to scientific understanding of climate change through data-driven approaches.
+            This project will focus on developing machine learning models that can predict personal household energy consumption patterns. The team will work with smart meter data, weather information, and household characteristics to build predictive models that can forecast energy usage, identify cost-saving opportunities, and recommend optimizations. The solution will include an intuitive dashboard for homeowners to visualize their energy usage, view predictions, and receive actionable recommendations to reduce costs and environmental impact.
           </p>
         </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Project Duration:</h2>
           <ul className="list-disc list-inside">
-            <li><strong>Start Date:</strong> May 10, 2025</li>
-            <li><strong>End Date:</strong> July 26, 2025</li>
-            <li><strong>Total Duration:</strong> 11 weeks</li>
+            <li><strong>Start Date:</strong> June 1, 2025</li>
+            <li><strong>End Date:</strong> August 10, 2025</li>
+            <li><strong>Total Duration:</strong> 10 weeks</li>
           </ul>
         </div>
 
@@ -97,43 +97,47 @@ const DataScienceProjectDetail = () => {
           <h2 className="text-xl font-semibold mb-2">Required Skill Sets:</h2>
           <ul className="list-disc list-inside">
             <li>Python Programming (NumPy, Pandas, Scikit-learn)</li>
-            <li>Machine Learning / Deep Learning</li>
+            <li>Time Series Forecasting (ARIMA, Prophet, LSTM)</li>
             <li>Data Visualization (Matplotlib, Seaborn, Plotly)</li>
             <li>Statistical Analysis</li>
-            <li>Time Series Analysis</li>
+            <li>IoT Data Processing Experience</li>
             <li>Experience with Jupyter Notebooks</li>
             <li>Version Control (Git)</li>
+            <li>UX/UI Design (for dashboard creation)</li>
           </ul>
         </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Key Tasks and Responsibilities:</h2>
           <ul className="list-disc list-inside">
-            <li>Collect and preprocess climate and environmental datasets.</li>
-            <li>Develop machine learning models for climate pattern prediction.</li>
-            <li>Create visualizations to communicate findings effectively.</li>
-            <li>Optimize and validate models for accuracy and reliability.</li>
-            <li>Document methodology and results for potential publication.</li>
+            <li>Collect and preprocess energy consumption data from smart meters and IoT devices.</li>
+            <li>Integrate weather and household characteristic data for improved predictions.</li>
+            <li>Develop machine learning models for short and long-term energy usage forecasting.</li>
+            <li>Create user-friendly dashboards for energy visualization and recommendations.</li>
+            <li>Implement cost-saving opportunity detection algorithms.</li>
+            <li>Design and test user interfaces for mobile and web applications.</li>
           </ul>
         </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Benefits of Participation:</h2>
           <ul className="list-disc list-inside">
-            <li>Gain experience in applying data science to real-world environmental challenges.</li>
-            <li>Build a strong portfolio demonstrating data analysis and machine learning skills.</li>
-            <li>Contribute to research that addresses one of the most pressing global issues.</li>
-            <li>Develop expertise working with complex, multi-dimensional datasets.</li>
+            <li>Gain experience in applying machine learning to real-world energy efficiency challenges.</li>
+            <li>Build a strong portfolio demonstrating forecasting, UX design, and ML skills.</li>
+            <li>Contribute to sustainability efforts by helping reduce household energy consumption.</li>
+            <li>Develop expertise working with IoT data and time series forecasting.</li>
+            <li>Learn about energy markets and utility pricing structures.</li>
           </ul>
         </div>
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Nice-to-have Skills:</h2>
           <ul className="list-disc list-inside">
-            <li>Experience with geospatial data analysis</li>
+            <li>Experience with smart home technology integration</li>
             <li>Knowledge of cloud computing platforms (AWS, GCP, Azure)</li>
-            <li>Familiarity with climate science or environmental studies</li>
-            <li>Experience with big data technologies (Spark, Hadoop)</li>
+            <li>Familiarity with utility rate structures and energy markets</li>
+            <li>Experience with web/mobile app development</li>
+            <li>Background in energy efficiency or building systems</li>
           </ul>
         </div>
 
