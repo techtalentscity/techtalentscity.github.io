@@ -95,72 +95,9 @@ const Projects = () => {
       verified: true,
       premium: true,
       remote: true,
-      price: '$200',
+      price: '$500',
       link: '/projects/ai-agent',
     },
-    {
-      title: 'Developing a Mobile App for Mental Health Support',
-      skills: [
-        'Mobile App Developers',
-        'UI/UX Designers',
-        'Backend Developers',
-        'Data Security Specialists',
-        'Mental Health Researchers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      remote: false,
-      price: '$200',
-      link: '/projects/mental-app',
-    },
-    {
-      title: 'Real-Time Notification System for Tech Platforms',
-      skills: [
-        'Realtime Engineers',
-        'Socket.io Developers',
-        'System Integrators',
-        'Cloud Infrastructure Specialists'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      remote: true,
-      price: '$200',
-      link: '/projects/real-time-notification-system',
-    },
-    {
-      title: 'Blockchain-based DeFi Lending Platform',
-      skills: [
-        'Solidity Developers',
-        'Smart Contract Auditors',
-        'Frontend Developers',
-        'Backend/API Developers',
-        'DeFi Strategists'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: true,
-      remote: false,
-      price: '$200',
-      link: '/projects/blockchain-defi',
-    },
-    {
-      title: 'AI-Driven Climate Change Prediction Platform',
-      skills: [
-        'AI/ML Researchers',
-        'Data Scientists',
-        'Frontend Developers',
-        'Climate Experts',
-        'Visualization Engineers'
-      ],
-      logo: techtalent,
-      verified: true,
-      premium: false,
-      remote: true,
-      price: 'Free',
-      link: '/projects/climate-prediction',
-    }
   ];
   
   // Reset all filters and display all projects
